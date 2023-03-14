@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SupplierController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,11 +14,12 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::get('/',[LoginController::class, 'index']);
-Route::get('/dashboard', function () {
+Route::get('/', function () {
     return view('dashboard.index');
-});
+})->middleware('auth');
 
-Route::get('/login',[LoginController::class, 'index'])->middleware('guest');
+Route::get('/login',[LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout',[LoginController::class, 'logout']);
+
+Route::resource('/supplier', SupplierController::class)->middleware('auth');
