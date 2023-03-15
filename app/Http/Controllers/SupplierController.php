@@ -66,13 +66,13 @@ class SupplierController extends Controller
         }
 
         $validator = Validator::make($arr_input, [
-            '*.stuff_name' => 'required',
+            '*.stuff_name' => 'required|unique:stuffs',
             '*.price' => 'required',
         ]);
 
         if ($validator->fails()) {
             Supplier::destroy($supp->id);
-            return redirect('/supplier/create')->with('error_validate','Gagal! Nama dan Harga Barang harus dimasukan ');
+            return redirect('/supplier/create')->with('error_validate','Gagal! nama barang tidak boleh sama ');
         }
 
         for ($i=0; $i<count($arr_input); $i++){
@@ -102,7 +102,11 @@ class SupplierController extends Controller
      */
     public function edit(Supplier $supplier)
     {
-        //
+        return view('dashboard.supplier.edit',[
+            'supplier' => $supplier,
+            'stuffs' => $supplier->stuff
+            // 'stuffs' => Supplier::find($supplier->id)->stuff
+        ]);
     }
 
     /**
@@ -110,7 +114,87 @@ class SupplierController extends Controller
      */
     public function update(UpdateSupplierRequest $request, Supplier $supplier)
     {
-        //
+        $rules = [
+            'address' => 'required',
+            'responsible' => 'required|min:3|max:255',
+            'telp' => 'required|min:3|max:255',
+        ];
+        
+        if($request->supplier_name != $supplier->supplier_name) {
+            $rules['supplier_name'] = 'required|min:3|max:255|unique:suppliers';
+        }
+
+        $validatedDataSupp = $request->validate($rules);
+        $validatedDataSupp['description'] = $request->supplier_description;
+
+
+        $stuffs = $supplier->stuff;
+        $arr_stuff_names = [];
+        $stuff_ids = [];
+
+        foreach ($stuffs as $stuff){
+            $arr_stuff_names[] = $stuff->stuff_name;
+        }
+        
+        
+        $stuff_descs = $request->description;
+        $stuff_prices = $request->price;
+
+        $arr_input= [];
+
+        for ($i=0; $i<count($stuff_prices); $i++){
+            //sampe sini, cari tau gimana validate yang stuff namesnya ga diubah
+            if(!in_array($request->stuff_name,$arr_stuff_names)){
+                $stuff_names = $request->stuff_name;
+            }
+            $arr_input[] = [
+                'stuff_name' => $stuff_names[$i],
+                'description' => $stuff_descs[$i],
+                'price' => $stuff_prices[$i],
+                
+            ];
+        }
+
+        $validator = Validator::make($arr_input, [
+            '*.stuff_name' => 'required|unique:stuffs',
+            '*.price' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/supplier/create')->with('error_validate','Gagal! nama barang tidak boleh sama ');
+        }
+
+        foreach($stuffs as $ids){
+            $stuff_ids[] = $ids->id;
+        }
+
+        for ($i=0; $i<count($arr_input); $i++){
+            if ($arr_input[$i]['stuff_name']->isEmpty()){
+                Stuff::updateOrCreate(
+                    ['id' => $stuff_ids[$i]],
+                    [
+                    'description' => $arr_input[$i]['description'],
+                    'price' => $arr_input[$i]['price']
+                    ]
+            );
+            } else{
+                Stuff::updateOrCreate(
+                    ['id' => $stuff_ids[$i]],
+                    [
+                    'stuff_name' => $arr_input[$i]['stuff_name'],
+                    'description' => $arr_input[$i]['description'],
+                    'price' => $arr_input[$i]['price']
+                    ]
+                );
+            }
+            
+        }
+
+
+
+        Supplier::where('id',$supplier->id)->update($validatedDataSupp);
+
+        return redirect('/supplier')->with('success','Data pemasok berhasil diubah! ');
     }
 
     /**
@@ -118,6 +202,8 @@ class SupplierController extends Controller
      */
     public function destroy(Supplier $supplier)
     {
-        //
+        Supplier::destroy($supplier->id);
+
+        return redirect('/supplier')->with('success','Data Pemasok Berhasil Dihapus ');
     }
 }

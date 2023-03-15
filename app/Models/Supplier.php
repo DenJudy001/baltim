@@ -17,6 +17,8 @@ class Supplier extends Model
         'telp',
     ];
 
+    protected $with = ['stuff'];
+
     public function stuff(){
         return $this->hasMany(Stuff::class);
     }

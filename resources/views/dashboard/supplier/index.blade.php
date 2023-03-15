@@ -33,11 +33,11 @@
                         <td>
                             <a href="/supplier/show" class="badge bg-info"><span data-feather="eye">
                                 </span></a>
-                            <a href="/supplier/edit" class="badge bg-warning"><span data-feather="edit"> </span></a>
-                            <form action="/supplier/" method="POST" class="d-inline">
+                            <a href="/supplier/{{ $supplier->id }}/edit" class="badge bg-warning"><span data-feather="edit"> </span></a>
+                            <form action="/supplier/{{ $supplier->id }}" method="POST" class="d-inline">
                                 @method('delete')
                                 @csrf
-                                <button class="badge bg-danger border-0" onclick="return confirm('Are You Sure?')"><span
+                                <button class="badge bg-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><span
                                         data-feather="trash"> </span></button>
                             </form>
                         </td>
