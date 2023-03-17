@@ -79,6 +79,10 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         @endif
+                        
+                        <div class="alert alert-success alert-dismissible fade d-none" role="alert" id="success_hapus">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                         <table class="table table-light">
                             <thead>
                                 <tr>
@@ -94,6 +98,7 @@
                                     
                                     <tr>
                                         <td>
+                                            <input type="hidden" class="form-control" id="stuff_id" name="stuff_id[]" value="{{ $stuff->id }}">
                                             <input type="text" class="form-control" id="stuff_name" name="stuff_name[]" value="{{ $stuff->stuff_name }}" required>
                                         </td>
                                         <td><input type="text" class="form-control nowrap" id="description" name="description[]" value="{{ $stuff->description }}" required></td>
@@ -101,7 +106,7 @@
                                             
                                         </td>
                                         <td>
-                                            <a href="javascript:void(0)" class="btn btn-danger deleteRow"><span data-feather='trash'></span></a>
+                                            <a class="btn btn-danger" onclick="deleteData('{{ url('/stuff') }}/{{ $stuff->id }}', {{ $stuff->id }})"><span data-feather='trash'></span></a>
                                         </td>
                                     </tr>
 

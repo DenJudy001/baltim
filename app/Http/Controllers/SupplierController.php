@@ -128,68 +128,92 @@ class SupplierController extends Controller
         $validatedDataSupp['description'] = $request->supplier_description;
 
 
-        $stuffs = $supplier->stuff;
-        $arr_stuff_names = [];
-        $stuff_ids = [];
-
-        foreach ($stuffs as $stuff){
-            $arr_stuff_names[] = $stuff->stuff_name;
-        }
-        
-        
+        $stuffs = $supplier->stuff->toArray();
+        $arr_input= [];
+        $arr_input_newOrUpdate= [];
+        // $arr_del = [];
+        $stuff_id = $request->stuff_id;
+        $stuff_names = $request->stuff_name;
         $stuff_descs = $request->description;
         $stuff_prices = $request->price;
 
-        $arr_input= [];
-
-        for ($i=0; $i<count($stuff_prices); $i++){
-            //sampe sini, cari tau gimana validate yang stuff namesnya ga diubah
-            if(!in_array($request->stuff_name,$arr_stuff_names)){
-                $stuff_names = $request->stuff_name;
-            }
-            $arr_input[] = [
-                'stuff_name' => $stuff_names[$i],
-                'description' => $stuff_descs[$i],
-                'price' => $stuff_prices[$i],
-                
-            ];
+        for ($i=0; $i<count($stuff_names); $i++){
+            if(isset($stuffs[$i]['stuff_name'])){
+                //bisa pakai if stuff_id di db not in array dari stuff_id di request, maka $i ubah jdi $val = $i + 1,
+                // terus push ke arr_del
+                if($stuffs[$i]['stuff_name'] != $stuff_names[$i]){
+                    $arr_input_newOrUpdate[] = [
+                        'id' => $stuff_id[$i],
+                        'stuff_name' => $stuff_names[$i],
+                        'description' => $stuff_descs[$i],
+                        'price' => $stuff_prices[$i],
+                    ];
+                    
+                } 
+                else {
+                    $arr_input[] = [
+                        'id' => $stuff_id[$i],
+                        'description' => $stuff_descs[$i],
+                        'price' => $stuff_prices[$i],
+                    ];
+                }
+            } 
+            else {
+                $arr_input_newOrUpdate[] = [
+                    'id' => '',
+                    'stuff_name' => $stuff_names[$i],
+                    'description' => $stuff_descs[$i],
+                    'price' => $stuff_prices[$i],
+                ];
+            } 
+        }
+        
+        $stuffNames = array_column($arr_input_newOrUpdate, 'stuff_name');
+        
+        if (count($stuffNames) !== count(array_unique($stuffNames))){
+            return redirect('/supplier/'.$supplier->id.'/edit')->with('error_validate','Gagal! nama barang tidak boleh sama ');
         }
 
-        $validator = Validator::make($arr_input, [
+        $validator_newOrCreate = Validator::make($arr_input_newOrUpdate, [
             '*.stuff_name' => 'required|unique:stuffs',
+            '*.price' => 'required',
+        ]);
+        
+        $validator = Validator::make($arr_input, [
             '*.price' => 'required',
         ]);
 
         if ($validator->fails()) {
-            return redirect('/supplier/create')->with('error_validate','Gagal! nama barang tidak boleh sama ');
+            return redirect('/supplier/'.$supplier->id.'/edit')->with('error_validate','Gagal! kolom harga tidak boleh kosong ');
+        }
+        if ($validator_newOrCreate->fails()) {
+            return redirect('/supplier/'.$supplier->id.'/edit')->with('error_validate','Gagal! nama barang tidak boleh sama ');
         }
 
-        foreach($stuffs as $ids){
-            $stuff_ids[] = $ids->id;
-        }
-
-        for ($i=0; $i<count($arr_input); $i++){
-            if ($arr_input[$i]['stuff_name']->isEmpty()){
+        
+        if(count($arr_input) > 0){
+            for ($i=0; $i<count($arr_input); $i++){
                 Stuff::updateOrCreate(
-                    ['id' => $stuff_ids[$i]],
+                    ['id' => $arr_input[$i]['id']],
                     [
-                    'description' => $arr_input[$i]['description'],
-                    'price' => $arr_input[$i]['price']
-                    ]
-            );
-            } else{
-                Stuff::updateOrCreate(
-                    ['id' => $stuff_ids[$i]],
-                    [
-                    'stuff_name' => $arr_input[$i]['stuff_name'],
-                    'description' => $arr_input[$i]['description'],
-                    'price' => $arr_input[$i]['price']
-                    ]
-                );
+                        'description' => $arr_input[$i]['description'],
+                        'price' => $arr_input[$i]['price']
+                    ]);
             }
-            
         }
 
+        if(count($arr_input_newOrUpdate) > 0){
+            for ($i=0; $i<count($arr_input_newOrUpdate); $i++){
+                Stuff::updateOrCreate(
+                    ['id' => $arr_input_newOrUpdate[$i]['id']],
+                    [
+                        'supplier_id' => $supplier->id,
+                        'stuff_name' => $arr_input_newOrUpdate[$i]['stuff_name'],
+                        'description' => $arr_input_newOrUpdate[$i]['description'],
+                        'price' => $arr_input_newOrUpdate[$i]['price']
+                    ]);
+            }
+        }
 
 
         Supplier::where('id',$supplier->id)->update($validatedDataSupp);

@@ -90,10 +90,10 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control" id="stuff_name" name="stuff_name[]" >
+                                        <input type="text" class="form-control" id="stuff_name" name="stuff_name[]" required>
                                     </td>
                                     <td><input type="text" class="form-control nowrap" id="description" name="description[]" required></td>
-                                    <td><input type="text" class="form-control" id="price" name="price[]" >
+                                    <td><input type="text" class="form-control" id="price" name="price[]" required>
                                         
                                     </td>
                                     <td>
