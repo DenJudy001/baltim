@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Supplier;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreSupplierRequest;
-use Illuminate\Http\Request;
-use App\Http\Requests\UpdateSupplierRequest;
 use App\Models\Stuff;
+use App\Models\Supplier;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\StoreSupplierRequest;
+use App\Http\Requests\UpdateSupplierRequest;
 
 class SupplierController extends Controller
 {
@@ -66,7 +67,9 @@ class SupplierController extends Controller
         }
 
         $validator = Validator::make($arr_input, [
-            '*.stuff_name' => 'required|unique:stuffs',
+            '*.stuff_name' => ['required',Rule::unique('stuffs')->where(function ($query) use ($stuff_supp){
+                return $query->where('supplier_id', $stuff_supp);
+            })],
             '*.price' => 'required',
         ]);
 
@@ -175,7 +178,9 @@ class SupplierController extends Controller
         }
 
         $validator_newOrCreate = Validator::make($arr_input_newOrUpdate, [
-            '*.stuff_name' => 'required|unique:stuffs',
+            '*.stuff_name' => ['required',Rule::unique('stuffs')->where(function ($query) use ($supplier){
+                return $query->where('supplier_id', $supplier->id);
+            })],
             '*.price' => 'required',
         ]);
         
@@ -187,7 +192,7 @@ class SupplierController extends Controller
             return redirect('/supplier/'.$supplier->id.'/edit')->with('error_validate','Gagal! kolom harga tidak boleh kosong ');
         }
         if ($validator_newOrCreate->fails()) {
-            return redirect('/supplier/'.$supplier->id.'/edit')->with('error_validate','Gagal! nama barang tidak boleh sama ');
+            return redirect('/supplier/'.$supplier->id.'/edit')->with('error_validate','Gagal! nama barang tidak boleh sama atau kosong ');
         }
 
         
