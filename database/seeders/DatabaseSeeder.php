@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             'series_name' => "TRX"
         ]);
         Series::create([
-            'series_name' => "PYD"
+            'series_name' => "SAL"
         ]);
     }
 }

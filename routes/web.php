@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\EmployeeSalaryController;
+use App\Http\Controllers\FoodNBeveragesController;
 use App\Models\Stuff;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
@@ -40,4 +42,6 @@ Route::post('/logout',[LoginController::class, 'logout']);
 
 Route::resource('/supplier', SupplierController::class)->middleware('auth');
 Route::resource('/purchase', PurchaseController::class)->middleware('auth');
+Route::resource('/fnb', FoodNBeveragesController::class)->middleware('auth');
+Route::resource('/salary', EmployeeSalaryController::class)->middleware('auth');
 Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
