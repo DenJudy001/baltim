@@ -23,6 +23,10 @@ class Purchase extends Model
 
     protected $with = ['dtl_purchase','series'];
 
+    public function getRouteKeyName() {
+        return 'purchase_number';
+    }
+
     public function dtl_purchase(){
         return $this->hasMany(DetailPurchase::class);
     }

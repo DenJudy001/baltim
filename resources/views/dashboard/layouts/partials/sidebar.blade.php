@@ -17,6 +17,11 @@
                     Pemesanan
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('account') ? 'active' : '' }}" aria-current="page" href="/account">
+                    Pencatatan
+                </a>
+            </li>
         </ul>
     </div>
 </nav>
