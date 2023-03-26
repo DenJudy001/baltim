@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Series;
+use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,6 +20,16 @@ class DatabaseSeeder extends Seeder
            'username' => "baltim",
            'email' => "baltim@gmail.com",
            'password' => bcrypt('12345')
+        ]);
+
+        Series::create([
+            'series_name' => "ORD"
+        ]);
+        Series::create([
+            'series_name' => "TRX"
+        ]);
+        Series::create([
+            'series_name' => "PYD"
         ]);
     }
 }

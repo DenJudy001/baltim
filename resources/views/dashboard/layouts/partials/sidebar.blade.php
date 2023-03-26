@@ -8,8 +8,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('supplier') ? 'active' : '' }}" aria-current="page" href="/supplier">
+                <a class="nav-link {{ Request::is('supplier','supplier/create','supplier/'.($supplier->id ?? '').'/edit') ? 'active' : '' }}" aria-current="page" href="/supplier">
                     Pemasok
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('purchase/create') ? 'active' : '' }}" aria-current="page" href="/purchase/create">
+                    Pemesanan
                 </a>
             </li>
         </ul>

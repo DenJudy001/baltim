@@ -50,41 +50,43 @@ class SupplierController extends Controller
         $supp = Supplier::create($validatedDataSupp);
 
 
-        $stuff_names = $request->stuff_name;
-        $stuff_descs = $request->description;
-        $stuff_prices = $request->price;
-        $stuff_supp = $supp->id;
+        if($request->stuff_name){
+            $stuff_names = $request->stuff_name;
+            $stuff_descs = $request->description;
+            $stuff_prices = $request->price;
+            $stuff_supp = $supp->id;
 
-        $arr_input= [];
+            $arr_input= [];
 
-        for ($i=0; $i<count($stuff_names); $i++){
-            $arr_input[] = [
-                'stuff_name' => $stuff_names[$i],
-                'description' => $stuff_descs[$i],
-                'price' => $stuff_prices[$i],
-                'supplier_id' => $stuff_supp
-            ];
-        }
+            for ($i=0; $i<count($stuff_names); $i++){
+                $arr_input[] = [
+                    'stuff_name' => $stuff_names[$i],
+                    'description' => $stuff_descs[$i],
+                    'price' => $stuff_prices[$i],
+                    'supplier_id' => $stuff_supp
+                ];
+            }
 
-        $validator = Validator::make($arr_input, [
-            '*.stuff_name' => ['required',Rule::unique('stuffs')->where(function ($query) use ($stuff_supp){
-                return $query->where('supplier_id', $stuff_supp);
-            })],
-            '*.price' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            Supplier::destroy($supp->id);
-            return redirect('/supplier/create')->with('error_validate','Gagal! nama barang tidak boleh sama ');
-        }
-
-        for ($i=0; $i<count($arr_input); $i++){
-            Stuff::create([
-                'supplier_id' => $arr_input[$i]['supplier_id'],
-                'stuff_name' => $arr_input[$i]['stuff_name'],
-                'description' => $arr_input[$i]['description'],
-                'price' => $arr_input[$i]['price']
+            $validator = Validator::make($arr_input, [
+                '*.stuff_name' => ['required',Rule::unique('stuffs')->where(function ($query) use ($stuff_supp){
+                    return $query->where('supplier_id', $stuff_supp);
+                })],
+                '*.price' => 'required',
             ]);
+
+            if ($validator->fails()) {
+                Supplier::destroy($supp->id);
+                return redirect('/supplier/create')->with('error_validate','Gagal! nama barang tidak boleh sama ');
+            }
+
+            for ($i=0; $i<count($arr_input); $i++){
+                Stuff::create([
+                    'supplier_id' => $arr_input[$i]['supplier_id'],
+                    'stuff_name' => $arr_input[$i]['stuff_name'],
+                    'description' => $arr_input[$i]['description'],
+                    'price' => $arr_input[$i]['price']
+                ]);
+            }
         }
         
         

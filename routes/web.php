@@ -3,6 +3,9 @@
 use App\Models\Stuff;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\PurchStuffDdController;
+use App\Http\Controllers\PurchSuppDdController;
 use App\Http\Controllers\SupplierController;
 /*
 |--------------------------------------------------------------------------
@@ -27,8 +30,12 @@ Route::delete('stuff/{stuff}', function (Stuff $stuff) {
     ]);
 });
 
+Route::get('purchsupp-dropdown',PurchSuppDdController::class);
+Route::get('purchstuff-dropdown',PurchStuffDdController::class);
+
 Route::get('/login',[LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout',[LoginController::class, 'logout']);
 
 Route::resource('/supplier', SupplierController::class)->middleware('auth');
+Route::resource('/purchase', PurchaseController::class)->middleware('auth');

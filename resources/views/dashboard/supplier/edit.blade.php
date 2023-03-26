@@ -27,8 +27,8 @@
                         <div class="mb-3">
                             <label for="description" class="form-label @error('description') is-invalid @enderror">Deskripsi
                                 Pemasok</label>
-                            <input type="text" class="form-control" id="description" name="supplier_description"
-                                value="{{ old('supplier_description',$supplier->description) }}" required>
+                            <textarea type="text" class="form-control" id="description" name="supplier_description"
+                                value="{{ old('supplier_description',$supplier->description) }}" required></textarea>
                             @error('description')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -38,8 +38,8 @@
                         <div class="mb-3">
                             <label for="address" class="form-label @error('address') is-invalid @enderror">Alamat
                                 Pemasok</label>
-                            <input type="text" class="form-control" id="address" name="address"
-                                value="{{ old('address',$supplier->address) }}" required>
+                            <textarea type="text" class="form-control" id="address" name="address"
+                                value="{{ old('address',$supplier->address) }}" required></textarea>
                             @error('address')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -89,7 +89,7 @@
                                     <th scope="col">Nama Bahan</th>
                                     <th scope="col">Deskripsi</th>
                                     <th scope="col">Harga</th>
-                                    <th scope="col">Aksi</th>
+                                    <th scope="col"><a href="javascript:void(0)" class="btn btn-success addRow">+</a></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -98,11 +98,11 @@
                                     
                                     <tr>
                                         <td>
-                                            <input type="hidden" class="form-control" id="stuff_id" name="stuff_id[]" value="{{ $stuff->id }}">
-                                            <input type="text" class="form-control" id="stuff_name" name="stuff_name[]" value="{{ $stuff->stuff_name }}" required>
+                                            <input type="hidden" class="form-control" name="stuff_id[]" value="{{ $stuff->id }}">
+                                            <input type="text" class="form-control" name="stuff_name[]" value="{{ $stuff->stuff_name }}" required>
                                         </td>
-                                        <td><input type="text" class="form-control nowrap" id="description" name="description[]" value="{{ $stuff->description }}" required></td>
-                                        <td><input type="number" class="form-control" id="price" name="price[]" value="{{ $stuff->price }}" required >
+                                        <td><textarea class="form-control" name="description[]" value="{{ $stuff->description }}"></textarea></td>
+                                        <td><input type="number" class="form-control" name="price[]" value="{{ $stuff->price }}" required >
                                             
                                         </td>
                                         <td>
@@ -113,11 +113,6 @@
                                 @endforeach
                                 
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td><a href="javascript:void(0)" class="btn btn-success addRow">Tambah</a></td>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>
