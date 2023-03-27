@@ -28,7 +28,7 @@ class Purchase extends Model
     }
 
     public function dtl_purchase(){
-        return $this->hasMany(DetailPurchase::class);
+        return $this->hasMany(DetailPurchase::class ,'purchase_id');
     }
 
     public function series(){

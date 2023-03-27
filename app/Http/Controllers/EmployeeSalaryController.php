@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Illuminate\Http\Request;
 use App\Models\EmployeeSalary;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class EmployeeSalaryController extends Controller
 {
@@ -21,7 +22,9 @@ class EmployeeSalaryController extends Controller
      */
     public function create()
     {
-        //
+        $employee = User::where('is_admin', false)->get();
+
+        return view('dashboard.salary.create', compact('employee'));
     }
 
     /**
@@ -29,7 +32,17 @@ class EmployeeSalaryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request ->validate([
+            'user_id' => 'required',
+            'salary' => 'required',
+        ]);
+
+        $validatedData['name'] = $request->name;
+        $validatedData['email'] = $request->email;
+        $validatedData['telp'] = $request->telp;
+
+        EmployeeSalary::create($validatedData);
+        return redirect('/account')->with('success','Berhasil Menambah Upah Karyawan');
     }
 
     /**

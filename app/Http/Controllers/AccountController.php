@@ -13,4 +13,6 @@ class AccountController extends Controller
             'purchase'=>Purchase::all('purchase_number','total','state')
         ]);
     }
+
+
 }

@@ -160,6 +160,12 @@
                 countTotalHarga();
             });
 
+            $( '.single-select-employee' ).select2( {
+                theme: "bootstrap-5",
+                width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+                placeholder: $( this ).data( 'placeholder' ),
+                allowClear: true
+            } );
             $( '.single-select-supplier' ).select2( {
                 theme: "bootstrap-5",
                 width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
@@ -173,6 +179,12 @@
                 tags : true
             } );
             $( '.single-select-unit' ).select2( {
+                theme: "bootstrap-5",
+                width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+                placeholder: $( this ).data( 'placeholder' ),
+                
+            } );
+            $( '.single-select-menu-type' ).select2( {
                 theme: "bootstrap-5",
                 width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
                 placeholder: $( this ).data( 'placeholder' ),
@@ -288,7 +300,19 @@
                countTotalHarga();
             });
 
-            
+            function previewImage() {
+                const image = document.querySelector('#image');
+                const imgPreview = document.querySelector('.img-preview');
+                
+                imgPreview.style.display = 'block';
+        
+                const oFReader = new FileReader();
+                oFReader.readAsDataURL(image.files[0]);
+        
+                oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+                }
+            }
 
         });
 

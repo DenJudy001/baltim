@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeSalaryController;
 use App\Http\Controllers\FoodNBeveragesController;
 use App\Models\Stuff;
@@ -42,6 +43,7 @@ Route::post('/logout',[LoginController::class, 'logout']);
 
 Route::resource('/supplier', SupplierController::class)->middleware('auth');
 Route::resource('/purchase', PurchaseController::class)->middleware('auth');
-Route::resource('/fnb', FoodNBeveragesController::class)->middleware('auth');
-Route::resource('/salary', EmployeeSalaryController::class)->middleware('auth');
+Route::resource('/fnb', FoodNBeveragesController::class, ['parameters' => ['fnb' => 'foodNBeverages']])->middleware('auth');
+Route::resource('/salary', EmployeeSalaryController::class , ['parameters' => ['salary' => 'employeeSalary']])->middleware('auth');
+Route::resource('/employee', EmployeeController::class, ['parameters' => ['employee' => 'user']])->middleware('auth');
 Route::get('/account', [AccountController::class, 'index'])->middleware('auth');

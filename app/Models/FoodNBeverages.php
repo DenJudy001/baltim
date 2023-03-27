@@ -16,4 +16,7 @@ class FoodNBeverages extends Model
         'image',
         'price',
     ];
+
+
+    
 }

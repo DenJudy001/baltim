@@ -133,6 +133,8 @@ class PurchaseController extends Controller
      */
     public function destroy(Purchase $purchase)
     {
-        //
+        Purchase::destroy($purchase->id);
+
+        return redirect('/account')->with('success','Berhasil Hapus Data ');
     }
 }
