@@ -37,6 +37,11 @@
                     Menu
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('pos', 'pos/create') ? 'active' : '' }}" aria-current="page" href="/pos/create">
+                    POS
+                </a>
+            </li>
         </ul>
     </div>
 </nav>
