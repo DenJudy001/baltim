@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('employee_salaries', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable();
+            $table->string('salary_number');
             $table->string('name');
             $table->string('email')->unique();
             $table->string('telp');

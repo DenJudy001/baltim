@@ -15,7 +15,12 @@ return new class extends Migration
             $table->id();
             $table->integer('number');
             $table->foreignId('series_id')->nullable();
-            $table->foreignId('supplier_id');
+            $table->foreignId('supplier_id')->nullable();
+            $table->string('supplier_name');
+            $table->text('description')->nullable();
+            $table->text('address');
+            $table->string('supplier_responsible');
+            $table->string('telp');
             $table->string('purchase_number');
             $table->string('purchase_name');
             $table->string('responsible');
