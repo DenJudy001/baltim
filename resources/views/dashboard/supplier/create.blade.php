@@ -88,16 +88,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <input type="text" class="form-control" name="stuff_name[]" required>
-                                    </td>
-                                    <td><textarea class="form-control" name="description[]"></textarea></td>
-                                    <td><input type="number" class="form-control" name="price[]" value=0 required></td>
-                                    <td>
-                                        <a href="javascript:void(0)" class="btn btn-danger deleteRow"><span data-feather='trash'></span></a>
-                                    </td>
-                                </tr>
+                                
                             </tbody>
                         </table>
                     </div>
@@ -107,3 +98,26 @@
         </div>
     </div>
 @endsection
+
+@push('script')
+    <script>
+        $(document).ready(function(){
+            $('thead').on('click', '.addRow', function(){
+                var tr = "<tr>"+
+                            "<td><input type='text' class='form-control' name='stuff_name[]' required></td>"+
+                            "<td><textarea class='form-control' name='description[]' ></textarea></td>"+
+                            "<td><input type='number' class='form-control' name='price[]' value=0 required></td>"+
+                            "<td>"+
+                                "<a href='javascript:void(0)' class='btn btn-danger deleteRow'><span data-feather='trash'></span></a>"+
+                            "</td>"+
+                        "</tr>"
+                $('tbody').append(tr);
+                feather.replace();
+            });
+
+            $('tbody').on('click', '.deleteRow', function(){
+                $(this).parent().parent().remove();
+            });
+        });
+    </script>
+@endpush

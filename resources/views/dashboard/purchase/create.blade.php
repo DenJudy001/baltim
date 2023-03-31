@@ -90,3 +90,211 @@
         </div>
     </div>
 @endsection
+
+@push('script')
+    <script>
+        function selectRefresh($sel, $sel2) {
+        $sel.select2({
+            theme: "bootstrap-5",
+            width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+            placeholder: $( this ).data( 'placeholder' ),
+            tags : true
+        });
+        $sel2.select2({
+            theme: "bootstrap-5",
+            width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+            placeholder: $( this ).data( 'placeholder' ),
+        });
+        }
+
+        $(document).ready(function(){
+            function onChangeSelect(url, id, name){
+                $.ajax({
+                    url : url,
+                    type: 'GET',
+                    data: {
+                        "id" : id,
+                        "_token": $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data){
+                        let select = $('.' + name);
+                        select.empty();
+                        select.attr('placeholder', select.data('placeholder'));
+                        select.append(`<option></option>`);
+                        $.each(data, function(key, value){
+                            select.append(`<option>${value}</option>`);
+                        });
+
+                        if (typeof window.data === 'undefined') {
+                            window.data = {};
+                        }
+                        window.data.stuffFiltered = data;
+                    }
+                })
+            }
+
+            $('thead').on('click', '.addRowPurchase', function(){
+                var tr = "<tr>"+
+                            "<td>"+
+                            "<select class='form-select single-select-stuff' data-placeholder='Pilih Barang' name='stuff_name[]' required>"+
+                                "<option></option>"+
+                            "</select>"+
+                            "</td>"+
+                            "<td><textarea class='form-control descID' name='description[]' ></textarea></td>"+
+                            "<td><input type='number' class='form-control qtyID' name='qty[]' value=1 required></td>"+
+                            "<td>"+
+                                "<select class='form-select single-select-unit' data-placeholder='Pilih Satuan' name='unit[]' required>"+
+                                    "<option></option>"+
+                                    "<option>kilogram(kg)</option>"+
+                                    "<option>gram(gr)</option>"+
+                                    "<option>liter(lt)</option>"+
+                                    "<option>ekor</option>"+
+                                    "<option>lembar</option>"+
+                                "</select>"+
+                            "</td>"+
+                            "<td><input type='number' class='form-control priceID' name='price[]' value=0 required></td>"+
+                            "<td><input type='number' class='form-control subtotalID' value=0 disabled></td>"+
+                            "<td>"+
+                                "<a href='javascript:void(0)' class='btn btn-danger deleteRowPurchase'><span data-feather='trash'></span></a>"+
+                            "</td>"+
+                        "</tr>"
+                $('tbody').append(tr);
+                feather.replace();
+                var $select_stuff = $('.single-select-stuff').last();
+                var $select_unit = $('.single-select-unit').last();
+                selectRefresh($select_stuff, $select_unit);
+                
+                if(window.data && window.data.stuffFiltered){
+                    $select_stuff.attr('placeholder', $select_stuff.data('placeholder'));
+                    $select_stuff.append(`<option></option>`);
+                    $.each(window.data.stuffFiltered, function(key, value){
+                        $select_stuff.append(`<option>${value}</option>`);
+                    });
+                }
+
+            });
+
+            function countTotalHarga(){
+                var totalHarga = $('#totalPurchase');
+                var subtotal = $('.subtotalID');
+                var result = 0;
+                subtotal.each(function(){
+                    result = result + parseInt($(this).val());
+                });
+                totalHarga.val(result);
+            }
+
+            $('tbody').on('click', '.deleteRowPurchase', function(){
+                $(this).parent().parent().remove();
+                countTotalHarga();
+            });
+
+            $( '.single-select-supplier' ).select2( {
+                theme: "bootstrap-5",
+                width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+                placeholder: $( this ).data( 'placeholder' ),
+                allowClear: true
+            } );
+            $( '.single-select-stuff' ).select2( {
+                theme: "bootstrap-5",
+                width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+                placeholder: $( this ).data( 'placeholder' ),
+                tags : true
+            } );
+            $( '.single-select-unit' ).select2( {
+                theme: "bootstrap-5",
+                width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+                placeholder: $( this ).data( 'placeholder' ),
+                
+            } );
+
+            $("#sel_supplier_id").change(function(){
+                var id = $(this).val();
+                var url = "{{ URL::to('purchsupp-dropdown') }}";
+                var name = "single-select-stuff";
+                var desc = "textarea.descID";
+                var price = "input.priceID";
+                var qty = "input.qtyID";
+                var subtotal = "input.subtotalID";
+                if (id){
+                    onChangeSelect(url, id, name);
+                    $(desc).val('');
+                    $(price).val(0);
+                    $(qty).val(1);
+                    $(subtotal).val(0);
+                }else{
+                    $('.' + name).empty();
+                    $(desc).val('');
+                    $(price).val(0);
+                    $(qty).val(1);
+                    $(subtotal).val(0);
+                }
+            });
+
+            $('#PurchaseTable').on('change', '.single-select-stuff', function(){
+                var name = $(this).val();
+                var url = "{{ URL::to('purchstuff-dropdown') }}";
+                var desc = $(this).closest('tr').find('textarea.descID');
+                var price = $(this).closest('tr').find('input.priceID');
+                var qty = $(this).closest('tr').find('input.qtyID').val();
+                var subtotal = $(this).closest('tr').find('input.subtotalID');
+                
+                $.ajax({
+                    url : url,
+                    type: 'GET',
+                    data: {
+                        "stuff_name" : name,
+                        "_token": $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data){
+                        desc.val(data.description);
+                        price.val(data.price);
+                        var result = parseInt(price.val()) * parseInt(qty);
+                        if (!isNaN(result)) {
+                                subtotal.val(result);
+                            }
+                            if (result < 0) {
+                                subtotal.val(0);
+                        }
+                        countTotalHarga();
+                    },
+                    error: function(data){
+                        console.log('Error:', data);
+                    }
+                })
+                
+            });
+
+            $('#PurchaseTable').on('keyup', '.qtyID', function(){
+                var qty = $(this).val();
+                var price = $(this).closest('tr').find('input.priceID').val();
+                var subtotal = $(this).closest('tr').find('input.subtotalID');
+                var result = parseInt(price) * parseInt(qty);
+                if (!isNaN(result)) {
+                    subtotal.val(result);
+                }
+                if (result < 0) {
+                    subtotal.val(0);
+               }
+               countTotalHarga();
+            });
+
+            $('#PurchaseTable').on('keyup', '.priceID', function(){
+                var price = $(this).val();
+                var qty = $(this).closest('tr').find('input.qtyID').val();
+                var subtotal = $(this).closest('tr').find('input.subtotalID');
+                var result = parseInt(price) * parseInt(qty);
+
+                if (!isNaN(result)) {
+                    subtotal.val(result);
+                }
+                if (result < 0) {
+                    subtotal.val(0);
+               }
+               countTotalHarga();
+            });
+        });
+
+    </script>
+@endpush
+

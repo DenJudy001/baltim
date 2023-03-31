@@ -121,3 +121,50 @@
         </div>
     </div>
 @endsection
+
+@push('script')
+    <script>
+        $(document).ready(function(){
+            $('thead').on('click', '.addRow', function(){
+                var tr = "<tr>"+
+                            "<td><input type='text' class='form-control' name='stuff_name[]' required></td>"+
+                            "<td><textarea class='form-control' name='description[]' ></textarea></td>"+
+                            "<td><input type='number' class='form-control' name='price[]' value=0 required></td>"+
+                            "<td>"+
+                                "<a href='javascript:void(0)' class='btn btn-danger deleteRow'><span data-feather='trash'></span></a>"+
+                            "</td>"+
+                        "</tr>"
+                $('tbody').append(tr);
+                feather.replace();
+            });
+
+            $('tbody').on('click', '.deleteRow', function(){
+                $(this).parent().parent().remove();
+            });
+
+            function deleteData(url, id) {
+                if (confirm('Apakah Anda yakin ingin menghapus data yang sudah tersimpan?')) {
+                    $.ajax({
+                        url: url,
+                        type: 'DELETE',
+                        data: {
+                            "id": id,
+                            "_token": $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (data) {
+                            $('#success_hapus').removeClass('d-none').html('Data Barang Berhasil Dihapus, Silahkan Tunggu...').addClass('show');
+
+                            setTimeout(function(){
+                                location.reload();
+                            }, 2000);
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                }
+            }
+            
+        });
+    </script>
+@endpush
