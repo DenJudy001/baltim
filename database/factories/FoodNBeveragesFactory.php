@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use FakerRestaurant\Provider\id_ID\Restaurant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,12 @@ class FoodNBeveragesFactory extends Factory
      */
     public function definition(): array
     {
+        $this->faker->addProvider(new Restaurant($this->faker));
         return [
-            //
+            'name' =>  $this->faker->foodName(),
+            'description' => $this->faker->sentence(),
+            'type' => $this->faker->randomElement(['Makanan', 'Minuman']),
+            'price' => $this->faker->numberBetween(1000, 100000),
         ];
     }
 }

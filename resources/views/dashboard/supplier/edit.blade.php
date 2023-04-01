@@ -28,7 +28,7 @@
                             <label for="description" class="form-label @error('description') is-invalid @enderror">Deskripsi
                                 Pemasok</label>
                             <textarea type="text" class="form-control" id="description" name="supplier_description"
-                                value="{{ old('supplier_description',$supplier->description) }}" required></textarea>
+                             required>{{ old('supplier_description',$supplier->description) }}</textarea>
                             @error('description')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -38,8 +38,7 @@
                         <div class="mb-3">
                             <label for="address" class="form-label @error('address') is-invalid @enderror">Alamat
                                 Pemasok</label>
-                            <textarea type="text" class="form-control" id="address" name="address"
-                                value="{{ old('address',$supplier->address) }}" required></textarea>
+                            <textarea type="text" class="form-control" id="address" name="address" required>{{ old('address',$supplier->address) }}</textarea>
                             @error('address')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -101,7 +100,7 @@
                                             <input type="hidden" class="form-control" name="stuff_id[]" value="{{ $stuff->id }}">
                                             <input type="text" class="form-control" name="stuff_name[]" value="{{ $stuff->stuff_name }}" required>
                                         </td>
-                                        <td><textarea class="form-control" name="description[]" value="{{ $stuff->description }}"></textarea></td>
+                                        <td><textarea class="form-control" name="description[]">{{ $stuff->description }}</textarea></td>
                                         <td><input type="number" class="form-control" name="price[]" value="{{ $stuff->price }}" required >
                                             
                                         </td>
