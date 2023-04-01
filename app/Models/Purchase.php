@@ -10,8 +10,6 @@ class Purchase extends Model
     use HasFactory;
 
     protected $fillable = [
-        'number',
-        'series_id',
         'supplier_id',
         'supplier_name',
         'description',
@@ -26,7 +24,7 @@ class Purchase extends Model
         'end_date',
     ];
 
-    protected $with = ['dtl_purchase','series'];
+    protected $with = ['dtl_purchase'];
 
     public function getRouteKeyName() {
         return 'purchase_number';
@@ -36,7 +34,4 @@ class Purchase extends Model
         return $this->hasMany(DetailPurchase::class ,'purchase_id');
     }
 
-    public function series(){
-        return $this->belongsTo(Series::class);
-    }
 }

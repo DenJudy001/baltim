@@ -9,7 +9,4 @@ class Series extends Model
 {
     use HasFactory;
 
-    public function purchase_series(){
-        return $this->hasMany(Purchase::class, 'series_id');
-    }
 }

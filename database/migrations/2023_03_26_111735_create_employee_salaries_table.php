@@ -16,8 +16,9 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable();
             $table->string('salary_number');
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('telp');
+            $table->string('state');
             $table->integer('salary');
             $table->timestamps();
         });

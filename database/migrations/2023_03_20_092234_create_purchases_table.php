@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->integer('number');
-            $table->foreignId('series_id')->nullable();
             $table->foreignId('supplier_id')->nullable();
             $table->string('supplier_name');
             $table->text('description')->nullable();

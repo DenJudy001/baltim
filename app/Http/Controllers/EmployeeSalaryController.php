@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\EmployeeSalary;
 use App\Http\Controllers\Controller;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class EmployeeSalaryController extends Controller
 {
@@ -40,6 +41,8 @@ class EmployeeSalaryController extends Controller
         $validatedData['name'] = $request->name;
         $validatedData['email'] = $request->email;
         $validatedData['telp'] = $request->telp;
+        $validatedData['state'] = 'Selesai';
+        $validatedData['salary_number'] = IdGenerator::generate(['table' => 'employee_salaries', 'length' => 10, 'prefix' =>'SAL-','reset_on_prefix_change' => true ,'field' => 'salary_number']);
 
         EmployeeSalary::create($validatedData);
         return redirect('/account')->with('success','Berhasil Menambah Upah Karyawan');

@@ -23,17 +23,17 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($purchase as $purch)
+                @foreach ($transactions as $transaction)
                     <tr>
                         <td>{{ $loop->iteration }} </td>
-                        <td>{{ $purch->purchase_number }}</td>
-                        <td>{{ $purch->total }}</td>
-                        <td>{{ $purch->state }}</td>
+                        <td>{{ $transaction->purchase_number }}</td>
+                        <td>{{ $transaction->total }}</td>
+                        <td>{{ $transaction->state }}</td>
                         <td>
                             <a href="/purchase/show" class="badge bg-info"><span data-feather="eye">
                                 </span></a>
-                            <a href="/purchase/{{ $purch->purchase_number }}/edit" class="badge bg-warning"><span data-feather="edit"> </span></a>
-                            <form action="/purchase/{{ $purch->purchase_number }}" method="POST" class="d-inline">
+                            <a href="/purchase/{{ $transaction->purchase_number }}/edit" class="badge bg-warning"><span data-feather="edit"> </span></a>
+                            <form action="/purchase/{{ $transaction->purchase_number }}" method="POST" class="d-inline">
                                 @method('delete')
                                 @csrf
                                 <button class="badge bg-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><span

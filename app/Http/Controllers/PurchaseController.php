@@ -6,9 +6,10 @@ use App\Models\Series;
 use App\Models\Purchase;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\DetailPurchase;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class PurchaseController extends Controller
 {
@@ -42,15 +43,14 @@ class PurchaseController extends Controller
         $validatedDataPurch['purchase_name'] = 'Pemesanan';
         $validatedDataPurch['responsible'] = auth()->user()->name;
         $validatedDataPurch['state'] = 'Proses';
-        $validatedDataPurch['series_id'] = 1;
-        $purchNumber = Purchase::where('series_id', 1)->max('number');
-        if($purchNumber !== null){
-            $validatedDataPurch['number'] = $purchNumber+1;
-            $validatedDataPurch['purchase_number'] = Series::find(1)->series_name. '-' . str_pad($purchNumber+1, 5, '0', STR_PAD_LEFT);
-        }else{
-            $validatedDataPurch['number'] = 1;
-            $validatedDataPurch['purchase_number'] = Series::find(1)->series_name. '-' . str_pad(1, 5, '0', STR_PAD_LEFT);
-        }
+        $validatedDataPurch['purchase_number'] = IdGenerator::generate(['table' => 'purchases', 'length' => 10, 'prefix' =>'PUR-','reset_on_prefix_change' => true ,'field' => 'purchase_number']);
+        $dataSupplier = Supplier::where('id', $request->supplier_id)->first();
+
+        $validatedDataPurch['supplier_name'] = $dataSupplier->supplier_name;
+        $validatedDataPurch['description'] = $dataSupplier->description;
+        $validatedDataPurch['address'] = $dataSupplier->address;
+        $validatedDataPurch['supplier_responsible'] = $dataSupplier->responsible;
+        $validatedDataPurch['telp'] = $dataSupplier->telp;
         
         $purch = Purchase::create($validatedDataPurch);
 

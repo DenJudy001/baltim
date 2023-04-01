@@ -15,6 +15,7 @@ class EmployeeSalary extends Model
         'name',
         'email',
         'telp',
+        'state',
         'salary',
     ];
 
