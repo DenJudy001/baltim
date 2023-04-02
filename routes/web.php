@@ -49,6 +49,7 @@ Route::resource('/pos', PosController::class)->middleware('auth');
 Route::get('pos/add-to-cart/{menu}', [PosController::class, 'addToCart'])->middleware('auth');
 Route::post('pos/update-qty', [PosController::class, 'updateQty'])->middleware('auth');
 Route::post('pos/remove-from-cart', [PosController::class, 'remove'])->name('remove.from.cart')->middleware('auth');
+Route::post('pos/clear-cart', [PosController::class, 'clearCart'])->name('clear.cart')->middleware('auth');
 Route::resource('/fnb', FoodNBeveragesController::class, ['parameters' => ['fnb' => 'foodNBeverages']])->middleware('auth');
 Route::resource('/salary', EmployeeSalaryController::class , ['parameters' => ['salary' => 'employeeSalary']])->middleware('auth');
 Route::resource('/employee', EmployeeController::class, ['parameters' => ['employee' => 'user']])->middleware('auth');

@@ -48,6 +48,8 @@ class FoodNBeveragesController extends Controller
             $image_name = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images'), $image_name);
             $validatedData['image'] = $image_name;
+        } else{
+            $validatedData['image'] = 'food_3.jpg';
         }
         
         FoodNBeverages::create($validatedData);
@@ -102,6 +104,8 @@ class FoodNBeveragesController extends Controller
             $image_name = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images'), $image_name);
             $validatedData['image'] = $image_name;
+        }else{
+            $validatedData['image'] = 'food_3.jpg';
         }
         $validatedData['description'] = $request->description;
         FoodNBeverages::where('id', $foodNBeverages->id)

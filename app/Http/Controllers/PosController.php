@@ -110,4 +110,9 @@ class PosController extends Controller
             session()->flash('success', 'Berhasil menghapus keranjang menu');
         }
     }
+
+    public function clearCart()
+    {
+        session()->forget('cart');
+    }
 }

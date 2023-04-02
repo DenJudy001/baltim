@@ -124,9 +124,9 @@
                     <div class="col">
                         <button
                             type="button"
-                            class="btn btn-danger btn-block"
+                            class="btn btn-danger btn-block clear-cart"
                         >
-                            Cancel
+                            Reset
                         </button>
                     </div>
                     <div class="col">
@@ -134,7 +134,7 @@
                             type="submit"
                             class="btn btn-primary btn-block"
                         >
-                            Pay
+                            Simpan Transaksi
                         </button>
                     </div>
                 </div>
@@ -179,13 +179,29 @@
         
                 var position = $(this);
         
-                if(confirm("Apakah Anda yakin ingin menghapus menu?")) {
+                if(confirm("Apakah Anda yakin ingin menghapus menu pada keranjang?")) {
                     $.ajax({
                         url: '{{ route('remove.from.cart') }}',
                         method: "POST",
                         data: {
                             _token: '{{ csrf_token() }}', 
                             id: position.parents("tr").attr("data-id")
+                        },
+                        success: function (response) {
+                            window.location.reload();
+                        }
+                    });
+                }
+            });
+            $(".clear-cart").click(function (e) {
+                e.preventDefault();
+        
+                if(confirm("Apakah Anda yakin ingin menghapus semua keranjang?")) {
+                    $.ajax({
+                        url: '{{ route('clear.cart') }}',
+                        method: "POST",
+                        data: {
+                            _token: '{{ csrf_token() }}', 
                         },
                         success: function (response) {
                             window.location.reload();

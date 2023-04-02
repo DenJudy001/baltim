@@ -22,6 +22,7 @@ class FoodNBeveragesFactory extends Factory
             'name' =>  $this->faker->foodName(),
             'description' => $this->faker->sentence(),
             'type' => $this->faker->randomElement(['Makanan', 'Minuman']),
+            'image' => 'food_3.jpg',
             'price' => $this->faker->numberBetween(1000, 100000),
         ];
     }
