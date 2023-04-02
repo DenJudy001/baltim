@@ -132,97 +132,6 @@ class SupplierController extends Controller
         $validatedDataSupp = $request->validate($rules);
         $validatedDataSupp['description'] = $request->supplier_description;
 
-
-        $stuffs = $supplier->stuff->toArray();
-        $arr_input= [];
-        $arr_input_newOrUpdate= [];
-        // $arr_del = [];
-        $stuff_id = $request->stuff_id;
-        $stuff_names = $request->stuff_name;
-        $stuff_descs = $request->description;
-        $stuff_prices = $request->price;
-
-        for ($i=0; $i<count($stuff_names); $i++){
-            if(isset($stuffs[$i]['stuff_name'])){
-                //bisa pakai if stuff_id di db not in array dari stuff_id di request, maka $i ubah jdi $val = $i + 1,
-                // terus push ke arr_del
-                if($stuffs[$i]['stuff_name'] != $stuff_names[$i]){
-                    $arr_input_newOrUpdate[] = [
-                        'id' => $stuff_id[$i],
-                        'stuff_name' => $stuff_names[$i],
-                        'description' => $stuff_descs[$i],
-                        'price' => $stuff_prices[$i],
-                    ];
-                    
-                } 
-                else {
-                    $arr_input[] = [
-                        'id' => $stuff_id[$i],
-                        'description' => $stuff_descs[$i],
-                        'price' => $stuff_prices[$i],
-                    ];
-                }
-            } 
-            else {
-                $arr_input_newOrUpdate[] = [
-                    'id' => '',
-                    'stuff_name' => $stuff_names[$i],
-                    'description' => $stuff_descs[$i],
-                    'price' => $stuff_prices[$i],
-                ];
-            } 
-        }
-        
-        $stuffNames = array_column($arr_input_newOrUpdate, 'stuff_name');
-        
-        if (count($stuffNames) !== count(array_unique($stuffNames))){
-            return redirect('/supplier/'.$supplier->id.'/edit')->with('error_validate','Gagal! nama barang tidak boleh sama ');
-        }
-
-        $validator_newOrCreate = Validator::make($arr_input_newOrUpdate, [
-            '*.stuff_name' => ['required',Rule::unique('stuffs')->where(function ($query) use ($supplier){
-                return $query->where('supplier_id', $supplier->id);
-            })],
-            '*.price' => 'required',
-        ]);
-        
-        $validator = Validator::make($arr_input, [
-            '*.price' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect('/supplier/'.$supplier->id.'/edit')->with('error_validate','Gagal! kolom harga tidak boleh kosong ');
-        }
-        if ($validator_newOrCreate->fails()) {
-            return redirect('/supplier/'.$supplier->id.'/edit')->with('error_validate','Gagal! nama barang tidak boleh sama atau kosong ');
-        }
-
-        
-        if(count($arr_input) > 0){
-            for ($i=0; $i<count($arr_input); $i++){
-                Stuff::updateOrCreate(
-                    ['id' => $arr_input[$i]['id']],
-                    [
-                        'description' => $arr_input[$i]['description'],
-                        'price' => $arr_input[$i]['price']
-                    ]);
-            }
-        }
-
-        if(count($arr_input_newOrUpdate) > 0){
-            for ($i=0; $i<count($arr_input_newOrUpdate); $i++){
-                Stuff::updateOrCreate(
-                    ['id' => $arr_input_newOrUpdate[$i]['id']],
-                    [
-                        'supplier_id' => $supplier->id,
-                        'stuff_name' => $arr_input_newOrUpdate[$i]['stuff_name'],
-                        'description' => $arr_input_newOrUpdate[$i]['description'],
-                        'price' => $arr_input_newOrUpdate[$i]['price']
-                    ]);
-            }
-        }
-
-
         Supplier::where('id',$supplier->id)->update($validatedDataSupp);
 
         return redirect('/supplier')->with('success','Data pemasok berhasil diubah! ');
@@ -236,5 +145,47 @@ class SupplierController extends Controller
         Supplier::destroy($supplier->id);
 
         return redirect('/supplier')->with('success','Data Pemasok Berhasil Dihapus ');
+    }
+
+    public function updateStuff(Request $request)
+    {
+        $supplier = $request->supplier_id;
+        if ($request->id){
+            $stuffs = Stuff::find($request->id);
+            $rules = [
+                'price' => 'required',
+            ];
+            
+            if($request->stuff_name != $stuffs->stuff_name) {
+                $rules['stuff_name'] = ['required',Rule::unique('stuffs')->where(function ($query) use ($supplier){
+                    return $query->where('supplier_id', $supplier);
+                })];
+            }
+    
+            $validatedDataStuff = $request->validate($rules);
+            $validatedDataStuff['description'] = $request->description;
+
+            Stuff::where('id', $request->id)
+            ->update($validatedDataStuff);
+            // session()->flash('success', 'Berhasil merubah data bahan/produk');
+            return redirect()->back()->with('success', 'Berhasil merubah data bahan/produk');
+            
+        }else{
+            $rules = [
+                'price' => 'required',
+                'stuff_name' => ['required',Rule::unique('stuffs')->where(function ($query) use ($supplier){
+                    return $query->where('supplier_id', $supplier);
+                })],
+            ];
+
+            $validatedDataStuff = $request->validate($rules);
+            $validatedDataStuff['description'] = $request->description;
+            $validatedDataStuff['supplier_id'] = $supplier;
+
+            Stuff::create($validatedDataStuff);
+            // session()->flash('success', 'Berhasil menambahkan data bahan/produk');
+            return redirect()->back()->with('success', 'Berhasil menambahkan menu ke keranjang');
+            
+        }
     }
 }

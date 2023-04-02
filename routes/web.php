@@ -34,9 +34,11 @@ Route::get('/', function () {
 Route::delete('stuff/{stuff}', function (Stuff $stuff) {
     Stuff::destroy($stuff->id);
 
-    return response()->json([
-        'success' => 'Data Barang Berhasil Dihapus'
-    ]);
+    return redirect()->back()->with('success', 'Data Barang Berhasil Dihapus');
+    // session()->flash('success', 'Data Barang Berhasil Dihapus');
+    // return response()->json([
+    //     'success' => 'Data Barang Berhasil Dihapus'
+    // ]);
 });
 
 Route::get('purchsupp-dropdown',PurchSuppDdController::class);
@@ -47,6 +49,7 @@ Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout',[LoginController::class, 'logout']);
 
 Route::resource('/supplier', SupplierController::class)->middleware('auth');
+Route::post('/supplier/update-stuff', [SupplierController::class, 'updateStuff'])->name('update.stuff')->middleware('auth');
 Route::resource('/purchase', PurchaseController::class)->middleware('auth');
 Route::resource('/otherpurchase', OtherPurchaseController::class)->middleware('auth');
 Route::resource('/pos', PosController::class)->middleware('auth');

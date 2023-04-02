@@ -69,12 +69,16 @@
                             @enderror
                         </div>
                     </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary mb-3">Selesai</button>
+                    </div>
+                </form>
                 </div>
                 <div class="row">
                     <div class="table-responsive">
-                        @if(session()->has('error_validate'))
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                {{ session('error_validate') }}
+                        @if(session()->has('success'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ session('success') }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         @endif
@@ -82,30 +86,38 @@
                         <div class="alert alert-success alert-dismissible fade d-none" role="alert" id="success_hapus">
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                        <table class="table table-light">
+                        <table class="table table-light" id="editTable">
                             <thead>
                                 <tr>
                                     <th scope="col">Nama Bahan</th>
                                     <th scope="col">Deskripsi</th>
                                     <th scope="col">Harga</th>
-                                    <th scope="col"><a href="javascript:void(0)" class="btn btn-success addRow">+</a></th>
+                                    <th scope="col">
+                                        <div  class="d-flex justify-content-center">
+                                            <a href="javascript:void(0)" class="btn btn-success addRow">+</a>
+                                        </div>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 
                                 @foreach ($stuffs as $stuff)
-                                    
-                                    <tr>
+
+                                    <tr data-id="{{ $stuff->id }}" data-supplier-id="{{ $supplier->id }}">
                                         <td>
-                                            <input type="hidden" class="form-control" name="stuff_id[]" value="{{ $stuff->id }}">
-                                            <input type="text" class="form-control" name="stuff_name[]" value="{{ $stuff->stuff_name }}" required>
+                                            <input type="text" class="form-control-plaintext stuff-name" name="stuff_name[]" value="{{ $stuff->stuff_name }}" id="validationServerStuff" aria-describedby="inputGroupPrepend3 validationServerStuffFeedback" required disabled>
+                                            <div id="validationServerStuffFeedback" class="invalid-feedback d-none">
+                                                Silahkan simpan data terlebih dahulu
+                                              </div>
                                         </td>
-                                        <td><textarea class="form-control" name="description[]">{{ $stuff->description }}</textarea></td>
-                                        <td><input type="number" class="form-control" name="price[]" value="{{ $stuff->price }}" required >
+                                        <td><textarea class="form-control-plaintext stuff-desc" name="description[]" disabled>{{ $stuff->description }}</textarea></td>
+                                        <td><input type="number" class="form-control-plaintext stuff-price" name="price[]" value="{{ $stuff->price }}" required disabled>
                                             
                                         </td>
                                         <td>
-                                            <a class="btn btn-danger" onclick="deleteData('{{ url('/stuff') }}/{{ $stuff->id }}', {{ $stuff->id }})"><span data-feather='trash'></span></a>
+                                            <a class="btn btn-success button-save d-none" ><span data-feather='check'></span></a>
+                                            <a class="btn btn-warning button-edit"><span data-feather='edit'></span></a>
+                                            <a class="btn btn-danger single-stuff"><span data-feather='trash'></span></a>
                                         </td>
                                     </tr>
 
@@ -115,8 +127,6 @@
                         </table>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary mb-3">Selesai</button>
-            </form>
         </div>
     </div>
 @endsection
@@ -125,23 +135,100 @@
     <script>
         $(document).ready(function(){
             $('thead').on('click', '.addRow', function(){
-                var tr = "<tr>"+
-                            "<td><input type='text' class='form-control' name='stuff_name[]' required></td>"+
-                            "<td><textarea class='form-control' name='description[]' ></textarea></td>"+
-                            "<td><input type='number' class='form-control' name='price[]' value=0 required></td>"+
+                var select_stuff = $('.single-stuff').last();
+                var editButton = select_stuff.closest('td').find('a.button-edit');
+                var saveButton = select_stuff.closest('td').find('a.button-save');
+                var stuffExist = $('#validationServerStuff');
+
+                if(editButton.hasClass('d-none')){
+                    var errorMSG = select_stuff.closest('tr').find('#validationServerStuffFeedback');
+                    var stuffLoc = select_stuff.closest('tr').find('#validationServerStuff');
+
+                    stuffLoc.addClass('is-invalid');
+                    errorMSG.removeClass('d-none');
+                } 
+                else{
+                    var tr = "<tr data-supplier-id='{{ $supplier->id }}'>"+
+                            "<td><input type='text' class='form-control stuff-name' name='stuff_name[]' id='validationServerStuff' aria-describedby='inputGroupPrepend3 validationServerStuffFeedback' required>"+
+                                "<div id='validationServerStuffFeedback' class='invalid-feedback d-none'>"+
+                                    "Silahkan simpan data terlebih dahulu"+
+                                "</div>"+
+                            "</td>"+
+                            "<td><textarea class='form-control stuff-desc' name='description[]' ></textarea></td>"+
+                            "<td><input type='number' class='form-control stuff-price' name='price[]' value=0 required></td>"+
                             "<td>"+
-                                "<a href='javascript:void(0)' class='btn btn-danger deleteRow'><span data-feather='trash'></span></a>"+
+                                "<a class='btn btn-success button-save' ><span data-feather='check'></span></a>"+
+                                "<a class='btn btn-warning button-edit d-none'><span data-feather='edit'></span></a>"+
+                                "<a href='javascript:void(0)' class='btn btn-danger deleteRow single-stuff'><span data-feather='trash'></span></a>"+
                             "</td>"+
                         "</tr>"
-                $('tbody').append(tr);
-                feather.replace();
+                    $('tbody').append(tr);
+                    feather.replace();
+                }
+                
             });
 
             $('tbody').on('click', '.deleteRow', function(){
                 $(this).parent().parent().remove();
             });
 
-            function deleteData(url, id) {
+            $('#editTable').on('click', '.button-edit', function(){
+                var saveButton = $(this).closest('td').find('a.button-save');
+                var editButton = $(this);
+                var inpName = editButton.closest('tr').find('input.stuff-name');
+                var inpDesc = editButton.closest('tr').find('textarea.stuff-desc');
+                var inpPrice = editButton.closest('tr').find('input.stuff-price');
+
+                inpName.removeClass('form-control-plaintext');
+                inpName.removeAttr("disabled");
+                inpName.addClass('form-control');
+
+                inpDesc.removeClass('form-control-plaintext');
+                inpDesc.removeAttr("disabled");
+                inpDesc.addClass('form-control');
+
+                inpPrice.removeClass('form-control-plaintext');
+                inpPrice.removeAttr("disabled");
+                inpPrice.addClass('form-control');
+
+                saveButton.removeClass('d-none');
+                editButton.addClass('d-none');
+            });
+
+            //lanjut validasi error
+            $('#editTable').on('click', '.button-save', function(e){
+                e.preventDefault();
+
+                var saveButton = $(this);
+                var stuff_name = saveButton.closest('tr').find('input.stuff-name').val();
+                var description = saveButton.closest('tr').find('textarea.stuff-desc').val();
+                var price = saveButton.closest('tr').find('input.stuff-price').val();
+                var id = saveButton.parents("tr").attr("data-id");
+                var supplier_id = saveButton.parents("tr").attr("data-supplier-id");
+                
+                $.ajax({
+                    url: '{{ route('update.stuff') }}',
+                    type: "POST",
+                    data: {
+                        "_token": $('meta[name="csrf-token"]').attr('content'),
+                        "id": id,
+                        "supplier_id": supplier_id,
+                        "stuff_name" : stuff_name,
+                        "description" : description,
+                        "price" : price
+                    },
+                    success: function(response) {
+                        window.location.reload();
+                    }
+                });
+
+            });
+
+            $('#editTable').on('click', '.single-stuff', function(e){
+                e.preventDefault();
+                var id = $(this).parents("tr").attr("data-id");
+                var url = `{{ url('/stuff/${id}') }}`;
+
                 if (confirm('Apakah Anda yakin ingin menghapus data yang sudah tersimpan?')) {
                     $.ajax({
                         url: url,
@@ -151,18 +238,14 @@
                             "_token": $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function (data) {
-                            $('#success_hapus').removeClass('d-none').html('Data Barang Berhasil Dihapus, Silahkan Tunggu...').addClass('show');
-
-                            setTimeout(function(){
-                                location.reload();
-                            }, 2000);
+                             window.location.reload();
                         },
                         error: function (data) {
                             console.log('Error:', data);
                         }
                     });
                 }
-            }
+            });
             
         });
     </script>
