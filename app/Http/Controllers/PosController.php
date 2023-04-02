@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pos;
-use App\Http\Controllers\Controller;
-use App\Models\FoodNBeverages;
 use Illuminate\Http\Request;
+use App\Models\FoodNBeverages;
+use App\Http\Controllers\Controller;
+use App\Models\DetailPos;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class PosController extends Controller
@@ -32,7 +34,34 @@ class PosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dataTransaction['purchase_name'] = 'Pemesanan';
+        $dataTransaction['responsible'] = auth()->user()->name;
+        $dataTransaction['pos_number'] = IdGenerator::generate(['table' => 'pos', 'length' => 10, 'prefix' =>'TRX-','reset_on_prefix_change' => true ,'field' => 'pos_number']);
+        $dataTransaction['total'] = $request->totalHarga;
+        if($request->state == 'Selesai'){
+            $dataTransaction['end_date'] = now();
+        }
+        $dataTransaction['state'] = $request->state;
+        
+        $posTransaction = Pos::create($dataTransaction);
+
+        $cart = session()->get('cart');
+        foreach ($cart as $menu_id => $details) {
+            $dataFnb['pos_id'] = $posTransaction->id;
+            $dataFnb['fnb_id'] = $menu_id;
+            $dataFnb['qty'] = $details['quantity'];
+            $fnb = FoodNBeverages::find($menu_id);
+            $dataFnb['name'] = $fnb->name;
+            $dataFnb['description'] = $fnb->description;
+            $dataFnb['type'] = $fnb->type;
+            $dataFnb['image'] = $fnb->image;
+            $dataFnb['price'] = $fnb->price;
+
+            DetailPos::create($dataFnb);
+        }
+        session()->forget('cart');
+        
+        return redirect('/pos/create')->with('success','Data transaksi penjualan berhasil disimpan! ');
     }
 
     /**

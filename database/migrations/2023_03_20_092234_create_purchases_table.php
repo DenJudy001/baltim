@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
             $table->foreignId('supplier_id')->nullable();
-            $table->string('supplier_name');
+            $table->string('supplier_name')->nullable();
             $table->text('description')->nullable();
-            $table->text('address');
-            $table->string('supplier_responsible');
-            $table->string('telp');
+            $table->text('address')->nullable();
+            $table->string('supplier_responsible')->nullable();
+            $table->string('telp')->nullable();
             $table->string('purchase_number');
             $table->string('purchase_name');
             $table->string('responsible');

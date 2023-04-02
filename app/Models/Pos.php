@@ -17,6 +17,8 @@ class Pos extends Model
         'end_date',
     ];
 
+    protected $with = ['dtl_pos'];
+
     public function getRouteKeyName() {
         return 'pos_number';
     }
