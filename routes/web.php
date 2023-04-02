@@ -13,6 +13,9 @@ use App\Http\Controllers\PurchSuppDdController;
 use App\Http\Controllers\PurchStuffDdController;
 use App\Http\Controllers\EmployeeSalaryController;
 use App\Http\Controllers\FoodNBeveragesController;
+use App\Http\Controllers\OtherPurchase;
+use App\Http\Controllers\OtherPurchaseController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,6 +48,7 @@ Route::post('/logout',[LoginController::class, 'logout']);
 
 Route::resource('/supplier', SupplierController::class)->middleware('auth');
 Route::resource('/purchase', PurchaseController::class)->middleware('auth');
+Route::resource('/otherpurchase', OtherPurchaseController::class)->middleware('auth');
 Route::resource('/pos', PosController::class)->middleware('auth');
 Route::get('pos/add-to-cart/{menu}', [PosController::class, 'addToCart'])->middleware('auth');
 Route::post('pos/update-qty', [PosController::class, 'updateQty'])->middleware('auth');

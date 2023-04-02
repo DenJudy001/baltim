@@ -14,7 +14,12 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ Request::is('purchase/create') ? 'active' : '' }}" aria-current="page" href="/purchase/create">
-                    Pemesanan
+                    Pemesanan Bahan/Produk
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('otherpurchase/create') ? 'active' : '' }}" aria-current="page" href="/otherpurchase/create">
+                    Pembayaran Lain-lain 
                 </a>
             </li>
             <li class="nav-item">
