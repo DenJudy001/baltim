@@ -105,13 +105,13 @@
 
                                     <tr data-id="{{ $stuff->id }}" data-supplier-id="{{ $supplier->id }}">
                                         <td>
-                                            <input type="text" class="form-control-plaintext stuff-name" name="stuff_name[]" value="{{ $stuff->stuff_name }}" id="validationServerStuff" aria-describedby="inputGroupPrepend3 validationServerStuffFeedback" required disabled>
+                                            <input type="text" class="form-control-plaintext stuff-name" name="stuff_name" value="{{ $stuff->stuff_name }}" id="validationServerStuff" aria-describedby="inputGroupPrepend3 validationServerStuffFeedback" required readonly>
                                             <div id="validationServerStuffFeedback" class="invalid-feedback d-none">
                                                 Silahkan simpan data terlebih dahulu
                                               </div>
                                         </td>
-                                        <td><textarea class="form-control-plaintext stuff-desc" name="description[]" disabled>{{ $stuff->description }}</textarea></td>
-                                        <td><input type="number" class="form-control-plaintext stuff-price" name="price[]" value="{{ $stuff->price }}" required disabled>
+                                        <td><textarea class="form-control-plaintext stuff-desc" name="description" readonly>{{ $stuff->description }}</textarea></td>
+                                        <td><input type="number" class="form-control-plaintext stuff-price" name="price" value="{{ $stuff->price }}" required readonly>
                                             
                                         </td>
                                         <td>
@@ -149,15 +149,15 @@
                 } 
                 else{
                     var tr = "<tr data-supplier-id='{{ $supplier->id }}'>"+
-                            "<td><input type='text' class='form-control stuff-name' name='stuff_name[]' id='validationServerStuff' aria-describedby='inputGroupPrepend3 validationServerStuffFeedback' required>"+
+                            "<td><input type='text' class='form-control stuff-name' name='stuff_name' id='validationServerStuff' aria-describedby='inputGroupPrepend3 validationServerStuffFeedback' required>"+
                                 "<div id='validationServerStuffFeedback' class='invalid-feedback d-none'>"+
                                     "Silahkan simpan data terlebih dahulu"+
                                 "</div>"+
                             "</td>"+
-                            "<td><textarea class='form-control stuff-desc' name='description[]' ></textarea></td>"+
-                            "<td><input type='number' class='form-control stuff-price' name='price[]' value=0 required></td>"+
+                            "<td><textarea class='form-control stuff-desc' name='description' ></textarea></td>"+
+                            "<td><input type='number' class='form-control stuff-price' name='price' required></td>"+
                             "<td>"+
-                                "<a class='btn btn-success button-save' ><span data-feather='check'></span></a>"+
+                                "<a class='btn btn-success button-save'><span data-feather='check'></span></a>"+
                                 "<a class='btn btn-warning button-edit d-none'><span data-feather='edit'></span></a>"+
                                 "<a href='javascript:void(0)' class='btn btn-danger deleteRow single-stuff'><span data-feather='trash'></span></a>"+
                             "</td>"+
@@ -180,15 +180,15 @@
                 var inpPrice = editButton.closest('tr').find('input.stuff-price');
 
                 inpName.removeClass('form-control-plaintext');
-                inpName.removeAttr("disabled");
+                inpName.removeAttr("readonly");
                 inpName.addClass('form-control');
 
                 inpDesc.removeClass('form-control-plaintext');
-                inpDesc.removeAttr("disabled");
+                inpDesc.removeAttr("readonly");
                 inpDesc.addClass('form-control');
 
                 inpPrice.removeClass('form-control-plaintext');
-                inpPrice.removeAttr("disabled");
+                inpPrice.removeAttr("readonly");
                 inpPrice.addClass('form-control');
 
                 saveButton.removeClass('d-none');
@@ -200,9 +200,12 @@
                 e.preventDefault();
 
                 var saveButton = $(this);
-                var stuff_name = saveButton.closest('tr').find('input.stuff-name').val();
-                var description = saveButton.closest('tr').find('textarea.stuff-desc').val();
-                var price = saveButton.closest('tr').find('input.stuff-price').val();
+                var stuff_name = saveButton.closest('tr').find('input.stuff-name');
+                var description = saveButton.closest('tr').find('textarea.stuff-desc');
+                var price = saveButton.closest('tr').find('input.stuff-price');
+                var value_stuff_name = stuff_name.val();
+                var value_description = description.val();
+                var value_price = parseInt(price.val());
                 var id = saveButton.parents("tr").attr("data-id");
                 var supplier_id = saveButton.parents("tr").attr("data-supplier-id");
                 
@@ -213,12 +216,35 @@
                         "_token": $('meta[name="csrf-token"]').attr('content'),
                         "id": id,
                         "supplier_id": supplier_id,
-                        "stuff_name" : stuff_name,
-                        "description" : description,
-                        "price" : price
+                        "stuff_name" : value_stuff_name,
+                        "description" : value_description,
+                        "price" : value_price
                     },
                     success: function(response) {
                         window.location.reload();
+                    },
+                    error: function(response) {
+                        let keyname;
+                        console.log('Sekarang error')
+                        $.each(response.responseJSON.errors, function(key, value){
+                            keyname = key;
+                            keymessage = value;
+                        });
+                        console.log(response.responseJSON);
+                        stuff_name.closest('td').find('.invalid-feedback').empty();
+                        price.closest('td').find('.invalid-feedback').empty();
+                        stuff_name.removeClass('is-invalid');
+                        price.removeClass('is-invalid');
+                        if (keyname == stuff_name.attr('name')){
+                            stuff_name.addClass('is-invalid');
+                            stuff_name.closest('td').append("<div class='invalid-feedback'>"+keymessage+"</div>");
+                        }
+                        
+                        if (keyname == price.attr('name')){
+                            price.addClass('is-invalid');
+                            price.closest('td').append("<div class='invalid-feedback'>"+keymessage+"</div>");
+                        }
+                        
                     }
                 });
 
@@ -232,7 +258,7 @@
                 if (confirm('Apakah Anda yakin ingin menghapus data yang sudah tersimpan?')) {
                     $.ajax({
                         url: url,
-                        type: 'DELETE',
+                        type: 'post',
                         data: {
                             "id": id,
                             "_token": $('meta[name="csrf-token"]').attr('content')

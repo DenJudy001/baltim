@@ -153,7 +153,7 @@ class SupplierController extends Controller
         if ($request->id){
             $stuffs = Stuff::find($request->id);
             $rules = [
-                'price' => 'required',
+                'price' => 'required|integer|not_in:0|gt:0',
             ];
             
             if($request->stuff_name != $stuffs->stuff_name) {
@@ -167,8 +167,8 @@ class SupplierController extends Controller
 
             Stuff::where('id', $request->id)
             ->update($validatedDataStuff);
-            // session()->flash('success', 'Berhasil merubah data bahan/produk');
-            return redirect()->back()->with('success', 'Berhasil merubah data bahan/produk');
+            session()->flash('success', 'Berhasil merubah data bahan/produk');
+            // return redirect()->back()->with('success', 'Berhasil merubah data bahan/produk');
             
         }else{
             $rules = [
@@ -183,8 +183,8 @@ class SupplierController extends Controller
             $validatedDataStuff['supplier_id'] = $supplier;
 
             Stuff::create($validatedDataStuff);
-            // session()->flash('success', 'Berhasil menambahkan data bahan/produk');
-            return redirect()->back()->with('success', 'Berhasil menambahkan menu ke keranjang');
+            session()->flash('success', 'Berhasil menambahkan data bahan/produk');
+            // return redirect()->back()->with('success', 'Berhasil menambahkan menu ke keranjang');
             
         }
     }
