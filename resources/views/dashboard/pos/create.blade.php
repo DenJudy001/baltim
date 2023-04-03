@@ -12,22 +12,25 @@
             <div class="col-md-6 mb-4 col-lg-8">
                 <div class="card" style="min-height:85vh">
                     <div class="card-header bg-white">
-                        <form action="/" method="get">
+                        <form action="{{ url('/pos/create') }}" method="get">
                             <div class="row">
                                 <div class="col">
                                     <h4 class="font-weight-bold">Menu</h4>
                                 </div>
                                 <div class="col text-right">
-                                    <select name="" id="" class="form-control from-control-sm"
+                                    <select name="category_type" id="sel_category_id" class="form-select form-select-sm single-select-category" data-placeholder="Pilih Kategori"
                                         style="font-size: 12px">
-                                        <option value="" holder>Filter Category</option>
-                                        <option value="1">All Category...</option>
+                                        <option></option>
+                                        <option value="">-- Pilih Kategori --</option>
+                                        @foreach ($fnbCat as $fnbcat)
+                                        <option {{ request('category_type') == $fnbcat->type ? 'selected' : '' }}>{{ $fnbcat->type }}</option>
+                                        @endforeach
                                         <!-- Kembangkan sendiri ya bagian ini kalau bisa pake select2 biar keren -->
                                     </select>
                                 </div>
                                 <div class="col"><input type="text" name="search"
                                         class="form-control form-control-sm col-sm-12 float-right"
-                                        placeholder="Cari Menu..." onblur="this.form.submit()"></div>
+                                        placeholder="Cari Menu..." onblur="this.form.submit()" value="{{ request('search') }}"></div>
                                 <div class="col-sm-3"><button type="submit"
                                         class="btn btn-primary btn-sm float-right btn-block">Cari Menu</button></div>
                             </div>
@@ -226,6 +229,14 @@
 @push('script')
     <script>
         $(document).ready(function() {
+            $( '.single-select-category' ).select2( {
+                theme: "bootstrap-5",
+                width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+                placeholder: $( this ).data( 'placeholder' ),
+                allowClear: true
+            } );
+
+
             $(".update-qty").change(function(e) {
                 e.preventDefault();
 

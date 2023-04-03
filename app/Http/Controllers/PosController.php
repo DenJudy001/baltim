@@ -25,8 +25,15 @@ class PosController extends Controller
      */
     public function create()
     {
-        $fnbs = FoodNBeverages::orderBy('created_at','desc')->paginate(4);
-        return view('dashboard.pos.create', compact('fnbs'));
+        $fnbs = FoodNBeverages::when(request('search'), function($query){
+            return $query->where('name','like','%'.request('search').'%');
+        })->when(request('category_type'), function($query) {
+            return $query->where('type', request('category_type'));
+        })->orderBy('created_at','desc')->paginate(4);
+
+        $fnbCat = FoodNBeverages::select('type')->distinct()->get();
+
+        return view('dashboard.pos.create', compact('fnbs','fnbCat'));
     }
 
     /**
