@@ -31,11 +31,11 @@ Route::get('/', function () {
     return view('dashboard.index');
 })->middleware('auth');
 
-Route::delete('stuff/{stuff}', function (Stuff $stuff) {
+Route::post('stuff/{stuff}', function (Stuff $stuff) {
     Stuff::destroy($stuff->id);
 
-    return redirect()->back()->with('success', 'Data Barang Berhasil Dihapus');
-    // session()->flash('success', 'Data Barang Berhasil Dihapus');
+    // return redirect()->back()->with('success', 'Data Barang Berhasil Dihapus');
+    session()->flash('success', 'Data Barang Berhasil Dihapus');
     // return response()->json([
     //     'success' => 'Data Barang Berhasil Dihapus'
     // ]);
