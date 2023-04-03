@@ -38,8 +38,9 @@
                         <select class="form-select single-select-menu-type" data-placeholder="Pilih Jenis Menu"
                             name="type" id="type" required>
                             <option></option>
-                            <option {{ old('type') == 'Makanan' ? 'selected' : '' }}>Makanan</option>
-                            <option {{ old('type') == 'Minuman' ? 'selected' : '' }}>Minuman</option>
+                            @foreach ( $categs as $categ )
+                                <option value="{{ $categ->type }}" {{ old('type') == $categ->type ? 'selected' : '' }}>{{ $categ->type }}</option>
+                            @endforeach
                         </select>
                         @error('type')
                             <div class="invalid-feedback">
@@ -82,7 +83,7 @@
                 theme: "bootstrap-5",
                 width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
                 placeholder: $( this ).data( 'placeholder' ),
-                
+                tags : true
             } );
 
             function previewImage() {

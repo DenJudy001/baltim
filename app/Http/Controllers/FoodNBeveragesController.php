@@ -25,7 +25,7 @@ class FoodNBeveragesController extends Controller
     public function create()
     {
         return view('dashboard.fnb.create',[
-            
+            'categs'=>FoodNBeverages::select('type')->distinct()->get()
         ]);
     }
 
@@ -71,7 +71,8 @@ class FoodNBeveragesController extends Controller
     public function edit(FoodNBeverages $foodNBeverages)
     {
         return view('dashboard.fnb.edit',[
-            'fnb'=>$foodNBeverages
+            'fnb'=>$foodNBeverages,
+            'categs'=>FoodNBeverages::select('type')->distinct()->get()
         ]);
     }
 

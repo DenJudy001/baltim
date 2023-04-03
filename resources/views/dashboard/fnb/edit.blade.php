@@ -39,8 +39,9 @@
                         <select class="form-select single-select-menu-type" data-placeholder="Pilih Jenis Menu"
                             name="type" id="type" required>
                             <option></option>
-                            <option value="Makanan" {{ old('type', $fnb->type) == 'Makanan' ? 'selected' : '' }}>Makanan</option>
-                            <option value="Minuman" {{ old('type', $fnb->type) == 'Minuman' ? 'selected' : '' }}>Minuman</option>
+                            @foreach ($categs as $categ)
+                                <option value="{{ $fnb->type }}" @if(old('type', $fnb->type) == $categ->type) selected @endif>{{ $categ->type }}</option>
+                            @endforeach
                         </select>
                         @error('type')
                             <div class="invalid-feedback">
