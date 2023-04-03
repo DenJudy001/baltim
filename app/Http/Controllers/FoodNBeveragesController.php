@@ -94,10 +94,12 @@ class FoodNBeveragesController extends Controller
         
         if($request->hasFile('image')) {
             if($request->oldImage){
-                $imagePath = public_path('images/' . $request->oldImage);
-
-                if (File::exists($imagePath)) {
-                    File::delete($imagePath);
+                if($request->oldImage != 'food_3.jpg'){
+                    $imagePath = public_path('images/' . $request->oldImage);
+    
+                    if (File::exists($imagePath)) {
+                        File::delete($imagePath);
+                    }   
                 }
             }
             $image = $request->file('image');
@@ -119,10 +121,12 @@ class FoodNBeveragesController extends Controller
      */
     public function destroy(FoodNBeverages $foodNBeverages)
     {  
-        $imagePath = public_path('images/' . $foodNBeverages->image);
-
-        if (File::exists($imagePath)) {
-            File::delete($imagePath);
+        if($foodNBeverages->image != 'food_3.jpg'){
+            $imagePath = public_path('images/' . $foodNBeverages->image);
+    
+            if (File::exists($imagePath)) {
+                File::delete($imagePath);
+            }       
         }
 
         FoodNBeverages::destroy($foodNBeverages->id);
