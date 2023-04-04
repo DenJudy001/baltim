@@ -58,7 +58,7 @@
                             <img class="img-preview img-fluid mb-3 col-sm-5">
                         @endif
                         <input class="form-control  @error('image') is-invalid @enderror" type="file" id="image"
-                            name="image" onchange="previewImage()">
+                            name="image">
                         @error('image')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -92,7 +92,7 @@
                 
             } );
 
-            function previewImage() {
+            $("#image").change(function() {
                 const image = document.querySelector('#image');
                 const imgPreview = document.querySelector('.img-preview');
                 
@@ -104,7 +104,7 @@
                 oFReader.onload = function(oFREvent) {
                 imgPreview.src = oFREvent.target.result;
                 }
-            }
+            });
             
         });
     </script>
