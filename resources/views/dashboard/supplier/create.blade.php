@@ -108,11 +108,11 @@
                             "<td><textarea class='form-control' name='description[]' ></textarea></td>"+
                             "<td><input type='number' class='form-control' name='price[]' value=0 required></td>"+
                             "<td>"+
-                                "<a href='javascript:void(0)' class='btn btn-danger deleteRow'><span data-feather='trash'></span></a>"+
+                                "<a href='javascript:void(0)' class='btn btn-danger deleteRow'><i class='fas fa-trash-alt'></i></a>"+
                             "</td>"+
                         "</tr>"
                 $('tbody').append(tr);
-                feather.replace();
+                // feather.replace();
             });
 
             $('tbody').on('click', '.deleteRow', function(){

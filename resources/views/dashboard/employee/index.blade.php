@@ -29,13 +29,11 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
-                            <a href="/employee/show" class="badge bg-info"><span data-feather="eye">
-                                </span></a>
+                            <a href="/employee/show" class="badge bg-info"><i class="fas fa-eye"></i></a>
                             <form action="/employee/{{ $user->id }}" method="POST" class="d-inline">
                                 @method('delete')
                                 @csrf
-                                <button class="badge bg-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><span
-                                        data-feather="trash"> </span></button>
+                                <button class="badge bg-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><i class="fas fa-trash-alt"></i></button>
                             </form>
                         </td>
                     </tr>

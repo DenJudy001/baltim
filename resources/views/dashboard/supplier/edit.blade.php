@@ -115,9 +115,9 @@
                                             
                                         </td>
                                         <td>
-                                            <a class="btn btn-success button-save d-none" ><span data-feather='check'></span></a>
-                                            <a class="btn btn-warning button-edit"><span data-feather='edit'></span></a>
-                                            <a class="btn btn-danger single-stuff"><span data-feather='trash'></span></a>
+                                            <a class="btn btn-success button-save d-none" ><i class="fas fa-check"></i></a>
+                                            <a class="btn btn-warning button-edit"><i class="fas fa-edit"></i></a>
+                                            <a class="btn btn-danger single-stuff"><i class="fas fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
 
@@ -157,9 +157,9 @@
                             "<td><textarea class='form-control stuff-desc' name='description' ></textarea></td>"+
                             "<td><input type='number' class='form-control stuff-price' name='price' required></td>"+
                             "<td>"+
-                                "<a class='btn btn-success button-save'><span data-feather='check'></span></a>"+
-                                "<a class='btn btn-warning button-edit d-none'><span data-feather='edit'></span></a>"+
-                                "<a href='javascript:void(0)' class='btn btn-danger deleteRow single-stuff'><span data-feather='trash'></span></a>"+
+                                "<a class='btn btn-success button-save'><i class='fas fa-check'></i></a>"+
+                                "<a class='btn btn-warning button-edit d-none'><i class='fas fa-edit'></i></a>"+
+                                "<a href='javascript:void(0)' class='btn btn-danger deleteRow single-stuff'><i class='fas fa-trash-alt'></i></a>"+
                             "</td>"+
                         "</tr>"
                     $('tbody').append(tr);

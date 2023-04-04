@@ -155,11 +155,11 @@
                             "<td><input type='number' class='form-control priceID' name='price[]' value=0 required></td>"+
                             "<td><input type='number' class='form-control subtotalID' value=0 disabled></td>"+
                             "<td>"+
-                                "<a href='javascript:void(0)' class='btn btn-danger deleteRowPurchase'><span data-feather='trash'></span></a>"+
+                                "<a href='javascript:void(0)' class='btn btn-danger deleteRowPurchase'><i class='fas fa-trash-alt'></i></a>"+
                             "</td>"+
                         "</tr>"
                 $('tbody').append(tr);
-                feather.replace();
+                // feather.replace();
                 var $select_stuff = $('.single-select-stuff').last();
                 var $select_unit = $('.single-select-unit').last();
                 selectRefresh($select_stuff, $select_unit);

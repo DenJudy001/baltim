@@ -106,8 +106,7 @@
                                                     value={{ $details['quantity'] }} required>
                                             </td>
                                             <td class="text-right">Rp. {{ number_format($details['price'], 0, ',', '.') }}</td>
-                                            <td><button class="badge bg-danger border-0 remove-from-cart"><span
-                                                        data-feather="trash"></span></button></td>
+                                            <td><button class="badge bg-danger border-0 remove-from-cart"><i class="fas fa-trash-alt"></i></button></td>
                                         </tr>
                                     @endforeach
                                 @endif

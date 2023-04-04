@@ -31,13 +31,12 @@
                         <td>{{ $fnb->type }}</td>
                         <td>{{ $fnb->price }}</td>
                         <td>
-                            <a href="/fnb/show" class="badge bg-info"><span data-feather="eye"></span></a>
-                            <a href="/fnb/{{ $fnb->id }}/edit" class="badge bg-warning"><span data-feather="edit"></span></a>
+                            <a href="/fnb/show" class="badge bg-info"><i class="fas fa-eye"></i></a>
+                            <a href="/fnb/{{ $fnb->id }}/edit" class="badge bg-warning"><i class="fas fa-edit"></i></a>
                             <form action="/fnb/{{ $fnb->id }}" method="POST" class="d-inline">
                                 @method('delete')
                                 @csrf
-                                <button class="badge bg-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><span
-                                        data-feather="trash"> </span></button>
+                                <button class="badge bg-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><i class="fas fa-trash-alt"></i></button>
                             </form>
                         </td>
                     </tr>

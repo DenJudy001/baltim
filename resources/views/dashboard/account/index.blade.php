@@ -31,34 +31,28 @@
                         <td>{{ $transaction->state }}</td>
                         <td>
                             @if (str_contains($transaction->purchase_number, 'PUR'))
-                            <a href="/purchase/show" class="badge bg-info"><span data-feather="eye">
-                                </span></a>
-                            <a href="/purchase/{{ $transaction->purchase_number }}/edit" class="badge bg-warning"><span data-feather="edit"> </span></a>
+                            <a href="/purchase/show" class="badge bg-info"><i class="fas fa-eye"></i></a>
+                            <a href="/purchase/{{ $transaction->purchase_number }}/edit" class="badge bg-warning"><i class="fas fa-edit"></i></a>
                             <form action="/purchase/{{ $transaction->purchase_number }}" method="POST" class="d-inline">
                                 @method('delete')
                                 @csrf
-                                <button class="badge bg-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><span
-                                        data-feather="trash"> </span></button>
+                                <button class="badge bg-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><i class="fas fa-trash-alt"></i></button>
                             </form>
                             @elseif (str_contains($transaction->purchase_number, 'SAL'))
-                            <a href="/salary/show" class="badge bg-info"><span data-feather="eye">
-                                </span></a>
-                            <a href="/salary/{{ $transaction->purchase_number }}/edit" class="badge bg-warning"><span data-feather="edit"> </span></a>
+                            <a href="/salary/show" class="badge bg-info"><i class="fas fa-eye"></i></a>
+                            <a href="/salary/{{ $transaction->purchase_number }}/edit" class="badge bg-warning"><i class="fas fa-edit"></i></a>
                             <form action="/salary/{{ $transaction->purchase_number }}" method="POST" class="d-inline">
                                 @method('delete')
                                 @csrf
-                                <button class="badge bg-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><span
-                                        data-feather="trash"> </span></button>
+                                <button class="badge bg-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><i class="fas fa-trash-alt"></i></button>
                             </form>
                             @elseif (str_contains($transaction->purchase_number, 'TRX'))
-                            <a href="/pos/show" class="badge bg-info"><span data-feather="eye">
-                                </span></a>
-                            <a href="/pos/{{ $transaction->purchase_number }}/edit" class="badge bg-warning"><span data-feather="edit"> </span></a>
+                            <a href="/pos/show" class="badge bg-info"><i class="fas fa-eye"></i></a>
+                            <a href="/pos/{{ $transaction->purchase_number }}/edit" class="badge bg-warning"><i class="fas fa-edit"></i></a>
                             <form action="/pos/{{ $transaction->purchase_number }}" method="POST" class="d-inline">
                                 @method('delete')
                                 @csrf
-                                <button class="badge bg-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><span
-                                        data-feather="trash"> </span></button>
+                                <button class="badge bg-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><i class="fas fa-trash-alt"></i></button>
                             </form>
                             @endif
                         </td>
