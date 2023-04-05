@@ -7,6 +7,7 @@ use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreSupplierRequest;
 use App\Http\Requests\UpdateSupplierRequest;
@@ -67,17 +68,30 @@ class SupplierController extends Controller
                 ];
             }
 
+            
             $validator = Validator::make($arr_input, [
-                '*.stuff_name' => ['required',Rule::unique('stuffs')->where(function ($query) use ($stuff_supp){
-                    return $query->where('supplier_id', $stuff_supp);
-                })],
+                '*.stuff_name' => 'required|min:2',
                 '*.price' => 'required',
             ]);
 
+
             if ($validator->fails()) {
                 Supplier::destroy($supp->id);
-                return redirect('/supplier/create')->with('error_validate','Gagal! nama barang tidak boleh sama ');
+
+                $stuffNames = array_column($arr_input, 'stuff_name');
+    
+                if (count($stuffNames) !== count(array_unique($stuffNames))){
+                    return redirect()->back()->with('error_validate','Gagal! nama barang tidak boleh sama ')->withErrors($validator->errors())->withInput();
+                }
+                return redirect()->back()->withErrors($validator->errors())->withInput();
+            } else{
+                $stuffNames = array_column($arr_input, 'stuff_name');
+    
+                if (count($stuffNames) !== count(array_unique($stuffNames))){
+                    return redirect()->back()->with('error_unique','Gagal! nama barang tidak boleh sama ')->withInput();
+                }
             }
+
 
             for ($i=0; $i<count($arr_input); $i++){
                 Stuff::create([

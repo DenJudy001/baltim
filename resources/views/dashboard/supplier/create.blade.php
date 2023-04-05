@@ -27,7 +27,7 @@
                             <label for="description" class="form-label @error('description') is-invalid @enderror">Deskripsi
                                 Pemasok</label>
                             <textarea type="text" class="form-control" id="description" name="supplier_description"
-                                value="{{ old('supplier_description') }}"></textarea>
+                                >{{ old('supplier_description') }}</textarea>
                             @error('description')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -38,7 +38,7 @@
                             <label for="address" class="form-label @error('address') is-invalid @enderror">Alamat
                                 Pemasok</label>
                             <textarea type="text" class="form-control" id="address" name="address"
-                                value="{{ old('address') }}" required></textarea>
+                                required>{{ old('address') }}</textarea>
                             @error('address')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -72,11 +72,34 @@
                 </div>
                 <div class="row">
                     <div class="table-responsive">
-                        @if(session()->has('error_validate'))
+                        @if($errors->any())
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                {{ session('error_validate') }}
+                                <ul>
+                                    @foreach ($errors->all(  ) as $error_validate ) 
+                                        <li>
+                                            {{ $error_validate }}
+                                        </li>
+                                    @endforeach
+                                    @if(session()->has('error_validate'))
+                                        <li>
+                                            {{ session('error_validate') }}
+                                        </li>
+                                    @endif
+                                </ul>
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
+                        @endif
+                        @if(session()->has('error_unique'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <ul>
+                                @if(session()->has('error_unique'))
+                                    <li>
+                                        {{ session('error_unique') }}
+                                    </li>
+                                @endif
+                            </ul>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                         @endif
                         <table class="table table-light">
                             <thead>

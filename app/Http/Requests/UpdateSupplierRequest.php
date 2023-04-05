@@ -19,10 +19,10 @@ class UpdateSupplierRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
-    public function rules(): array
-    {
-        return [
-            //
-        ];
-    }
+    // public function rules(): array
+    // {
+    //     return [
+    //         //
+    //     ];
+    // }
 }
