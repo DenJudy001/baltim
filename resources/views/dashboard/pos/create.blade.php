@@ -17,7 +17,9 @@
                                 <div class="col">
                                     <h4 class="font-weight-bold">Menu</h4>
                                 </div>
-                                <div class="col text-right">
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-sm-6 col-md-6 col-lg-4">
                                     <select name="category_type" id="sel_category_id" class="form-select form-select-sm single-select-category" data-placeholder="Pilih Kategori"
                                         style="font-size: 12px">
                                         <option></option>
@@ -28,18 +30,23 @@
                                         <!-- Kembangkan sendiri ya bagian ini kalau bisa pake select2 biar keren -->
                                     </select>
                                 </div>
-                                <div class="col"><input type="text" name="search"
+                                <div class="col-sm-6 col-md-6 col-lg-4 mb-2"><input type="text" name="search"
                                         class="form-control form-control-sm col-sm-12 float-right"
                                         placeholder="Cari Menu..." onblur="this.form.submit()" value="{{ request('search') }}"></div>
-                                <div class="col-sm-3"><button type="submit"
+                                <div class="col-lg-4"><button type="submit"
                                         class="btn btn-primary btn-sm float-right btn-block">Cari Menu</button></div>
                             </div>
+                            {{-- <div class="row">
+                                <div class="d-lg-none"><button type="submit"
+                                    class="btn btn-primary btn-sm float-right btn-block">Cari Menu</button></div>
+                            </div> --}}
                         </form>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             @foreach ($fnbs as $fnb)
-                                <div style="width: 16.66%;border:1px solid rgb(243, 243, 243)" class="mb-4">
+                            <div class=" col-sm-6 col-md-6 col-lg-3">
+                                <div class="card mb-4">
                                     <div class="productCard">
                                         <div class="view overlay">
                                             <a href="/pos/add-to-cart/{{ $fnb->id }}"><img class="card-img-top gambar"
@@ -48,7 +55,7 @@
 
                                         </div>
                                         <div class="card-body">
-                                            <label class="card-text text-center font-weight-bold"
+                                            <label class="card-text font-weight-bold"
                                                 style="text-transform: capitalize;">
                                                 {{ Str::words($fnb->name, 4) }} </label>
                                             <p class="card-text text-center">Rp. {{ number_format($fnb->price, 0, ',', '.') }}
@@ -56,6 +63,7 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                             @endforeach
                         </div>
                     </div>

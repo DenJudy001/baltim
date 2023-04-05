@@ -111,11 +111,19 @@
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <!-- Custom scripts for all pages-->
         {{-- <script src="/assets/js/dashboard.js"></script> --}}
-        <script src="{{ asset('assets/js/sb-admin-2.min.js') }}"></script>
+        <script src="{{ asset('assets/js/sb-admin-2.js') }}"></script>
         <script src="{{ asset('assets/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
         <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
         @stack('script')
+
+        <script>
+            if ($(window).width() < 992) {
+                $("body").addClass("sidebar-toggled");
+                $(".sidebar").addClass("toggled");
+                $('.sidebar .collapse').collapse('hide');
+            };
+        </script>
 
 </body>
 
