@@ -135,14 +135,12 @@
     <script>
         $(document).ready(function(){
             $('thead').on('click', '.addRow', function(){
-                var select_stuff = $('.single-stuff').last();
-                var editButton = select_stuff.closest('td').find('a.button-edit');
-                var saveButton = select_stuff.closest('td').find('a.button-save');
-                var stuffExist = $('#validationServerStuff');
+                var editButtonLoc = $('.button-edit');
 
-                if(editButton.hasClass('d-none')){
-                    var errorMSG = select_stuff.closest('tr').find('#validationServerStuffFeedback');
-                    var stuffLoc = select_stuff.closest('tr').find('#validationServerStuff');
+                if(editButtonLoc.hasClass('d-none')){
+                    var hiddenLoc = $('a.button-edit.d-none');
+                    var errorMSG = hiddenLoc.closest('tr').find('#validationServerStuffFeedback');
+                    var stuffLoc = hiddenLoc.closest('tr').find('#validationServerStuff');
 
                     stuffLoc.addClass('is-invalid');
                     errorMSG.removeClass('d-none');
@@ -159,7 +157,7 @@
                             "<td>"+
                                 "<a class='btn btn-success button-save'><i class='fas fa-check'></i></a>"+
                                 "<a class='btn btn-warning button-edit d-none'><i class='fas fa-edit'></i></a>"+
-                                "<a href='javascript:void(0)' class='btn btn-danger deleteRow single-stuff'><i class='fas fa-trash-alt'></i></a>"+
+                                "<a href='javascript:void(0)' class='btn btn-danger deleteRow'><i class='fas fa-trash-alt'></i></a>"+
                             "</td>"+
                         "</tr>"
                     $('tbody').append(tr);
@@ -173,29 +171,40 @@
             });
 
             $('#editTable').on('click', '.button-edit', function(){
-                var saveButton = $(this).closest('td').find('a.button-save');
-                var editButton = $(this);
-                var inpName = editButton.closest('tr').find('input.stuff-name');
-                var inpDesc = editButton.closest('tr').find('textarea.stuff-desc');
-                var inpPrice = editButton.closest('tr').find('input.stuff-price');
+                var editButtonLoc = $('.button-edit');
 
-                inpName.removeClass('form-control-plaintext');
-                inpName.removeAttr("readonly");
-                inpName.addClass('form-control');
+                if(editButtonLoc.hasClass('d-none')){
+                    var hiddenLoc = $('a.button-edit.d-none');
+                    var errorMSG = hiddenLoc.closest('tr').find('#validationServerStuffFeedback');
+                    var stuffLoc = hiddenLoc.closest('tr').find('#validationServerStuff');
 
-                inpDesc.removeClass('form-control-plaintext');
-                inpDesc.removeAttr("readonly");
-                inpDesc.addClass('form-control');
+                    stuffLoc.addClass('is-invalid');
+                    errorMSG.removeClass('d-none');
+                } 
+                else{
+                    var saveButton = $(this).closest('td').find('a.button-save');
+                    var editButton = $(this);
+                    var inpName = editButton.closest('tr').find('input.stuff-name');
+                    var inpDesc = editButton.closest('tr').find('textarea.stuff-desc');
+                    var inpPrice = editButton.closest('tr').find('input.stuff-price');
 
-                inpPrice.removeClass('form-control-plaintext');
-                inpPrice.removeAttr("readonly");
-                inpPrice.addClass('form-control');
+                    inpName.removeClass('form-control-plaintext');
+                    inpName.removeAttr("readonly");
+                    inpName.addClass('form-control');
 
-                saveButton.removeClass('d-none');
-                editButton.addClass('d-none');
+                    inpDesc.removeClass('form-control-plaintext');
+                    inpDesc.removeAttr("readonly");
+                    inpDesc.addClass('form-control');
+
+                    inpPrice.removeClass('form-control-plaintext');
+                    inpPrice.removeAttr("readonly");
+                    inpPrice.addClass('form-control');
+
+                    saveButton.removeClass('d-none');
+                    editButton.addClass('d-none');
+                }
             });
 
-            //lanjut validasi error
             $('#editTable').on('click', '.button-save', function(e){
                 e.preventDefault();
 
@@ -218,7 +227,7 @@
                         "supplier_id": supplier_id,
                         "stuff_name" : value_stuff_name,
                         "description" : value_description,
-                        "price" : value_price
+                        "price" : value_price,
                     },
                     success: function(response) {
                         window.location.reload();
@@ -232,14 +241,13 @@
                         });
                         console.log(response.responseJSON);
                         stuff_name.closest('td').find('.invalid-feedback').empty();
-                        price.closest('td').find('.invalid-feedback').empty();
                         stuff_name.removeClass('is-invalid');
+                        price.closest('td').find('.invalid-feedback').empty();
                         price.removeClass('is-invalid');
                         if (keyname == stuff_name.attr('name')){
                             stuff_name.addClass('is-invalid');
                             stuff_name.closest('td').append("<div class='invalid-feedback'>"+keymessage+"</div>");
                         }
-                        
                         if (keyname == price.attr('name')){
                             price.addClass('is-invalid');
                             price.closest('td').append("<div class='invalid-feedback'>"+keymessage+"</div>");

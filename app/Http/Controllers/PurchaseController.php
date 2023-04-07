@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Stuff;
 use App\Models\Series;
 use App\Models\Purchase;
 use App\Models\Supplier;
@@ -64,6 +65,9 @@ class PurchaseController extends Controller
             $stuff_purch = $purch->id;
 
             $arr_input= [];
+            $stuff_input= [];
+
+            $stuffData = Stuff::where('supplier_id',$request->supplier_id)->pluck('stuff_name')->toArray();
 
             for ($i=0; $i<count($stuff_names); $i++){
                 $arr_input[] = [
@@ -74,6 +78,16 @@ class PurchaseController extends Controller
                     'price' => $stuff_prices[$i],
                     'purchase_id' => $stuff_purch
                 ];
+                if (in_array($stuff_names[$i], $stuffData)) {
+                    // 
+                } else {
+                    $stuff_input[] = [
+                        'stuff_name' => $stuff_names[$i],
+                        'description' => $stuff_descs[$i],
+                        'price' => $stuff_prices[$i],
+                        'supplier_id' => $request->supplier_id
+                    ];
+                }
             }
 
             $validator = Validator::make($arr_input, [
@@ -98,6 +112,17 @@ class PurchaseController extends Controller
                     'unit' => $arr_input[$i]['unit'],
                 ]);
             }
+
+            if(count($stuff_input) > 0){
+                for ($i=0; $i<count($stuff_input); $i++){
+                    Stuff::create([
+                        'supplier_id' => $stuff_input[$i]['supplier_id'],
+                        'stuff_name' => $stuff_input[$i]['stuff_name'],
+                        'description' => $stuff_input[$i]['description'],
+                        'price' => $stuff_input[$i]['price'],
+                    ]);
+                }
+            }
         }
         
         
@@ -109,7 +134,9 @@ class PurchaseController extends Controller
      */
     public function show(Purchase $purchase)
     {
-        //
+        return view('dashboard.purchase.show',[
+            'purchase'=>$purchase
+        ]);
     }
 
     /**
@@ -117,7 +144,12 @@ class PurchaseController extends Controller
      */
     public function edit(Purchase $purchase)
     {
-        //
+        $stuffs = Stuff::where('supplier_id',$purchase->supplier_id)->select('stuff_name')->get();
+
+        return view('dashboard.purchase.edit',[
+            'purchase'=>$purchase,
+            'stuffs'=>$stuffs
+        ]);
     }
 
     /**

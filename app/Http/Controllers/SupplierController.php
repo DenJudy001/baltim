@@ -167,7 +167,7 @@ class SupplierController extends Controller
         if ($request->id){
             $stuffs = Stuff::find($request->id);
             $rules = [
-                'price' => 'required|integer|not_in:0|gt:0',
+                'price' => 'required|integer|min:1',
             ];
             
             if($request->stuff_name != $stuffs->stuff_name) {
@@ -186,7 +186,7 @@ class SupplierController extends Controller
             
         }else{
             $rules = [
-                'price' => 'required',
+                'price' => 'required|integer|min:1',
                 'stuff_name' => ['required',Rule::unique('stuffs')->where(function ($query) use ($supplier){
                     return $query->where('supplier_id', $supplier);
                 })],
