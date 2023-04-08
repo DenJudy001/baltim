@@ -117,6 +117,7 @@
                                         <td>
                                             <a class="btn btn-success button-save d-none" ><i class="fas fa-check"></i></a>
                                             <a class="btn btn-warning button-edit"><i class="fas fa-edit"></i></a>
+                                            <a class="btn btn-danger button-cancel d-none"><i class="fas fa-times"></i></a>
                                             <a class="btn btn-danger single-stuff"><i class="fas fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
@@ -157,6 +158,7 @@
                             "<td>"+
                                 "<a class='btn btn-success button-save'><i class='fas fa-check'></i></a>"+
                                 "<a class='btn btn-warning button-edit d-none'><i class='fas fa-edit'></i></a>"+
+                                "<a class='btn btn-danger button-cancel d-none'><i class='fas fa-times'></i></a>"+
                                 "<a href='javascript:void(0)' class='btn btn-danger deleteRow'><i class='fas fa-trash-alt'></i></a>"+
                             "</td>"+
                         "</tr>"
@@ -184,6 +186,8 @@
                 else{
                     var saveButton = $(this).closest('td').find('a.button-save');
                     var editButton = $(this);
+                    var cancelButton = $(this).closest('td').find('a.button-cancel');
+                    var deleteButton = $(this).closest('td').find('a.single-stuff');
                     var inpName = editButton.closest('tr').find('input.stuff-name');
                     var inpDesc = editButton.closest('tr').find('textarea.stuff-desc');
                     var inpPrice = editButton.closest('tr').find('input.stuff-price');
@@ -201,7 +205,9 @@
                     inpPrice.addClass('form-control');
 
                     saveButton.removeClass('d-none');
+                    cancelButton.removeClass('d-none');
                     editButton.addClass('d-none');
+                    deleteButton.addClass('d-none');
                 }
             });
 
@@ -256,6 +262,11 @@
                     }
                 });
 
+            });
+
+            $('#editTable').on('click', '.button-cancel', function(e){
+                e.preventDefault();
+                window.location.reload();
             });
 
             $('#editTable').on('click', '.single-stuff', function(e){

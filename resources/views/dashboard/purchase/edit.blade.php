@@ -1,6 +1,7 @@
 @extends('dashboard.layouts.main')
 
 @section('container')
+@if (count($purchase->dtl_purchase) != null)
 <div class="card mb-3">
     <div class="card-header bg-white">
         <div class="row">
@@ -46,11 +47,6 @@
                         <td width="60%">{{$purchase->state}}</td>
                     </tr>
                     <tr>
-                        <td width="38%" class="font-weight-bold">Total</td>
-                        <td width="2%" class="font-weight-bold">:</td>
-                        <td width="60%" class="font-weight-bold">Rp. {{number_format($purchase->total, 0, ',', '.')}}</td>
-                    </tr>
-                    <tr>
                         <td width="38%">Tanggal pemesanan</td>
                         <td width="2%">:</td>
                         <td width="60%">{{$purchase->created_at}} (dibuat oleh {{ $purchase->responsible }})</td>
@@ -61,7 +57,12 @@
                             <td width="2%">:</td>
                             <td width="60%">{{$purchase->end_date}}</td>
                         </tr>
-                    @endif            
+                    @endif
+                    <tr>
+                        <td width="38%" class="font-weight-bold">Total</td>
+                        <td width="2%" class="font-weight-bold">:</td>
+                        <td width="60%" class="font-weight-bold">Rp. {{number_format($purchase->total, 0, ',', '.')}}</td>
+                    </tr>          
                 </table>
             </div>
         </div>              
@@ -124,6 +125,7 @@
                                 <td>
                                     <a class="btn btn-success button-save d-none" ><i class="fas fa-check"></i></a>
                                     <a class="btn btn-warning button-edit"><i class="fas fa-edit"></i></a>
+                                    <a class="btn btn-danger button-cancel d-none"><i class="fas fa-times"></i></a>
                                     <a class="btn btn-danger single-stuff"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                             </tr>
@@ -134,6 +136,52 @@
         </div>            
     </div>
 </div>
+@else
+<div class="card mb-3">
+    <div class="card-header bg-white">
+        <div class="row">
+            <div class="col"><h4 class="font-weight-bold">{{ $purchase->purchase_number }}</h4></div>
+        </div>                 
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <table width="100%" class="table table-borderless">
+                    <tr>
+                        <td width="38%" >Jenis Transaksi</td>
+                        <td width="2%" >:</td>
+                        <td width="60%" >{{$purchase->purchase_name}}</td>
+                    </tr>
+                    <tr>
+                        <td width="38%">Tanggal pemesanan</td>
+                        <td width="2%">:</td>
+                        <td width="60%">{{$purchase->created_at}} (dibuat oleh {{ $purchase->responsible }})</td>
+                    </tr>
+                    <tr>
+                        <td width="38%">Tanggal Selesai</td>
+                        <td width="2%">:</td>
+                        <td width="60%">{{$purchase->end_date}}</td>
+                    </tr>     
+                </table>
+            </div>
+            <div class="col-sm-6">
+                <table width="100%" class="table table-borderless">
+                    <tr>
+                        <td width="38%">Status</td>
+                        <td width="2%">:</td>
+                        <td width="60%">{{$purchase->state}}</td>
+                    </tr>
+                    <tr>
+                        <td width="38%" class="font-weight-bold">Total</td>
+                        <td width="2%" class="font-weight-bold">:</td>
+                        <td width="60%" class="font-weight-bold">Rp. {{number_format($purchase->total, 0, ',', '.')}}</td>
+                    </tr>              
+                </table>
+            </div>
+        </div>              
+    </div>
+</div>
+@endif
 @endsection
 
 @push('script')
@@ -166,7 +214,7 @@
                     errorMSG.removeClass('d-none');
                 }
                 else{
-                    var id = $(this).parents("tr").attr("data-supp-id");;
+                    var id = $(this).parents("tr").attr("data-supp-id");
                     var url = "{{ URL::to('purchsupp-dropdown') }}";
                     var name = "single-select-stuff";
                     if(id){
@@ -221,6 +269,7 @@
                                 "<td>"+
                                     "<a class='btn btn-success button-save'><i class='fas fa-check'></i></a>"+
                                     "<a class='btn btn-warning button-edit d-none'><i class='fas fa-edit'></i></a>"+
+                                    "<a class='btn btn-danger button-cancel d-none'><i class='fas fa-times'></i></a>"+
                                     "<a href='javascript:void(0)' class='btn btn-danger deleteRowPurchase'><i class='fas fa-trash-alt'></i></a>"+
                                 "</td>"+
                             "</tr>"
@@ -294,6 +343,8 @@
                 } else{
                     var saveButton = $(this).closest('td').find('a.button-save');
                     var editButton = $(this);
+                    var cancelButton = $(this).closest('td').find('a.button-cancel');
+                    var deleteButton = $(this).closest('td').find('a.single-stuff');
                     var inpName = editButton.closest('tr').find('select.stuff-name');
                     var inpDesc = editButton.closest('tr').find('textarea.stuff-desc');
                     var inpqty = editButton.closest('tr').find('input.stuff-qty');
@@ -317,7 +368,9 @@
                     inpPrice.addClass('form-control');
 
                     saveButton.removeClass('d-none');
+                    cancelButton.removeClass('d-none');
                     editButton.addClass('d-none');
+                    deleteButton.addClass('d-none');
                 }
             });
 
@@ -356,12 +409,13 @@
                     },
                     error: function(response) {
                         let keyname;
-                        console.log('Sekarang error')
+                        let keymessage;
+                        // console.log('Sekarang error')
                         $.each(response.responseJSON.errors, function(key, value){
                             keyname = key;
                             keymessage = value;
                         });
-                        console.log(response.responseJSON);
+                        // console.log(response.responseJSON);
                         stuff_name.closest('td').find('.invalid-feedback').empty();
                         stuff_name.removeClass('is-invalid');
                         qty.closest('td').find('.invalid-feedback').empty();
@@ -390,6 +444,11 @@
                     }
                 });
 
+            });
+
+            $('#PurchaseTable').on('click', '.button-cancel', function(e){
+                e.preventDefault();
+                window.location.reload();
             });
 
             $('#PurchaseTable').on('click', '.single-stuff', function(e){

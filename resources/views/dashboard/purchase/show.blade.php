@@ -47,11 +47,6 @@
                             <td width="60%">{{$purchase->state}}</td>
                         </tr>
                         <tr>
-                            <td width="38%" class="font-weight-bold">Total</td>
-                            <td width="2%" class="font-weight-bold">:</td>
-                            <td width="60%" class="font-weight-bold">Rp. {{number_format($purchase->total, 0, ',', '.')}}</td>
-                        </tr>
-                        <tr>
                             <td width="38%">Tanggal pemesanan</td>
                             <td width="2%">:</td>
                             <td width="60%">{{$purchase->created_at}} (dibuat oleh {{ $purchase->responsible }})</td>
@@ -62,7 +57,12 @@
                                 <td width="2%">:</td>
                                 <td width="60%">{{$purchase->end_date}}</td>
                             </tr>
-                        @endif                      
+                        @endif
+                        <tr>
+                            <td width="38%" class="font-weight-bold">Total</td>
+                            <td width="2%" class="font-weight-bold">:</td>
+                            <td width="60%" class="font-weight-bold">Rp. {{number_format($purchase->total, 0, ',', '.')}}</td>
+                        </tr>                   
                     </table>
                 </div>
             </div>              
