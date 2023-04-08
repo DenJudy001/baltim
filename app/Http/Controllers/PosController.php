@@ -74,17 +74,26 @@ class PosController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Pos $pos)
+    public function show(Pos $po)
     {
-        //
+        return view('dashboard.pos.show',[
+            'pos'=>$po
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pos $pos)
+    public function edit(Pos $po)
     {
-        //
+        $menus = FoodNBeverages::select('name')->get();
+        $categories = FoodNBeverages::select('type')->distinct()->get();
+
+        return view('dashboard.pos.edit',[
+            'pos'=>$po,
+            'menus'=>$menus,
+            'categories'=>$categories
+        ]);
     }
 
     /**
