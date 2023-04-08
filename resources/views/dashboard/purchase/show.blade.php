@@ -47,7 +47,7 @@
                             <td width="60%">{{$purchase->state}}</td>
                         </tr>
                         <tr>
-                            <td width="38%">Tanggal pemesanan</td>
+                            <td width="38%">Tanggal Pemesanan</td>
                             <td width="2%">:</td>
                             <td width="60%">{{$purchase->created_at}} (dibuat oleh {{ $purchase->responsible }})</td>
                         </tr>

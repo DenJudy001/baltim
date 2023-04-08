@@ -167,6 +167,6 @@ class PurchaseController extends Controller
     {
         Purchase::destroy($purchase->id);
 
-        return redirect('/account')->with('success','Berhasil Hapus Data ');
+        return redirect('/account')->with('success','Catatan Transaksi Berhasil Dihapus ');
     }
 }

@@ -42,6 +42,7 @@ class EmployeeSalaryController extends Controller
         $validatedData['email'] = $request->email;
         $validatedData['telp'] = $request->telp;
         $validatedData['state'] = 'Selesai';
+        $validatedData['end_by'] = auth()->user()->name;
         $validatedData['salary_number'] = IdGenerator::generate(['table' => 'employee_salaries', 'length' => 10, 'prefix' =>'SAL-','reset_on_prefix_change' => true ,'field' => 'salary_number']);
 
         EmployeeSalary::create($validatedData);
@@ -53,7 +54,9 @@ class EmployeeSalaryController extends Controller
      */
     public function show(EmployeeSalary $employeeSalary)
     {
-        //
+        return view('dashboard.salary.show',[
+            'salary'=>$employeeSalary
+        ]);
     }
 
     /**
@@ -77,6 +80,8 @@ class EmployeeSalaryController extends Controller
      */
     public function destroy(EmployeeSalary $employeeSalary)
     {
-        //
+        EmployeeSalary::destroy($employeeSalary->id);
+
+        return redirect('/account')->with('success','Catatan Transaksi Berhasil Dihapus ');
     }
 }

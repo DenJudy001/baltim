@@ -12,7 +12,7 @@
             <div class="col-sm-6">
                 <table width="100%" class="table table-borderless">
                     <tr>
-                        <td width="38%">Tanggal pemesanan</td>
+                        <td width="38%">Tanggal Penjualan</td>
                         <td width="2%">:</td>
                         <td width="60%">{{$pos->created_at}} (dibuat oleh {{ $pos->responsible }})</td>
                     </tr>

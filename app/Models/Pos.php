@@ -15,6 +15,7 @@ class Pos extends Model
         'state',
         'total',
         'end_date',
+        'end_by',
     ];
 
     protected $with = ['dtl_pos'];

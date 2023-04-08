@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('telp');
             $table->string('state');
             $table->integer('salary');
+            $table->string('end_by')->nullable();
             $table->timestamps();
         });
     }

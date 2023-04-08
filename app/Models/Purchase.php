@@ -22,6 +22,7 @@ class Purchase extends Model
         'state',
         'total',
         'end_date',
+        'end_by',
     ];
 
     protected $with = ['dtl_purchase'];

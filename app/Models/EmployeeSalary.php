@@ -17,6 +17,7 @@ class EmployeeSalary extends Model
         'telp',
         'state',
         'salary',
+        'end_by',
     ];
 
     public function getRouteKeyName() {

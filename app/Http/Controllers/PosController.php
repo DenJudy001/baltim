@@ -47,6 +47,7 @@ class PosController extends Controller
         $dataTransaction['total'] = $request->totalHarga;
         if($request->state == 'Selesai'){
             $dataTransaction['end_date'] = now();
+            $dataTransaction['end_by'] = auth()->user()->name;
         }
         $dataTransaction['state'] = $request->state;
         
@@ -107,9 +108,11 @@ class PosController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pos $pos)
+    public function destroy(Pos $po)
     {
-        //
+        Pos::destroy($po->id);
+
+        return redirect('/account')->with('success','Catatan Transaksi Berhasil Dihapus ');
     }
     
     public function addToCart($menu)

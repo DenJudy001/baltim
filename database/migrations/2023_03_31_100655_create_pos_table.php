@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('state');
             $table->integer('total');
             $table->timestamp('end_date')->nullable();
+            $table->string('end_by')->nullable();
             $table->timestamps();
         });
     }
