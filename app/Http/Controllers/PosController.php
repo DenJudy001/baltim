@@ -90,11 +90,40 @@ class PosController extends Controller
         $menus = FoodNBeverages::select('name')->get();
         $categories = FoodNBeverages::select('type')->distinct()->get();
 
-        return view('dashboard.pos.edit',[
-            'pos'=>$po,
-            'menus'=>$menus,
-            'categories'=>$categories
-        ]);
+        $menuData = FoodNBeverages::pluck('name')->toArray();
+        $checkMenu = False;
+
+        foreach($po->dtl_pos as $details){
+            if (in_array($details->name, $menuData)) {
+                // 
+            }else{
+                $checkMenu = True;
+            }
+        }
+
+        if ($po->state == 'Proses' && $checkMenu != True){
+            return view('dashboard.pos.edit',[
+                'pos'=>$po,
+                'menus'=>$menus,
+                'categories'=>$categories,
+            ]);
+        } else {
+            if ($checkMenu == True && $po->state == 'Proses'){
+                return view('dashboard.pos.editlock',[
+                    'pos'=>$po,
+                    'check_menu'=>$checkMenu,
+                    'announce' => 'Rincian penjualan tidak dapat diubah karena terdapat menu yang berubah atau terhapus'
+                ]);
+            } else{
+                return view('dashboard.pos.editlock',[
+                    'pos'=>$po,
+                    'check_menu'=>$checkMenu,
+                    'announce' => 'Rincian penjualan tidak dapat diubah karena status transaksi telah '.$po->state.''
+                ]);
+            }
+        }
+
+        
     }
 
     /**
@@ -162,5 +191,16 @@ class PosController extends Controller
     public function clearCart()
     {
         session()->forget('cart');
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $endDate = now();
+        $endBy = auth()->user()->name;
+        $newStatus = $request->state;
+        Pos::where('id', $request->pos_id)
+            ->update(['state'=>$newStatus, 'end_date'=>$endDate,'end_by'=>$endBy]);  
+        
+        session()->flash('success', 'Berhasil Merubah Status Penjualan');   
     }
 }

@@ -64,7 +64,10 @@ class EmployeeSalaryController extends Controller
      */
     public function edit(EmployeeSalary $employeeSalary)
     {
-        //
+        return view('dashboard.salary.editlock',[
+            'salary'=>$employeeSalary,
+            'announce' => 'Pembayaran jenis ini tidak dapat diubah'
+        ]);
     }
 
     /**

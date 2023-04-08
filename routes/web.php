@@ -64,6 +64,7 @@ Route::resource('/otherpurchase', OtherPurchaseController::class)->middleware('a
 Route::resource('/pos', PosController::class)->middleware('auth');
 Route::resource('/detail-pos', DetailPosController::class)->middleware('auth');
 Route::post('/detail-pos/update-details', [DetailPosController::class, 'updateDetailPos'])->name('update.details-pos')->middleware('auth');
+Route::post('/pos/update-status', [PosController::class, 'updateStatus'])->name('update.status-pos')->middleware('auth');
 Route::get('pos/add-to-cart/{menu}', [PosController::class, 'addToCart'])->middleware('auth');
 Route::post('pos/update-qty', [PosController::class, 'updateQty'])->middleware('auth');
 Route::post('pos/remove-from-cart', [PosController::class, 'remove'])->name('remove.from.cart')->middleware('auth');

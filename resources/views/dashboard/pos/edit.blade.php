@@ -5,6 +5,12 @@
     <div class="card-header bg-white">
         <div class="row">
             <div class="col"><h4 class="font-weight-bold">{{ $pos->pos_number }}</h4></div>
+            @if ($pos->state == 'Proses')
+                <div class="col text-right" id="changeStatus" data-pos-id="{{ $pos->id }}">
+                    <a class="btn btn-success shadow-sm button-finished">{{ __('Selesaikan') }}</a>
+                    <a class="btn btn-danger shadow-sm button-cancelled">{{ __('Batalkan') }}</a>
+                </div>
+            @endif
         </div>                 
     </div>
     <div class="card-body">
@@ -327,6 +333,53 @@
             $('#PosTable').on('click', '.button-cancel', function(e){
                 e.preventDefault();
                 window.location.reload();
+            });
+
+            $('#changeStatus').on('click', '.button-finished', function(e){
+                e.preventDefault();
+                var url = '{{ route('update.status-pos') }}';
+                var pos_id = $(this).parents("div").attr("data-pos-id");
+                var newStatus = "Selesai";
+                if (confirm('Apakah Anda yakin ingin merubah status transaksi?')) {
+                    $.ajax({
+                        url: url,
+                        type: 'post',
+                        data: {
+                            "_token": $('meta[name="csrf-token"]').attr('content'),
+                            "pos_id": pos_id,
+                            "state": newStatus
+                        },
+                        success: function (data) {
+                            window.location.replace('/account');
+                        },
+                        error: function (data) {
+                            // console.log('Error:', data);
+                        }
+                    });
+                }
+            });
+            $('#changeStatus').on('click', '.button-cancelled', function(e){
+                e.preventDefault();
+                var url = '{{ route('update.status-pos') }}';
+                var pos_id = $(this).parents("div").attr("data-pos-id");
+                var newStatus = "Dibatalkan";
+                if (confirm('Apakah Anda yakin ingin merubah status transaksi?')) {
+                    $.ajax({
+                        url: url,
+                        type: 'post',
+                        data: {
+                            "_token": $('meta[name="csrf-token"]').attr('content'),
+                            "pos_id": pos_id,
+                            "state": newStatus
+                        },
+                        success: function (data) {
+                            window.location.replace('/account');
+                        },
+                        error: function (data) {
+                            // console.log('Error:', data);
+                        }
+                    });
+                }
             });
 
             $('#PosTable').on('click', '.single-stuff', function(e){
