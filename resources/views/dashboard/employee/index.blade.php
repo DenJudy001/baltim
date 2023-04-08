@@ -29,7 +29,7 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
-                            <a href="/employee/show" class="badge bg-info"><i class="fas fa-eye"></i></a>
+                            <a href="/employee/{{ $user->id }}" class="badge bg-info"><i class="fas fa-eye"></i></a>
                             <form action="/employee/{{ $user->id }}" method="POST" class="d-inline">
                                 @method('delete')
                                 @csrf

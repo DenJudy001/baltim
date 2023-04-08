@@ -54,7 +54,9 @@ class EmployeeController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return view('dashboard.employee.show',[
+            'employee'=>$user
+        ]);
     }
 
     /**
