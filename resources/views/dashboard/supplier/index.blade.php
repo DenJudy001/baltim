@@ -31,7 +31,7 @@
                         <td>{{ $supplier->supplier_name }}</td>
                         <td>{{ $supplier->address }}</td>
                         <td>
-                            <a href="/supplier/show" class="badge bg-info"><i class="fas fa-eye"></i></a>
+                            <a href="/supplier/{{ $supplier->id }}" class="badge bg-info"><i class="fas fa-eye"></i></a>
                             <a href="/supplier/{{ $supplier->id }}/edit" class="badge bg-warning"><i class="fas fa-edit"></i></a>
                             <form action="/supplier/{{ $supplier->id }}" method="POST" class="d-inline">
                                 @method('delete')

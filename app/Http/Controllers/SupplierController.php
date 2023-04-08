@@ -113,7 +113,9 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier)
     {
-        //
+        return view('dashboard.supplier.show',[
+            'supplier' => $supplier,
+        ]);
     }
 
     /**
