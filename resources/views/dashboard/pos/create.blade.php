@@ -27,7 +27,6 @@
                                         @foreach ($fnbCat as $fnbcat)
                                         <option {{ request('category_type') == $fnbcat->type ? 'selected' : '' }}>{{ $fnbcat->type }}</option>
                                         @endforeach
-                                        <!-- Kembangkan sendiri ya bagian ini kalau bisa pake select2 biar keren -->
                                     </select>
                                 </div>
                                 <div class="col-sm-6 col-md-6 col-lg-4 mb-2"><input type="text" name="search"
@@ -69,28 +68,6 @@
                     </div>
                     <div class="d-flex justify-content-center">{{ $fnbs->links() }}</div>
                 </div>
-                {{-- <div class="mb-2">
-                <input
-                    type="text"
-                    class="form-control search"
-                    placeholder="Search Product..."
-                />
-            </div>
-            <div class="order-product product-search" style="display: flex;column-gap: 0.5rem;flex-wrap: wrap;row-gap: .5rem;">
-                @foreach ($products as $product)
-                    <button type="button"
-                        class="item"
-                        style="cursor: pointer; border: none;"
-                        value="{{ $product->id }}"
-                    >
-                        @if ($product->image)
-                        <img src="{{ $product->image->getUrl() }}" width="45px" height="45px" alt="test" />
-                        @endif
-                        <h6 style="margin: 0;">{{ $product->name }}</h6>
-                        <span >(${{ $product->price }})</span>
-                    </button>
-                @endforeach
-            </div> --}}
             </div>
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="user-cart">

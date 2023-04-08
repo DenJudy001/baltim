@@ -31,7 +31,7 @@
                         <td>{{ $fnb->type }}</td>
                         <td>{{ $fnb->price }}</td>
                         <td>
-                            <a href="/fnb/show" class="badge bg-info"><i class="fas fa-eye"></i></a>
+                            <a href="/fnb/{{ $fnb->id }}" class="badge bg-info"><i class="fas fa-eye"></i></a>
                             <a href="/fnb/{{ $fnb->id }}/edit" class="badge bg-warning"><i class="fas fa-edit"></i></a>
                             <form action="/fnb/{{ $fnb->id }}" method="POST" class="d-inline">
                                 @method('delete')

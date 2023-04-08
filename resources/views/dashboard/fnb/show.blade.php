@@ -1,0 +1,46 @@
+@extends('dashboard.layouts.main')
+
+@section('container')
+<div class="card mb-3">
+    <div class="card-header bg-white">
+        <div class="row">
+            <div class="col"><h4 class="font-weight-bold">Rincian Menu</h4></div>
+        </div>                 
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 ">
+                <div class="thumbnail text-center">
+                    <img src="{{ asset('images/'.$menu->image) }}" class="img-fluid img-thumbnail rounded card-img-top" alt="Gambar Menu" style="width : 80%">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <table width="100%" class="table table-borderless">
+                        <tr>
+                            <td width="38%">Nama Menu</td>
+                            <td width="2%">:</td>
+                            <td width="60%">{{$menu->name}}</td>
+                        </tr>   
+                        <tr>
+                            <td width="38%">Keterangan</td>
+                            <td width="2%">:</td>
+                            <td width="60%">{{$menu->description}}</td>
+                        </tr>  
+                        <tr>
+                            <td width="38%">Kategori</td>
+                            <td width="2%">:</td>
+                            <td width="60%">{{$menu->type}}</td>
+                        </tr>
+                        <tr>
+                            <td width="38%">Harga</td>
+                            <td width="2%">:</td>
+                            <td width="60%">Rp. {{number_format($menu->price, 0, ',', '.')}}</td>
+                        </tr>            
+                    </table>
+                </div>
+            </div>
+        </div>              
+    </div>
+</div>
+@endsection

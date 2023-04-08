@@ -62,7 +62,9 @@ class FoodNBeveragesController extends Controller
      */
     public function show(FoodNBeverages $foodNBeverages)
     {
-        //
+        return view('dashboard.fnb.show',[
+            'menu'=>$foodNBeverages,
+        ]);
     }
 
     /**
