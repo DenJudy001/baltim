@@ -130,7 +130,7 @@
                                 <td>{{ $loop->iteration }} </td>
                                 <td>{{ $transaction->purchase_number }}</td>
                                 <td>{{ $transaction->total }}</td>
-                                <td>{{ $transaction->state }}</td>
+                                <td ><span class="badge {{ $transaction->state == 'Proses' ? 'text-bg-warning' : ($transaction->state == 'Selesai' ? 'text-bg-success' : 'text-bg-danger') }}">{{ $transaction->state }}</span></td>
                                 <td>
                                     @if (str_contains($transaction->purchase_number, 'PUR'))
                                     <a href="/purchase/{{ $transaction->purchase_number }}" class="badge bg-info"><i class="fas fa-eye"></i></a>

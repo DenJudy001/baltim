@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="mb-3">
                         <label for="name" class="form-label @error('name') is-invalid @enderror">Nama
-                            Lengkap</label>
+                            Lengkap<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="name" name="name"
                             value="{{ old('name') }}" required autofocus>
                         @error('name')
@@ -30,45 +30,49 @@
                             </div>
                         @enderror
                     </div>
-                    <div class="mb-3">
-                        <label for="username" class="form-label @error('username') is-invalid @enderror">Username</label>
-                        <input type="text" class="form-control" id="username" name="username"
-                            value="{{ old('username') }}" required>
-                        @error('username')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="username" class="form-label @error('username') is-invalid @enderror">Username<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="username" name="username"
+                                value="{{ old('username') }}" required>
+                            @error('username')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="telp" class="form-label @error('telp') is-invalid @enderror">No. HP<span class="text-danger">*</span> Cth: 62878***</label>
+                            <input type="text" class="form-control" id="telp" name="telp" value="{{ old('telp') }}"
+                                required>
+                            @error('telp')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="telp" class="form-label @error('telp') is-invalid @enderror">No. HP</label>
-                        <input type="text" class="form-control" id="telp" name="telp" value="{{ old('telp') }}"
-                            required>
-                        @error('telp')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label @error('email') is-invalid @enderror">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}"
-                            required>
-                        @error('email')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label @error('password') is-invalid @enderror">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                        @error('password')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="email" class="form-label @error('email') is-invalid @enderror">Email<span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}"
+                                required>
+                            @error('email')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label @error('password') is-invalid @enderror">Password<span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                            @error('password')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                    </div>                  
                 </div>
                 <button type="submit" class="btn btn-primary mb-3 mt-2">Buat Karyawan</button>
             </form>

@@ -52,7 +52,7 @@
                         <tr>
                             <td width="38%">Status</td>
                             <td width="2%">:</td>
-                            <td width="60%">{{$purchase->state}}</td>
+                            <td width="60%"><span class="badge {{ $purchase->state == 'Proses' ? 'text-bg-warning' : ($purchase->state == 'Selesai' ? 'text-bg-success' : 'text-bg-danger') }}">{{$purchase->state}}</span></td>
                         </tr>
                         <tr>
                             <td width="38%">Tanggal Pemesanan</td>
@@ -152,7 +152,7 @@
                         <tr>
                             <td width="38%">Status</td>
                             <td width="2%">:</td>
-                            <td width="60%">{{$purchase->state}}</td>
+                            <td width="60%"><span class="badge {{ $purchase->state == 'Proses' ? 'text-bg-warning' : ($purchase->state == 'Selesai' ? 'text-bg-success' : 'text-bg-danger') }}">{{$purchase->state}}</span></td>
                         </tr>
                         <tr>
                             <td width="38%" class="font-weight-bold">Total</td>

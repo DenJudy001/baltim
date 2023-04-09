@@ -50,7 +50,7 @@
                     <tr>
                         <td width="38%">Status</td>
                         <td width="2%">:</td>
-                        <td width="60%">{{$pos->state}}</td>
+                        <td width="60%" ><span class="badge {{ $pos->state == 'Proses' ? 'text-bg-warning' : ($pos->state == 'Selesai' ? 'text-bg-success' : 'text-bg-danger') }}">{{$pos->state}}</span></td>
                     </tr>
                     <tr>
                         <td width="38%" class="font-weight-bold">Total</td>

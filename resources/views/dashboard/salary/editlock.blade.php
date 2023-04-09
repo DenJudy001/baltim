@@ -47,7 +47,7 @@
                     <tr>
                         <td width="38%">Status</td>
                         <td width="2%">:</td>
-                        <td width="60%">{{$salary->state}}</td>
+                        <td width="60%"><span class="badge {{ $salary->state == 'Proses' ? 'text-bg-warning' : ($salary->state == 'Selesai' ? 'text-bg-success' : 'text-bg-danger') }}">{{$salary->state}}</span></td>
                     </tr>
                     <tr>
                         <td width="38%">Tanggal Pencatatan</td>

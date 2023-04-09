@@ -23,7 +23,7 @@
                     <div class="col-lg-6">
                         <div class="mb-3">
                             <label for="supplier_name" class="form-label @error('supplier_name') is-invalid @enderror">Nama
-                                Tempat Pemasok</label>
+                                Tempat Pemasok<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="supplier_name" name="supplier_name"
                                 value="{{ old('supplier_name',$supplier->supplier_name) }}" required autofocus>
                             @error('supplier_name')
@@ -33,10 +33,8 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="description" class="form-label @error('description') is-invalid @enderror">Deskripsi
-                                Pemasok</label>
-                            <textarea type="text" class="form-control" id="description" name="supplier_description"
-                             required>{{ old('supplier_description',$supplier->description) }}</textarea>
+                            <label for="description" class="form-label @error('description') is-invalid @enderror">Keterangan</label>
+                            <textarea type="text" class="form-control" id="description" name="supplier_description">{{ old('supplier_description',$supplier->description) }}</textarea>
                             @error('description')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -45,7 +43,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="address" class="form-label @error('address') is-invalid @enderror">Alamat
-                                Pemasok</label>
+                                <span class="text-danger">*</span></label>
                             <textarea type="text" class="form-control" id="address" name="address" required>{{ old('address',$supplier->address) }}</textarea>
                             @error('address')
                                 <div class="invalid-feedback">
@@ -57,7 +55,7 @@
                     <div class="col-lg-6">
                         <div class="mb-3">
                             <label for="responsible"
-                                class="form-label @error('responsible') is-invalid @enderror">Penanggung Jawab</label>
+                                class="form-label @error('responsible') is-invalid @enderror">Pemilik<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="responsible" name="responsible"
                                 value="{{ old('responsible',$supplier->responsible) }}" required>
                             @error('responsible')
@@ -67,7 +65,7 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="telp" class="form-label @error('telp') is-invalid @enderror">No. HP</label>
+                            <label for="telp" class="form-label @error('telp') is-invalid @enderror">No. HP<span class="text-danger">*</span> Cth: 62878***</label>
                             <input type="text" class="form-control" id="telp" name="telp"
                                 value="{{ old('telp',$supplier->telp) }}" required>
                             @error('telp')
@@ -78,7 +76,7 @@
                         </div>
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-primary mb-3">Selesai</button>
+                        <button type="submit" class="btn btn-primary mb-3">Ubah Data</button>
                     </div>
                 </form>
                 </div>
@@ -97,9 +95,9 @@
                         <table class="table table-light" id="editTable">
                             <thead>
                                 <tr>
-                                    <th scope="col">Nama Bahan</th>
-                                    <th scope="col">Deskripsi</th>
-                                    <th scope="col">Harga</th>
+                                    <th scope="col">Nama Bahan<span class="text-danger">*</span></th>
+                                    <th scope="col">Keterangan</th>
+                                    <th scope="col">Harga<span class="text-danger">*</span></th>
                                     <th scope="col">
                                         <div  class="d-flex justify-content-center">
                                             <a href="javascript:void(0)" class="btn btn-success addRow">+</a>

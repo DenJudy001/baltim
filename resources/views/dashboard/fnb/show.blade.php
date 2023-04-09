@@ -23,30 +23,28 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="row">
-                    <table width="100%" class="table table-borderless">
-                        <tr>
-                            <td width="38%">Nama Menu</td>
-                            <td width="2%">:</td>
-                            <td width="60%">{{$menu->name}}</td>
-                        </tr>   
-                        <tr>
-                            <td width="38%">Keterangan</td>
-                            <td width="2%">:</td>
-                            <td width="60%">{{$menu->description}}</td>
-                        </tr>  
-                        <tr>
-                            <td width="38%">Kategori</td>
-                            <td width="2%">:</td>
-                            <td width="60%">{{$menu->type}}</td>
-                        </tr>
-                        <tr>
-                            <td width="38%">Harga</td>
-                            <td width="2%">:</td>
-                            <td width="60%">Rp. {{number_format($menu->price, 0, ',', '.')}}</td>
-                        </tr>            
-                    </table>
-                </div>
+                <table width="100%" class="table table-borderless">
+                    <tr>
+                        <td width="38%">Nama Menu</td>
+                        <td width="2%">:</td>
+                        <td width="60%">{{$menu->name}}</td>
+                    </tr>   
+                    <tr>
+                        <td width="38%">Keterangan</td>
+                        <td width="2%">:</td>
+                        <td width="60%">{{$menu->description}}</td>
+                    </tr>  
+                    <tr>
+                        <td width="38%">Kategori</td>
+                        <td width="2%">:</td>
+                        <td width="60%">{{$menu->type}}</td>
+                    </tr>
+                    <tr>
+                        <td width="38%">Harga</td>
+                        <td width="2%">:</td>
+                        <td width="60%">Rp. {{number_format($menu->price, 0, ',', '.')}}</td>
+                    </tr>            
+                </table>
             </div>
         </div>              
     </div>
