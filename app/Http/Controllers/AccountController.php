@@ -20,8 +20,9 @@ class AccountController extends Controller
         $pos = DB::table('pos')->select('pos_number', 'total', 'state', 'updated_at');
 
         $transactions = $purchase->union($salary)->union($pos)->orderBy('updated_at', 'desc')->get();
+        $title = "Catatan Keuangan";
 
-        return view('dashboard.account.index', compact('transactions'));
+        return view('dashboard.account.index', compact('transactions','title'));
     }
 
 

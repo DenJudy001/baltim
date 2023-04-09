@@ -28,8 +28,9 @@ class PurchaseController extends Controller
     public function create()
     {
         $suppliers = Supplier::all(['id', 'supplier_name']);
+        $title = "Pemesanan";
 
-        return view('dashboard.purchase.create', compact('suppliers'));
+        return view('dashboard.purchase.create', compact('suppliers','title'));
     }
 
     /**
@@ -135,7 +136,8 @@ class PurchaseController extends Controller
     public function show(Purchase $purchase)
     {
         return view('dashboard.purchase.show',[
-            'purchase'=>$purchase
+            'purchase'=>$purchase,
+            'title'=>"Info Pemesanan"
         ]);
     }
 
@@ -158,20 +160,23 @@ class PurchaseController extends Controller
         if ($purchase->state == 'Proses' && $checkMenu != True){
             return view('dashboard.purchase.edit',[
                 'purchase'=>$purchase,
-                'stuffs'=>$stuffs
+                'stuffs'=>$stuffs,
+                'title'=>"Info Pemesanan"
             ]);
         } else {
             if ($checkMenu == True && $purchase->state == 'Proses'){
                 return view('dashboard.purchase.editlock',[
                     'purchase'=>$purchase,
                     'check_menu'=>$checkMenu,
-                    'announce' => 'Rincian pembelian tidak dapat diubah karena pemasok tidak terdaftar atau terhapus'
+                    'announce' => 'Rincian pembelian tidak dapat diubah karena pemasok tidak terdaftar atau terhapus',
+                    'title'=>"Ubah Data Pemesanan"
                 ]);
             } else{
                 return view('dashboard.purchase.editlock',[
                     'purchase'=>$purchase,
                     'check_menu'=>$checkMenu,
-                    'announce' => 'Rincian pembelian tidak dapat diubah karena status transaksi telah '.$purchase->state.''
+                    'announce' => 'Rincian pembelian tidak dapat diubah karena status transaksi telah '.$purchase->state.'',
+                    'title'=>"Ubah Data Pemesanan"
                 ]);
             }
         }

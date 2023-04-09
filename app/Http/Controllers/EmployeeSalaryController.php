@@ -24,8 +24,9 @@ class EmployeeSalaryController extends Controller
     public function create()
     {
         $employee = User::where('is_admin', false)->get();
+        $title = "Pembayaran Gaji";
 
-        return view('dashboard.salary.create', compact('employee'));
+        return view('dashboard.salary.create', compact('employee','title'));
     }
 
     /**
@@ -55,7 +56,8 @@ class EmployeeSalaryController extends Controller
     public function show(EmployeeSalary $employeeSalary)
     {
         return view('dashboard.salary.show',[
-            'salary'=>$employeeSalary
+            'salary'=>$employeeSalary,
+            'title'=>"Info Gaji Karyawan"
         ]);
     }
 
@@ -66,7 +68,8 @@ class EmployeeSalaryController extends Controller
     {
         return view('dashboard.salary.editlock',[
             'salary'=>$employeeSalary,
-            'announce' => 'Pembayaran jenis ini tidak dapat diubah'
+            'announce' => 'Pembayaran jenis ini tidak dapat diubah',
+            'title'=>"Ubah Gaji Karyawan"
         ]);
     }
 

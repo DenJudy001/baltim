@@ -17,7 +17,8 @@ class EmployeeController extends Controller
     public function index()
     {
         return view('dashboard.employee.index',[
-            'users'=>User::all('id','name','email')
+            'users'=>User::all('id','name','email'),
+            'title'=>"Daftar Karyawan"
         ]);
     }
 
@@ -27,7 +28,7 @@ class EmployeeController extends Controller
     public function create()
     {
         return view('dashboard.employee.create',[
-            
+            'title'=>"Buat Akun Karyawan"
         ]);
     }
 
@@ -58,7 +59,8 @@ class EmployeeController extends Controller
     {
         //buat if admin if user redirect back
         return view('dashboard.employee.show',[
-            'employee'=>$user
+            'employee'=>$user,
+            'title'=>"Info Karyawan"
         ]);
     }
 
@@ -69,7 +71,8 @@ class EmployeeController extends Controller
     {
         if ($user->id == auth()->user()->id){
             return view('dashboard.employee.edit',[
-                'employee'=>$user
+                'employee'=>$user,
+                'title'=>"Ubah Profil"
             ]);
         } else {
             return redirect()->back();
@@ -118,7 +121,8 @@ class EmployeeController extends Controller
     {
         if ($user->id == auth()->user()->id){
             return view('dashboard.employee.change-password',[
-                'employee'=>$user
+                'employee'=>$user,
+                'title'=>"Ubah Kata Sandi"
             ]);
         } else {
             return redirect()->back();

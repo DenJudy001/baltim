@@ -15,7 +15,8 @@ class FoodNBeveragesController extends Controller
     public function index()
     {
         return view('dashboard.fnb.index',[
-            'fnbs'=>FoodNBeverages::all('id','name','type','price')
+            'fnbs'=>FoodNBeverages::all('id','name','type','price'),
+            'title'=>"Daftar Menu"
         ]);
     }
 
@@ -25,7 +26,8 @@ class FoodNBeveragesController extends Controller
     public function create()
     {
         return view('dashboard.fnb.create',[
-            'categs'=>FoodNBeverages::select('type')->distinct()->get()
+            'categs'=>FoodNBeverages::select('type')->distinct()->get(),
+            'title'=>"Buat Menu"
         ]);
     }
 
@@ -64,6 +66,7 @@ class FoodNBeveragesController extends Controller
     {
         return view('dashboard.fnb.show',[
             'menu'=>$foodNBeverages,
+            'title'=>"Info Menu"
         ]);
     }
 
@@ -74,7 +77,8 @@ class FoodNBeveragesController extends Controller
     {
         return view('dashboard.fnb.edit',[
             'fnb'=>$foodNBeverages,
-            'categs'=>FoodNBeverages::select('type')->distinct()->get()
+            'categs'=>FoodNBeverages::select('type')->distinct()->get(),
+            'title'=>"Ubah Menu"
         ]);
     }
 

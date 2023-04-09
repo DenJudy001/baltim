@@ -119,9 +119,9 @@
                                 <td><input type="number" class="form-control-plaintext stuff-qty" name="qty" value="{{ old('qty',$details->qty) }}" required readonly></td>
                                 <td><select class="form-select single-select-unit stuff-unit" data-placeholder="Pilih Satuan" name="unit" required disabled>
                                     <option></option>
-                                    <option @if(old('unit', $details->unit) == 'kilogram(kg)') selected @endif>kilogram(kg)</option>
-                                    <option @if(old('unit', $details->unit) == 'gram(gr)') selected @endif>gram(gr)</option>
-                                    <option @if(old('unit', $details->unit) == 'liter(lt)') selected @endif>liter(lt)</option>
+                                    <option @if(old('unit', $details->unit) == 'kg (kilogram)') selected @endif>kg (kilogram)</option>
+                                    <option @if(old('unit', $details->unit) == 'gr (gram)') selected @endif>gr (gram)</option>
+                                    <option @if(old('unit', $details->unit) == 'ltr (liter)') selected @endif>ltr (liter)</option>
                                     <option @if(old('unit', $details->unit) == 'ekor') selected @endif>ekor</option>
                                     <option @if(old('unit', $details->unit) == 'lembar') selected @endif>lembar</option>
                                 </select></td>
@@ -262,9 +262,9 @@
                                 "<td>"+
                                     "<select class='form-select single-select-unit stuff-unit' data-placeholder='Pilih Satuan' name='unit' required>"+
                                         "<option></option>"+
-                                        "<option>kilogram(kg)</option>"+
-                                        "<option>gram(gr)</option>"+
-                                        "<option>liter(lt)</option>"+
+                                        "<option>kg (kilogram)</option>"+
+                                        "<option>gr (gram)</option>"+
+                                        "<option>ltr (liter)</option>"+
                                         "<option>ekor</option>"+
                                         "<option>lembar</option>"+
                                     "</select>"+

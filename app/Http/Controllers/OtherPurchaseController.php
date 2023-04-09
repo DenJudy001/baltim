@@ -23,7 +23,9 @@ class OtherPurchaseController extends Controller
      */
     public function create()
     {
-        return view('dashboard.otherPurchase.create');
+        return view('dashboard.otherPurchase.create', [
+            'title'=>"Pembayaran"
+        ]);
     }
 
     /**

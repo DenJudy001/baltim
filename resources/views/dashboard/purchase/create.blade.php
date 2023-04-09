@@ -64,9 +64,9 @@
                                     <td>
                                         <select class="form-select single-select-unit" data-placeholder="Pilih Satuan" name="unit[]" required>
                                             <option></option>
-                                            <option>kilogram(kg)</option>
-                                            <option>gram(gr)</option>
-                                            <option>liter(lt)</option>
+                                            <option>kg (kilogram)</option>
+                                            <option>gr (gram)</option>
+                                            <option>ltr (liter)</option>
                                             <option>ekor</option>
                                             <option>lembar</option>
                                         </select>
@@ -151,9 +151,9 @@
                             "<td>"+
                                 "<select class='form-select single-select-unit' data-placeholder='Pilih Satuan' name='unit[]' required>"+
                                     "<option></option>"+
-                                    "<option>kilogram(kg)</option>"+
-                                    "<option>gram(gr)</option>"+
-                                    "<option>liter(lt)</option>"+
+                                    "<option>kg (kilogram)</option>"+
+                                    "<option>gr (gram)</option>"+
+                                    "<option>ltr (liter)</option>"+
                                     "<option>ekor</option>"+
                                     "<option>lembar</option>"+
                                 "</select>"+

@@ -32,8 +32,9 @@ class PosController extends Controller
         })->orderBy('created_at','desc')->paginate(4);
 
         $fnbCat = FoodNBeverages::select('type')->distinct()->get();
+        $title = "Penjualan";
 
-        return view('dashboard.pos.create', compact('fnbs','fnbCat'));
+        return view('dashboard.pos.create', compact('fnbs','fnbCat','title'));
     }
 
     /**
@@ -78,7 +79,8 @@ class PosController extends Controller
     public function show(Pos $po)
     {
         return view('dashboard.pos.show',[
-            'pos'=>$po
+            'pos'=>$po,
+            'title'=>"Info Transaksi Penjualan"
         ]);
     }
 
@@ -106,19 +108,22 @@ class PosController extends Controller
                 'pos'=>$po,
                 'menus'=>$menus,
                 'categories'=>$categories,
+                'title'=>"Ubah Data Transaksi Penjualan"
             ]);
         } else {
             if ($checkMenu == True && $po->state == 'Proses'){
                 return view('dashboard.pos.editlock',[
                     'pos'=>$po,
                     'check_menu'=>$checkMenu,
-                    'announce' => 'Rincian penjualan tidak dapat diubah karena terdapat menu yang berubah atau terhapus'
+                    'announce' => 'Rincian penjualan tidak dapat diubah karena terdapat menu yang berubah atau terhapus',
+                    'title'=>"Ubah Data Transaksi Penjualan"
                 ]);
             } else{
                 return view('dashboard.pos.editlock',[
                     'pos'=>$po,
                     'check_menu'=>$checkMenu,
-                    'announce' => 'Rincian penjualan tidak dapat diubah karena status transaksi telah '.$po->state.''
+                    'announce' => 'Rincian penjualan tidak dapat diubah karena status transaksi telah '.$po->state.'',
+                    'title'=>"Ubah Data Transaksi Penjualan"
                 ]);
             }
         }

@@ -20,7 +20,8 @@ class SupplierController extends Controller
     public function index()
     {
         return view('dashboard.supplier.index', [
-            'suppliers'=>Supplier::all()
+            'suppliers'=>Supplier::all(),
+            'title'=>"Daftar Pemasok"
         ]);
     }
 
@@ -30,7 +31,7 @@ class SupplierController extends Controller
     public function create()
     {
         return view('dashboard.supplier.create', [
-            
+            'title'=>"Buat Data Pemasok"
         ]);
     }
 
@@ -115,6 +116,7 @@ class SupplierController extends Controller
     {
         return view('dashboard.supplier.show',[
             'supplier' => $supplier,
+            'title'=>"Info Pemasok"
         ]);
     }
 
@@ -125,7 +127,8 @@ class SupplierController extends Controller
     {
         return view('dashboard.supplier.edit',[
             'supplier' => $supplier,
-            'stuffs' => $supplier->stuff
+            'stuffs' => $supplier->stuff,
+            'title'=>"Ubah Data Pemasok"
             // 'stuffs' => Supplier::find($supplier->id)->stuff
         ]);
     }
