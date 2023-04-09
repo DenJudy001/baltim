@@ -71,7 +71,7 @@ class SupplierController extends Controller
             
             $validator = Validator::make($arr_input, [
                 '*.stuff_name' => 'required|min:2',
-                '*.price' => 'required',
+                '*.price' => 'required|integer|min:1',
             ]);
 
 

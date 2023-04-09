@@ -13,7 +13,7 @@
 
     <div class="table-responsive col-lg-10">
         <a href="/supplier/create" class="btn btn-primary mb-3">Tambah Pemasok</a>
-        <table class="table table-striped table-sm">
+        <table class="table table-striped table-sm" id="DataTables">
             <thead>
                 <tr>
                     <th scope="col">#</th>

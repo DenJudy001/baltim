@@ -75,7 +75,7 @@
                         @if($errors->any())
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <ul>
-                                    @foreach ($errors->all(  ) as $error_validate ) 
+                                    @foreach ($errors->all() as $error_validate ) 
                                         <li>
                                             {{ $error_validate }}
                                         </li>

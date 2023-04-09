@@ -92,14 +92,14 @@ class PurchaseController extends Controller
 
             $validator = Validator::make($arr_input, [
                 '*.name' => 'required',
-                '*.qty' => 'required|min:1',
+                '*.qty' => 'required|integer|min:1',
                 '*.unit' => 'required',
-                '*.price' => 'required',
+                '*.price' => 'required|integer|min:1',
             ]);
 
             if ($validator->fails()) {
                 Purchase::destroy($purch->id);
-                return redirect('/purchase/create')->with('error_validate','Gagal! kuantitas minimal 1 ');
+                return redirect()->back()->withErrors($validator->errors())->withInput();
             }
 
             for ($i=0; $i<count($arr_input); $i++){

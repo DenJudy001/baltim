@@ -28,9 +28,15 @@
                 </div>
                 <div class="row">
                     <div class="table-responsive">
-                        @if(session()->has('error_validate'))
+                        @if($errors->any())
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                {{ session('error_validate') }}
+                                <ul>
+                                    @foreach ($errors->all() as $error_validate ) 
+                                        <li>
+                                            {{ $error_validate }}
+                                        </li>
+                                    @endforeach
+                                </ul>
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         @endif
@@ -53,7 +59,7 @@
                                             <option></option>
                                         </select>
                                     </td>
-                                    <td><textarea  class="form-control descID" name="description[]" required></textarea></td>
+                                    <td><textarea  class="form-control descID" name="description[]"></textarea></td>
                                     <td><input type="number" class="form-control qtyID" name="qty[]" value=1 required></td>
                                     <td>
                                         <select class="form-select single-select-unit" data-placeholder="Pilih Satuan" name="unit[]" required>

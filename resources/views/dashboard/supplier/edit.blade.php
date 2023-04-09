@@ -75,17 +75,17 @@
                 </form>
                 </div>
                 <div class="row">
+                    @if(session()->has('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    @endif
+                    
+                    <div class="alert alert-success alert-dismissible fade d-none" role="alert" id="success_hapus">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                     <div class="table-responsive">
-                        @if(session()->has('success'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{ session('success') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        @endif
-                        
-                        <div class="alert alert-success alert-dismissible fade d-none" role="alert" id="success_hapus">
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
                         <table class="table table-light" id="editTable">
                             <thead>
                                 <tr>

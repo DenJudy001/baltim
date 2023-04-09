@@ -16,7 +16,9 @@
     <!-- Custom styles for this template -->
     <link href="{{ asset('assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-
+    {{-- Datatables --}}
+    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    
     @stack('style')
 </head>
 
@@ -101,10 +103,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
         </script>
-        {{-- feater icons --}}
-        {{-- <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
-            integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous">
-        </script> --}}
         {{-- jquery --}}
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         {{-- select2 --}}
@@ -114,6 +112,9 @@
         <script src="{{ asset('assets/js/sb-admin-2.js') }}"></script>
         <script src="{{ asset('assets/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
         <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        {{-- DataTables --}}
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
         @stack('script')
 
@@ -123,6 +124,10 @@
                 $(".sidebar").addClass("toggled");
                 $('.sidebar .collapse').collapse('hide');
             };
+
+            $(document).ready(function () {
+                $('#DataTables').DataTable();
+            });
         </script>
 
 </body>
