@@ -71,5 +71,25 @@
             <span>{{ __('Gaji Karyawan') }}</span></a>
     </li>
 
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Pengaturan Pengguna
+    </div>
+
+    <li class="nav-item {{ request()->is('employee/'. auth()->user()->id .'/edit') ? 'active' : '' }}">
+        <a class="nav-link" href="/employee/{{ auth()->user()->id }}/edit">
+            <i class="fas fa-fw fa-cogs"></i>
+            <span>{{ __('Ubah Profil') }}</span></a>
+    </li>
+
+    <li class="nav-item {{ request()->is('change-password') || request()->is('employee-change-password/*') ? 'active' : '' }}">
+        <a class="nav-link" href="/employee-change-password/{{ auth()->user()->id }}">
+            <i class="fas fa-fw fa-cogs"></i>
+            <span>{{ __('Ubah Kata Sandi') }}</span></a>
+    </li>
+
 
 </ul>

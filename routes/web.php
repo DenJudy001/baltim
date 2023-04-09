@@ -73,4 +73,6 @@ Route::post('pos/clear-cart', [PosController::class, 'clearCart'])->name('clear.
 Route::resource('/fnb', FoodNBeveragesController::class, ['parameters' => ['fnb' => 'foodNBeverages']])->middleware('auth');
 Route::resource('/salary', EmployeeSalaryController::class , ['parameters' => ['salary' => 'employeeSalary']])->middleware('auth');
 Route::resource('/employee', EmployeeController::class, ['parameters' => ['employee' => 'user']])->middleware('auth');
+Route::post('/employee-change-password', [EmployeeController::class, 'changePassword'])->middleware('auth');
+Route::get('/employee-change-password/{user}', [EmployeeController::class, 'indexChangePassword'])->middleware('auth');
 Route::get('/account', [AccountController::class, 'index'])->middleware('auth');

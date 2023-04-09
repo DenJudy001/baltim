@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class EmployeeController extends Controller
 {
@@ -34,7 +36,7 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request ->validate([
+        $validatedData = $request->validate([
             'name' => 'required|max:255',
             'username' => 'required|min:3|max:255|unique:users',
             'telp' => 'required',
@@ -54,6 +56,7 @@ class EmployeeController extends Controller
      */
     public function show(User $user)
     {
+        //buat if admin if user redirect back
         return view('dashboard.employee.show',[
             'employee'=>$user
         ]);
@@ -64,7 +67,14 @@ class EmployeeController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        if ($user->id == auth()->user()->id){
+            return view('dashboard.employee.edit',[
+                'employee'=>$user
+            ]);
+        } else {
+            return redirect()->back();
+        }
+        
     }
 
     /**
@@ -72,7 +82,26 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $rules =[
+            'name' => [
+                'required',
+                Rule::unique('users')->ignore($user->id),
+            ],
+            'email' => [
+                'required',
+                Rule::unique('users')->ignore($user->id),
+            ],
+            'telp' => [
+                'required',
+                Rule::unique('users')->ignore($user->id),
+            ],
+        ];
+        
+        $validatedData = $request -> validate($rules);
+        User::where('id', $user->id)
+            ->update($validatedData);
+
+        return redirect()->back()->with('success','Berhasil Ubah Data Profil');
     }
 
     /**
@@ -83,5 +112,45 @@ class EmployeeController extends Controller
         User::destroy($user->id);
 
         return redirect('/employee')->with('success','Berhasil Hapus Karyawan ');
+    }
+
+    public function indexChangePassword(User $user)
+    {
+        if ($user->id == auth()->user()->id){
+            return view('dashboard.employee.change-password',[
+                'employee'=>$user
+            ]);
+        } else {
+            return redirect()->back();
+        }
+    }
+    public function changePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'old_password' => 'required',
+            'password' => 'required|confirmed|min:6',
+        ],[
+            'old_password.required' => 'Silakan masukkan kata sandi saat ini.',
+            'password.required' => 'Silakan masukkan kata sandi baru.',
+            'password.confirmed' => 'Kata sandi baru dan konfirmasi kata sandi tidak cocok.',
+            'password.min' => 'Kata sandi baru harus memiliki setidaknya :min karakter.',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+    
+        $user = auth()->user()->id;
+        $old_password = auth()->user()->password;
+    
+        if (Hash::check($request->old_password, $old_password)) {
+            User::where('id', $user)
+            ->update(['password'=>Hash::make($request->password)]);
+    
+            return redirect('/')->with('success', 'Kata Sandi berhasil diubah!');
+        } else {
+            $validator->errors()->add('old_password', 'Kata Sandi lama salah.');
+            return back()->withErrors($validator);
+        }
     }
 }
