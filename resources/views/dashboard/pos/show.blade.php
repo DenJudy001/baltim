@@ -14,13 +14,13 @@
                     <tr>
                         <td width="38%">Tanggal Penjualan</td>
                         <td width="2%">:</td>
-                        <td width="60%">{{$pos->created_at}} (dibuat oleh {{ $pos->responsible }})</td>
+                        <td width="60%">{{$pos->created_at}} (oleh {{ $pos->responsible }})</td>
                     </tr>
                     @if ($pos->end_date)
                         <tr>
                             <td width="38%">Tanggal Selesai</td>
                             <td width="2%">:</td>
-                            <td width="60%">{{$pos->end_date}}</td>
+                            <td width="60%">{{$pos->end_date}} (oleh {{ $pos->end_by }})</td>
                         </tr>
                     @endif
                 </table>

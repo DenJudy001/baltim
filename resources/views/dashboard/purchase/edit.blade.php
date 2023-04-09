@@ -6,6 +6,12 @@
     <div class="card-header bg-white">
         <div class="row">
             <div class="col"><h4 class="font-weight-bold">{{ $purchase->purchase_number }}</h4></div>
+            @if ($purchase->state == 'Proses')
+                <div class="col text-right" id="changeStatus" data-purchase-id="{{ $purchase->id }}">
+                    <a class="btn btn-success shadow-sm button-finished">{{ __('Selesaikan') }}</a>
+                    <a class="btn btn-danger shadow-sm button-cancelled">{{ __('Batalkan') }}</a>
+                </div>
+            @endif
         </div>                 
     </div>
     <div class="card-body">
@@ -49,13 +55,13 @@
                     <tr>
                         <td width="38%">Tanggal pemesanan</td>
                         <td width="2%">:</td>
-                        <td width="60%">{{$purchase->created_at}} (dibuat oleh {{ $purchase->responsible }})</td>
+                        <td width="60%">{{$purchase->created_at}} (oleh {{ $purchase->responsible }})</td>
                     </tr>
                     @if ($purchase->end_date)
                         <tr>
                             <td width="38%">Tanggal Selesai</td>
                             <td width="2%">:</td>
-                            <td width="60%">{{$purchase->end_date}}</td>
+                            <td width="60%">{{$purchase->end_date}} (oleh {{ $purchase->end_by }})</td>
                         </tr>
                     @endif
                     <tr>
@@ -104,11 +110,9 @@
                                 <td><select class="form-select single-select-stuff stuff-name" data-placeholder="Pilih Bahan/Barang"
                                     name="name" aria-describedby="inputGroupPrepend3 validationServerStuffNameFeedback" required disabled>
                                     <option></option>
-                                    @if (count($stuffs) != null)
                                         @foreach ($stuffs as $stuff)
                                             <option value="{{ $stuff->stuff_name }}" @if(old('name', $details->name) == $stuff->stuff_name) selected @endif>{{ $stuff->stuff_name }}</option>
                                         @endforeach
-                                    @endif
                                 </select>
                                 <div id="validationServerStuffNameFeedback" class="invalid-feedback d-none">Silahkan simpan data terlebih dahulu</div></td>
                                 <td><textarea class="form-control-plaintext stuff-desc" name="description" readonly>{{ old('description',$details->description) }}</textarea></td>
@@ -155,12 +159,12 @@
                     <tr>
                         <td width="38%">Tanggal pemesanan</td>
                         <td width="2%">:</td>
-                        <td width="60%">{{$purchase->created_at}} (dibuat oleh {{ $purchase->responsible }})</td>
+                        <td width="60%">{{$purchase->created_at}} (oleh {{ $purchase->responsible }})</td>
                     </tr>
                     <tr>
                         <td width="38%">Tanggal Selesai</td>
                         <td width="2%">:</td>
-                        <td width="60%">{{$purchase->end_date}}</td>
+                        <td width="60%">{{$purchase->end_date}} (oleh {{ $purchase->end_by }})</td>
                     </tr>     
                 </table>
             </div>
@@ -468,6 +472,53 @@
                         },
                         success: function (data) {
                              window.location.reload();
+                        },
+                        error: function (data) {
+                            // console.log('Error:', data);
+                        }
+                    });
+                }
+            });
+
+            $('#changeStatus').on('click', '.button-finished', function(e){
+                e.preventDefault();
+                var url = '{{ route('update.status-purchase') }}';
+                var purchase_id = $(this).parents("div").attr("data-purchase-id");
+                var newStatus = "Selesai";
+                if (confirm('Apakah Anda yakin ingin menyelesaikan pemesanan?')) {
+                    $.ajax({
+                        url: url,
+                        type: 'post',
+                        data: {
+                            "_token": $('meta[name="csrf-token"]').attr('content'),
+                            "purchase_id": purchase_id,
+                            "state": newStatus
+                        },
+                        success: function (data) {
+                            window.location.replace('/account');
+                        },
+                        error: function (data) {
+                            // console.log('Error:', data);
+                        }
+                    });
+                }
+            });
+            $('#changeStatus').on('click', '.button-cancelled', function(e){
+                e.preventDefault();
+                var url = '{{ route('update.status-purchase') }}';
+                var purchase_id = $(this).parents("div").attr("data-purchase-id");
+                var newStatus = "Dibatalkan";
+                if (confirm('Apakah Anda yakin ingin membatalkan pemesanan?')) {
+                    $.ajax({
+                        url: url,
+                        type: 'post',
+                        data: {
+                            "_token": $('meta[name="csrf-token"]').attr('content'),
+                            "purchase_id": purchase_id,
+                            "state": newStatus
+                        },
+                        success: function (data) {
+                            window.location.replace('/account');
                         },
                         error: function (data) {
                             // console.log('Error:', data);

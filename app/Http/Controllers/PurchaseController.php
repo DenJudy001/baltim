@@ -126,7 +126,7 @@ class PurchaseController extends Controller
         }
         
         
-        return redirect('/supplier')->with('success','Data pemesanan berhasil ditambahkan! ');
+        return redirect('/account')->with('success','Data pemesanan berhasil ditambahkan! ');
     }
 
     /**
@@ -146,10 +146,35 @@ class PurchaseController extends Controller
     {
         $stuffs = Stuff::where('supplier_id',$purchase->supplier_id)->select('stuff_name')->get();
 
-        return view('dashboard.purchase.edit',[
-            'purchase'=>$purchase,
-            'stuffs'=>$stuffs
-        ]);
+        $suppData = Supplier::pluck('id')->toArray();
+        $checkMenu = False;
+
+        if (in_array($purchase->supplier_id, $suppData)) {
+            // 
+        }else{
+            $checkMenu = True;
+        }
+
+        if ($purchase->state == 'Proses' && $checkMenu != True){
+            return view('dashboard.purchase.edit',[
+                'purchase'=>$purchase,
+                'stuffs'=>$stuffs
+            ]);
+        } else {
+            if ($checkMenu == True && $purchase->state == 'Proses'){
+                return view('dashboard.purchase.editlock',[
+                    'purchase'=>$purchase,
+                    'check_menu'=>$checkMenu,
+                    'announce' => 'Rincian pembelian tidak dapat diubah karena pemasok tidak terdaftar atau terhapus'
+                ]);
+            } else{
+                return view('dashboard.purchase.editlock',[
+                    'purchase'=>$purchase,
+                    'check_menu'=>$checkMenu,
+                    'announce' => 'Rincian pembelian tidak dapat diubah karena status transaksi telah '.$purchase->state.''
+                ]);
+            }
+        }
     }
 
     /**
@@ -168,5 +193,16 @@ class PurchaseController extends Controller
         Purchase::destroy($purchase->id);
 
         return redirect('/account')->with('success','Catatan Transaksi Berhasil Dihapus ');
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $endDate = now();
+        $endBy = auth()->user()->name;
+        $newStatus = $request->state;
+        Purchase::where('id', $request->purchase_id)
+            ->update(['state'=>$newStatus, 'end_date'=>$endDate,'end_by'=>$endBy]);  
+        
+        session()->flash('success', 'Berhasil Merubah Status Pemesanan');   
     }
 }

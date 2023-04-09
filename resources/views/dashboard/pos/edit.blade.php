@@ -20,13 +20,13 @@
                     <tr>
                         <td width="38%">Tanggal pemesanan</td>
                         <td width="2%">:</td>
-                        <td width="60%">{{$pos->created_at}} (dibuat oleh {{ $pos->responsible }})</td>
+                        <td width="60%">{{$pos->created_at}} (oleh {{ $pos->responsible }})</td>
                     </tr>
                     @if ($pos->end_date)
                         <tr>
                             <td width="38%">Tanggal Selesai</td>
                             <td width="2%">:</td>
-                            <td width="60%">{{$pos->end_date}}</td>
+                            <td width="60%">{{$pos->end_date}} (oleh {{ $pos->end_by }})</td>
                         </tr>
                     @endif
                 </table>
@@ -340,7 +340,7 @@
                 var url = '{{ route('update.status-pos') }}';
                 var pos_id = $(this).parents("div").attr("data-pos-id");
                 var newStatus = "Selesai";
-                if (confirm('Apakah Anda yakin ingin merubah status transaksi?')) {
+                if (confirm('Apakah Anda yakin ingin menyelesaikan transaksi?')) {
                     $.ajax({
                         url: url,
                         type: 'post',
@@ -363,7 +363,7 @@
                 var url = '{{ route('update.status-pos') }}';
                 var pos_id = $(this).parents("div").attr("data-pos-id");
                 var newStatus = "Dibatalkan";
-                if (confirm('Apakah Anda yakin ingin merubah status transaksi?')) {
+                if (confirm('Apakah Anda yakin ingin membatalkan transaksi?')) {
                     $.ajax({
                         url: url,
                         type: 'post',

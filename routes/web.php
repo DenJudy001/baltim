@@ -58,6 +58,7 @@ Route::post('/logout',[LoginController::class, 'logout']);
 Route::resource('/supplier', SupplierController::class)->middleware('auth');
 Route::post('/supplier/update-stuff', [SupplierController::class, 'updateStuff'])->name('update.stuff')->middleware('auth');
 Route::resource('/purchase', PurchaseController::class)->middleware('auth');
+Route::post('/purchase/update-status', [PurchaseController::class, 'updateStatus'])->name('update.status-purchase')->middleware('auth');
 Route::resource('/detail-purchase', DetailPurchaseController::class)->middleware('auth');
 Route::post('/detail-purchase/update-details', [DetailPurchaseController::class, 'updateDetailPurchase'])->name('update.details-purchase')->middleware('auth');
 Route::resource('/otherpurchase', OtherPurchaseController::class)->middleware('auth');

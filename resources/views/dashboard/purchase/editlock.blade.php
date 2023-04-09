@@ -1,11 +1,23 @@
 @extends('dashboard.layouts.main')
 
 @section('container')
+@if (isset($announce))
+    <div class="alert alert-danger" role="alert">
+        <b>Perhatian! </b>
+        {{ $announce }}
+    </div>
+@endif
 @if (count($purchase->dtl_purchase) != null)
     <div class="card mb-3">
         <div class="card-header bg-white">
             <div class="row">
                 <div class="col"><h4 class="font-weight-bold">{{ $purchase->purchase_number }}</h4></div>
+                @if ($check_menu == True && $purchase->state == 'Proses')
+                    <div class="col text-right" id="changeStatus" data-purchase-id="{{ $purchase->id }}">
+                        <a class="btn btn-success shadow-sm button-finished">{{ __('Selesaikan') }}</a>
+                        <a class="btn btn-danger shadow-sm button-cancelled">{{ __('Batalkan') }}</a>
+                    </div>
+                @endif
             </div>                 
         </div>
         <div class="card-body">
@@ -150,3 +162,56 @@
     </div>
 @endif
 @endsection
+
+@push('script')
+    <script>
+        $(document).ready(function(){
+            $('#changeStatus').on('click', '.button-finished', function(e){
+                e.preventDefault();
+                var url = '{{ route('update.status-purchase') }}';
+                var purchase_id = $(this).parents("div").attr("data-purchase-id");
+                var newStatus = "Selesai";
+                if (confirm('Apakah Anda yakin ingin menyelesaikan pemesanan?')) {
+                    $.ajax({
+                        url: url,
+                        type: 'post',
+                        data: {
+                            "_token": $('meta[name="csrf-token"]').attr('content'),
+                            "purchase_id": purchase_id,
+                            "state": newStatus
+                        },
+                        success: function (data) {
+                            window.location.replace('/account');
+                        },
+                        error: function (data) {
+                            // console.log('Error:', data);
+                        }
+                    });
+                }
+            });
+            $('#changeStatus').on('click', '.button-cancelled', function(e){
+                e.preventDefault();
+                var url = '{{ route('update.status-purchase') }}';
+                var purchase_id = $(this).parents("div").attr("data-purchase-id");
+                var newStatus = "Dibatalkan";
+                if (confirm('Apakah Anda yakin ingin membatalkan pemesanan?')) {
+                    $.ajax({
+                        url: url,
+                        type: 'post',
+                        data: {
+                            "_token": $('meta[name="csrf-token"]').attr('content'),
+                            "purchase_id": purchase_id,
+                            "state": newStatus
+                        },
+                        success: function (data) {
+                            window.location.replace('/account');
+                        },
+                        error: function (data) {
+                            // console.log('Error:', data);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+@endpush
