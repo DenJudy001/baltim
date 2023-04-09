@@ -168,15 +168,22 @@ class PurchaseController extends Controller
                 return view('dashboard.purchase.editlock',[
                     'purchase'=>$purchase,
                     'check_menu'=>$checkMenu,
-                    'announce' => 'Rincian pembelian tidak dapat diubah karena pemasok tidak terdaftar atau terhapus',
+                    'announce' => 'Rincian pemesanan tidak dapat diubah karena pemasok tidak terdaftar atau terhapus',
                     'title'=>"Ubah Data Pemesanan"
                 ]);
-            } else{
+            } else if (count($purchase->dtl_purchase) != null){
                 return view('dashboard.purchase.editlock',[
                     'purchase'=>$purchase,
                     'check_menu'=>$checkMenu,
-                    'announce' => 'Rincian pembelian tidak dapat diubah karena status transaksi telah '.$purchase->state.'',
+                    'announce' => 'Rincian pemesanan tidak dapat diubah karena status transaksi telah '.$purchase->state.'',
                     'title'=>"Ubah Data Pemesanan"
+                ]);
+            }else{
+                return view('dashboard.purchase.editlock',[
+                    'purchase'=>$purchase,
+                    'check_menu'=>$checkMenu,
+                    'announce' => 'Rincian pembayaran tidak dapat diubah karena status transaksi telah '.$purchase->state.'',
+                    'title'=>"Ubah Data Pembayaran"
                 ]);
             }
         }

@@ -2,6 +2,14 @@
 
 @section('container')
 @if (count($purchase->dtl_purchase) != null)
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb no-bg">
+                <li class="breadcrumb-item"><a href="/account">Daftar Transaksi</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Info Pemesanan</li>
+            </ol>
+        </nav>
+    </div>
     <div class="card mb-3">
         <div class="card-header bg-white">
             <div class="row">
@@ -71,7 +79,7 @@
     <div class="card">
         <div class="card-header bg-white">
             <div class="row">
-                <div class="col"><h4 class="font-weight-bold">Rincian Pembelian</h4></div>
+                <div class="col"><h4 class="font-weight-bold">Rincian Pemesanan</h4></div>
             </div>                 
         </div>
         <div class="card-body">
@@ -104,6 +112,14 @@
         </div>
     </div>
 @else
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb no-bg">
+                <li class="breadcrumb-item"><a href="/account">Daftar Transaksi</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Info Pembayaran</li>
+            </ol>
+        </nav>
+    </div>
     <div class="card mb-3">
         <div class="card-header bg-white">
             <div class="row">
@@ -120,14 +136,14 @@
                             <td width="60%" >{{$purchase->purchase_name}}</td>
                         </tr>
                         <tr>
-                            <td width="38%">Tanggal pemesanan</td>
-                            <td width="2%">:</td>
-                            <td width="60%">{{$purchase->created_at}} (oleh {{ $purchase->responsible }})</td>
+                            <td width="38%" >Keterangan</td>
+                            <td width="2%" >:</td>
+                            <td width="60%" >{{$purchase->description}}</td>
                         </tr>
                         <tr>
-                            <td width="38%">Tanggal Selesai</td>
+                            <td width="38%">Tanggal Pencatatan</td>
                             <td width="2%">:</td>
-                            <td width="60%">{{$purchase->end_date}} (oleh {{ $purchase->end_by }})</td>
+                            <td width="60%">{{$purchase->end_date}} (oleh {{ $purchase->responsible }})</td>
                         </tr>     
                     </table>
                 </div>

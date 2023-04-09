@@ -1,11 +1,11 @@
 @extends('dashboard.layouts.main')
 
 @section('container')
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Catatan Pembayaran</h1>
-    </div>
-    <div class="card col-lg-8">
-        <div class="card-header">
+    <div class="card">
+        <div class="card-header bg-white">
+            <div class="row">
+                <div class="col"><h4 class="font-weight-bold">Buat Catatan Pembayaran</h4></div>
+            </div>
         </div>
         <div class="card-body">
             <form action="/otherpurchase" method="post">

@@ -1,6 +1,14 @@
 @extends('dashboard.layouts.main')
 
 @section('container')
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb no-bg">
+            <li class="breadcrumb-item"><a href="/account">Daftar Transaksi</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Ubah Data Penjualan</li>
+        </ol>
+    </nav>
+</div>
 @if (isset($announce))
     <div class="alert alert-danger" role="alert">
         <b>Perhatian! </b>

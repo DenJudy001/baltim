@@ -38,7 +38,7 @@ class OtherPurchaseController extends Controller
             'total' => 'required',
         ]);
 
-        $validatedData['description'] = $request->description;
+        $validatedData['description'] = $request->supplier_description;
         $validatedData['responsible'] = auth()->user()->name;
         $validatedData['state'] = 'Selesai';
         $validatedData['end_date'] = now();

@@ -1,11 +1,19 @@
 @extends('dashboard.layouts.main')
 
 @section('container')
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Tambah Karyawan Baru</h1>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb no-bg">
+                <li class="breadcrumb-item"><a href="/employee">Daftar Karyawan</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tambah Karyawan</li>
+            </ol>
+        </nav>
     </div>
-    <div class="card col-lg-8">
-        <div class="card-header">
+    <div class="card">
+        <div class="card-header bg-white">
+            <div class="row">
+                <div class="col"><h4 class="font-weight-bold">Tambah Karyawan Baru</h4></div>
+            </div> 
         </div>
         <div class="card-body">
             <form action="/employee" method="post">
@@ -62,7 +70,7 @@
                         @enderror
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary mb-3">Buat Karyawan</button>
+                <button type="submit" class="btn btn-primary mb-3 mt-2">Buat Karyawan</button>
             </form>
         </div>
     </div>
