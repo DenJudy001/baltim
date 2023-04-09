@@ -22,7 +22,49 @@ class AccountController extends Controller
         $transactions = $purchase->union($salary)->union($pos)->orderBy('updated_at', 'desc')->get();
         $title = "Catatan Keuangan";
 
-        return view('dashboard.account.index', compact('transactions','title'));
+        $posData = $pos->get();
+        $salaryData = $salary->get();
+        $purchaseData = $purchase->get();
+        $totalIncome = 0;
+        $pendingIncome = 0;
+        $confirmedIncome = 0;
+        $totalExpense = 0;
+        $pendingExpense = 0;
+        $confirmedExpense = 0;
+
+
+        foreach ($posData as $data){
+            if($data->state == "Proses"){
+                $pendingIncome += $data->total;
+                $totalIncome += $data->total;
+            } else if($data->state == "Selesai"){
+                $confirmedIncome += $data->total;
+                $totalIncome += $data->total;
+            }
+        }
+
+        foreach($salaryData as $data){
+            if($data->state == "Proses"){
+                $pendingExpense += $data->salary;
+                $totalExpense += $data->salary;
+            } else if($data->state == "Selesai"){
+                $confirmedExpense += $data->salary;
+                $totalExpense += $data->salary;
+            }
+        }
+        
+        foreach($purchaseData as $data){
+            if($data->state == "Proses"){
+                $pendingExpense += $data->total;
+                $totalExpense += $data->total;
+            } else if($data->state == "Selesai"){
+                $confirmedExpense += $data->total;
+                $totalExpense += $data->total;
+            }
+        }
+
+
+        return view('dashboard.account.index', compact('transactions','title','totalIncome','pendingIncome','confirmedIncome','totalExpense','pendingExpense','confirmedExpense'));
     }
 
 
