@@ -9,7 +9,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item {{ request()->is('account') || request()->is('account/*') ? 'active' : '' }}">
+    <li class="nav-item {{ request()->is('account') || request()->is('purchase/*') && !request()->is('purchase/create') || request()->is('salary/*') && !request()->is('salary/create') || request()->is('pos/*')  && !request()->is('pos/create')  ? 'active' : '' }}">
         <a class="nav-link" href="/account">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>{{ __('Catatan Keuangan') }}</span></a>
@@ -39,7 +39,7 @@
         Pemasukan
     </div>
 
-    <li class="nav-item {{ request()->is('pos') || request()->is('pos/*') ? 'active' : '' }}">
+    <li class="nav-item {{ request()->is('pos/create') ? 'active' : '' }}">
         <a class="nav-link" href="/pos/create">
             <i class="fas fa-fw fa-cogs"></i>
             <span>{{ __('Kasir') }}</span></a>
@@ -53,7 +53,7 @@
         Pengeluaran
     </div>
 
-    <li class="nav-item {{ request()->is('purchase') || request()->is('purchase/*') ? 'active' : '' }}">
+    <li class="nav-item {{ request()->is('purchase/create') ? 'active' : '' }}">
         <a class="nav-link" href="/purchase/create">
             <i class="fas fa-fw fa-cogs"></i>
             <span>{{ __('Pemesanan Bahan/Barang') }}</span></a>
@@ -65,7 +65,7 @@
             <span>{{ __('Pembayaran Lain-lain') }}</span></a>
     </li>
 
-    <li class="nav-item {{ request()->is('salary') || request()->is('salary/*') ? 'active' : '' }}">
+    <li class="nav-item {{ request()->is('salary/create') ? 'active' : '' }}">
         <a class="nav-link" href="/salary/create">
             <i class="fas fa-fw fa-cogs"></i>
             <span>{{ __('Gaji Karyawan') }}</span></a>

@@ -33,7 +33,9 @@ use App\Models\DetailPurchase;
 */
 
 Route::get('/', function () {
-    return view('dashboard.index');
+    return view('dashboard.index',[
+        'title'=> "Selamat Datang!"
+    ]);
 })->middleware('auth');
 
 Route::post('stuff/{stuff}', function (Stuff $stuff) {
