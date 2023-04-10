@@ -29,7 +29,7 @@ class PosController extends Controller
             return $query->where('name','like','%'.request('search').'%');
         })->when(request('category_type'), function($query) {
             return $query->where('type', request('category_type'));
-        })->orderBy('created_at','desc')->paginate(4);
+        })->orderBy('created_at','desc')->paginate(6);
 
         $fnbCat = FoodNBeverages::select('type')->distinct()->get();
         $title = "Penjualan";
@@ -161,6 +161,7 @@ class PosController extends Controller
             $cart[$menu] = [
                 "name" => $menuData->name,
                 "quantity" => 1,
+                "description" => $menuData->description,
                 "price" => $menuData->price,
                 "image" => $menuData->image
             ];

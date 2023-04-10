@@ -10,7 +10,7 @@
                 </div>
             @endif
             <div class="col-md-6 mb-4 col-lg-8">
-                <div class="card" style="min-height:85vh">
+                <div class="card">
                     <div class="card-header bg-white">
                         <form action="{{ url('/pos/create') }}" method="get">
                             <div class="row">
@@ -41,38 +41,35 @@
                             </div> --}}
                         </form>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body d-flex flex-wrap justify-content-between">
                         <div class="row">
                             @foreach ($fnbs as $fnb)
-                            <div class=" col-sm-6 col-md-6 col-lg-3">
-                                <div class="card mb-4">
-                                    <div class="productCard">
-                                        <div class="view overlay">
-                                            <a href="/pos/add-to-cart/{{ $fnb->id }}"><img class="card-img-top gambar"
-                                                    src="{{ asset('images/' . $fnb->image) }}" alt="Card image cap"
-                                                    style="cursor: pointer"></a>
-
-                                        </div>
-                                        <div class="card-body">
-                                            <label class="card-text font-weight-bold"
-                                                style="text-transform: capitalize;">
-                                                {{ Str::words($fnb->name, 4) }} </label>
-                                            <p class="card-text text-center">Rp. {{ number_format($fnb->price, 0, ',', '.') }}
-                                            </p>
-                                        </div>
+                            <div class="card mb-4 col-sm-6 col-md-6 col-lg-4">
+                                {{-- <div class=" col-sm-6 col-md-6 col-lg-4"> --}}
+                                <div class="productCard">
+                                    <div class="view overlay">
+                                    <a href="/pos/add-to-cart/{{ $fnb->id }}"><img class="card-img-top gambar"
+                                        src="{{ asset('images/' . $fnb->image) }}" alt="Card image cap" style="cursor: pointer"></a>
+                                    </div>
+                                    <div class="card-body">
+                                    <label class="card-text font-weight-bold" style="text-transform: capitalize;">
+                                        {{ Str::words($fnb->name, 4) }} </label>
+                                    <p class="card-text text-center">Rp. {{ number_format($fnb->price, 0, ',', '.') }}
+                                    </p>
                                     </div>
                                 </div>
+                                {{-- </div> --}}
                             </div>
                             @endforeach
                         </div>
                     </div>
-                    <div class="d-flex justify-content-center">{{ $fnbs->links() }}</div>
+                    <div class="d-flex justify-content-center">{{ $fnbs->appends(['category_type' => request()->category_type, 'search' => request()->search])->links() }}</div>
                 </div>
             </div>
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="user-cart">
-                    <div class="card">
-                        <table class="table table-striped">
+                    <div class="card mb-3">
+                        <table class="table table-striped mb-0">
                             <thead>
                                 <tr>
                                     <th width="30%">Menu</th>
@@ -96,19 +93,30 @@
                                     @endforeach
                                 @endif
                             </tbody>
+                            <tfoot>
+                                @php $total = 0 @endphp
+                                @foreach ((array) session('cart') as $menu => $details)
+                                    @php $total += $details['price'] * $details['quantity'] @endphp
+                                @endforeach
+                                <tr>
+                                    <td>
+                                        <div class="col font-weight-bold">Total :</div>
+                                    </td>
+                                    <td colspan="3">
+                                        <div class="col text-right">
+                                            <p><span class="font-weight-bold">Rp. {{ number_format($total, 0, ',', '.') }}</span></p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
-                <div class="row mt-2">
-                    @php $total = 0 @endphp
-                    @foreach ((array) session('cart') as $menu => $details)
-                        @php $total += $details['price'] * $details['quantity'] @endphp
-                    @endforeach
-                    <div class="col">Total:</div>
-                    <div class="col text-right">
-                        <p><span class="text-dark">Rp. {{ number_format($total, 0, ',', '.') }}</span></p>
-                    </div>
-                </div>
+                {{-- <div class="row mt-2">
+                    
+                    
+                   
+                </div> --}}
                 <div class="row">
                     @if (session('cart'))
                     <div class="col">
@@ -163,9 +171,10 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="text-center" width="20%">Gambar</th>
-                                                <th scope="col" width="30%">Menu</th>
-                                                <th scope="col" width="20%">Jumlah</th>
-                                                <th scope="col" class="text-right" width="30%">Harga</th>
+                                                <th scope="col" width="20%">Menu</th>
+                                                <th scope="col" width="30%">Keterangan</th>
+                                                <th scope="col" width="10%">Jumlah</th>
+                                                <th scope="col" class="text-right" width="20%">Harga</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -174,7 +183,8 @@
                                                     <tr>
                                                         <td scope="row"><img class="card-img-top"
                                                             src="{{ asset('images/' . $details['image']) }}" alt="Card image cap"></td>
-                                                        <td>{{ Str::words($details['name'], 2) }}</td>
+                                                        <td>{{ $details['name'] }}</td>
+                                                        <td>{{ $details['description'] }}</td>
                                                         <td class="font-weight-bold">
                                                             <p>{{ $details['quantity'] }}</p>
                                                         </td>
@@ -185,7 +195,7 @@
                                         </tbody>                                        
                                         <tfoot>
                                             <tr>
-                                                <td colspan="3">
+                                                <td colspan="4">
                                                     <div class="d-flex justify-content-end">Total Harga :</div> 
                                                 </td>
                                                 <td>
