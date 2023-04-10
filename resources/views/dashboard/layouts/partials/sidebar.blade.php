@@ -68,14 +68,14 @@
         Pengaturan Pengguna
     </div>
 
-    <li class="nav-item {{ request()->is('employee/'. auth()->user()->id .'/edit') ? 'active' : '' }}">
-        <a class="nav-link" href="/employee/{{ auth()->user()->id }}/edit">
+    <li class="nav-item {{ request()->is('employee/'. auth()->user()->username .'/edit') ? 'active' : '' }}">
+        <a class="nav-link" href="/employee/{{ auth()->user()->username }}/edit">
             <i class="fas fa-fw fa-cogs"></i>
             <span>{{ __('Ubah Profil') }}</span></a>
     </li>
 
     <li class="nav-item {{ request()->is('change-password') || request()->is('employee-change-password/*') ? 'active' : '' }}">
-        <a class="nav-link" href="/employee-change-password/{{ auth()->user()->id }}">
+        <a class="nav-link" href="/employee-change-password/{{ auth()->user()->username }}">
             <i class="fas fa-fw fa-cogs"></i>
             <span>{{ __('Ubah Kata Sandi') }}</span></a>
     </li>

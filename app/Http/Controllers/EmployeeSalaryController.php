@@ -43,7 +43,7 @@ class EmployeeSalaryController extends Controller
         $validatedData['email'] = $request->email;
         $validatedData['telp'] = $request->telp;
         $validatedData['state'] = 'Selesai';
-        $validatedData['end_by'] = auth()->user()->name;
+        $validatedData['end_by'] = auth()->user()->username;
         $validatedData['salary_number'] = IdGenerator::generate(['table' => 'employee_salaries', 'length' => 10, 'prefix' =>'SAL-','reset_on_prefix_change' => true ,'field' => 'salary_number']);
 
         EmployeeSalary::create($validatedData);

@@ -43,12 +43,12 @@ class PosController extends Controller
     public function store(Request $request)
     {
         $dataTransaction['purchase_name'] = 'Pemesanan';
-        $dataTransaction['responsible'] = auth()->user()->name;
+        $dataTransaction['responsible'] = auth()->user()->username;
         $dataTransaction['pos_number'] = IdGenerator::generate(['table' => 'pos', 'length' => 10, 'prefix' =>'TRX-','reset_on_prefix_change' => true ,'field' => 'pos_number']);
         $dataTransaction['total'] = $request->totalHarga;
         if($request->state == 'Selesai'){
             $dataTransaction['end_date'] = now();
-            $dataTransaction['end_by'] = auth()->user()->name;
+            $dataTransaction['end_by'] = auth()->user()->username;
         }
         $dataTransaction['state'] = $request->state;
         
@@ -202,7 +202,7 @@ class PosController extends Controller
     public function updateStatus(Request $request)
     {
         $endDate = now();
-        $endBy = auth()->user()->name;
+        $endBy = auth()->user()->username;
         $newStatus = $request->state;
         Pos::where('id', $request->pos_id)
             ->update(['state'=>$newStatus, 'end_date'=>$endDate,'end_by'=>$endBy]);  

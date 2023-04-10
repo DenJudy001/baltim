@@ -57,13 +57,13 @@
                         <tr>
                             <td width="38%">Tanggal Pemesanan</td>
                             <td width="2%">:</td>
-                            <td width="60%">{{$purchase->created_at}} (oleh {{ $purchase->responsible }})</td>
+                            <td width="60%">{{$purchase->created_at}} (oleh @can('admin') <a href="/employee/{{ $purchase->responsible }}">{{ $purchase->responsible }}</a>@else {{ $purchase->responsible }} @endcan)</td>
                         </tr>
                         @if ($purchase->end_date)
                             <tr>
                                 <td width="38%">Tanggal Selesai</td>
                                 <td width="2%">:</td>
-                                <td width="60%">{{$purchase->end_date}} (oleh {{ $purchase->end_by }})</td>
+                                <td width="60%">{{$purchase->end_date}} (oleh @can('admin') <a href="/employee/{{ $purchase->end_by }}">{{ $purchase->end_by }}</a>@else {{ $purchase->end_by }} @endcan)</td>
                             </tr>
                         @endif
                         <tr>
@@ -143,7 +143,7 @@
                         <tr>
                             <td width="38%">Tanggal Pencatatan</td>
                             <td width="2%">:</td>
-                            <td width="60%">{{$purchase->end_date}} (oleh {{ $purchase->responsible }})</td>
+                            <td width="60%">{{$purchase->end_date}} (oleh @can('admin') <a href="/employee/{{ $purchase->responsible }}">{{ $purchase->responsible }}</a>@else {{ $purchase->responsible }} @endcan)</td>
                         </tr>     
                     </table>
                 </div>

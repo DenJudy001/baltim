@@ -39,7 +39,7 @@ class OtherPurchaseController extends Controller
         ]);
 
         $validatedData['description'] = $request->supplier_description;
-        $validatedData['responsible'] = auth()->user()->name;
+        $validatedData['responsible'] = auth()->user()->username;
         $validatedData['state'] = 'Selesai';
         $validatedData['end_date'] = now();
         $validatedData['purchase_number'] = IdGenerator::generate(['table' => 'purchases', 'length' => 10, 'prefix' =>'PUR-','reset_on_prefix_change' => true ,'field' => 'purchase_number']);

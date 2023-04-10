@@ -17,7 +17,7 @@ class EmployeeController extends Controller
     public function index()
     {
         return view('dashboard.employee.index',[
-            'users'=>User::all('id','name','email'),
+            'users'=>User::all('id','name','email','username'),
             'title'=>"Daftar Karyawan"
         ]);
     }
@@ -40,7 +40,7 @@ class EmployeeController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'username' => 'required|min:3|max:255|unique:users',
-            'telp' => 'required',
+            'telp' => 'required|min:9|max:15|unique:users',
             'email' => 'required|email:dns|unique:users',
             'password' => 'required|min:5|max:255'
         ]);
@@ -86,10 +86,7 @@ class EmployeeController extends Controller
     public function update(Request $request, User $user)
     {
         $rules =[
-            'name' => [
-                'required',
-                Rule::unique('users')->ignore($user->id),
-            ],
+            'name' => 'required',
             'email' => [
                 'required',
                 Rule::unique('users')->ignore($user->id),

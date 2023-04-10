@@ -43,7 +43,7 @@ class PurchaseController extends Controller
             'total' => 'required',
         ]);
         $validatedDataPurch['purchase_name'] = 'Pemesanan';
-        $validatedDataPurch['responsible'] = auth()->user()->name;
+        $validatedDataPurch['responsible'] = auth()->user()->username;
         $validatedDataPurch['state'] = 'Proses';
         $validatedDataPurch['purchase_number'] = IdGenerator::generate(['table' => 'purchases', 'length' => 10, 'prefix' =>'PUR-','reset_on_prefix_change' => true ,'field' => 'purchase_number']);
         $dataSupplier = Supplier::where('id', $request->supplier_id)->first();
@@ -210,7 +210,7 @@ class PurchaseController extends Controller
     public function updateStatus(Request $request)
     {
         $endDate = now();
-        $endBy = auth()->user()->name;
+        $endBy = auth()->user()->username;
         $newStatus = $request->state;
         Purchase::where('id', $request->purchase_id)
             ->update(['state'=>$newStatus, 'end_date'=>$endDate,'end_by'=>$endBy]);  
