@@ -80,3 +80,7 @@ Route::put('/employee/{user}', [EmployeeController::class, 'update'])->middlewar
 Route::post('/employee-change-password', [EmployeeController::class, 'changePassword'])->middleware('auth');
 Route::get('/employee-change-password/{user}', [EmployeeController::class, 'indexChangePassword'])->middleware('auth');
 Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
+
+Route::get('/lang/id/datatables', function () {
+    return response()->json(trans('datatables'));
+});

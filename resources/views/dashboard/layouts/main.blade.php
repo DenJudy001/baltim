@@ -126,7 +126,11 @@
             };
 
             $(document).ready(function () {
-                $('#DataTables').DataTable();
+                $('#DataTables').DataTable({
+                    language: {
+                        url: '/lang/id/datatables'
+                    }
+                });
             });
         </script>
 
