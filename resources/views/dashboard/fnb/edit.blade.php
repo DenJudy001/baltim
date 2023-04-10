@@ -41,7 +41,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="name" class="form-label @error('name') is-invalid @enderror">Nama
-                                Menuc</label>
+                                Menu<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="name" name="name"
                                 value="{{ old('name', $fnb->name) }}" required autofocus>
                             @error('name')

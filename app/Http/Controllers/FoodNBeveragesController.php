@@ -39,7 +39,7 @@ class FoodNBeveragesController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255|unique:food_n_beverages',
             'type' => 'required',
-            'price' => 'required',
+            'price' => 'required|integer|min:1',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -89,7 +89,7 @@ class FoodNBeveragesController extends Controller
     {
         $rules =[
             'type' => 'required',
-            'price' => 'required',
+            'price' => 'required|integer|min:1',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
         
