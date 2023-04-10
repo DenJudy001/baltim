@@ -15,22 +15,6 @@
             <span>{{ __('Catatan Keuangan') }}</span></a>
     </li>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <li class="nav-item">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-            <span>{{ __('Manajemen') }}</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item {{ request()->is('employee') || request()->is('employee/*') ? 'active' : '' }}" href="/employee"> <i class="fa fa-briefcase mr-2"></i> {{ __('Akun Karyawan') }}</a>
-                <a class="collapse-item {{ request()->is('supplier') || request()->is('supplier/*') ? 'active' : '' }}" href="/supplier"><i class="fa fa-briefcase mr-2"></i> {{ __('Pemasok') }}</a>
-                <a class="collapse-item {{ request()->is('fnb') || request()->is('fnb/*') ? 'active' : '' }}" href="/fnb"> <i class="fa fa-user mr-2"></i> {{ __('Menu') }}</a>
-            </div>
-        </div>
-    </li>
-
      <!-- Divider -->
      <hr class="sidebar-divider">
 
@@ -39,6 +23,11 @@
         Pemasukan
     </div>
 
+    <li class="nav-item {{ request()->is('fnb') || request()->is('fnb/*') ? 'active' : '' }}">
+        <a class="nav-link" href="/fnb">
+            <i class="fas fa-fw fa-cogs"></i>
+            <span>{{ __('Menu') }}</span></a>
+    </li>
     <li class="nav-item {{ request()->is('pos/create') ? 'active' : '' }}">
         <a class="nav-link" href="/pos/create">
             <i class="fas fa-fw fa-cogs"></i>
@@ -53,6 +42,12 @@
         Pengeluaran
     </div>
 
+    <li class="nav-item {{ request()->is('supplier') || request()->is('supplier/*') ? 'active' : '' }}">
+        <a class="nav-link" href="/supplier">
+            <i class="fas fa-fw fa-cogs"></i>
+            <span>{{ __('Pemasok') }}</span></a>
+    </li>
+
     <li class="nav-item {{ request()->is('purchase/create') ? 'active' : '' }}">
         <a class="nav-link" href="/purchase/create">
             <i class="fas fa-fw fa-cogs"></i>
@@ -63,12 +58,6 @@
         <a class="nav-link" href="/otherpurchase/create">
             <i class="fas fa-fw fa-cogs"></i>
             <span>{{ __('Pembayaran Lain-lain') }}</span></a>
-    </li>
-
-    <li class="nav-item {{ request()->is('salary/create') ? 'active' : '' }}">
-        <a class="nav-link" href="/salary/create">
-            <i class="fas fa-fw fa-cogs"></i>
-            <span>{{ __('Gaji Karyawan') }}</span></a>
     </li>
 
     <!-- Divider -->
@@ -90,6 +79,30 @@
             <i class="fas fa-fw fa-cogs"></i>
             <span>{{ __('Ubah Kata Sandi') }}</span></a>
     </li>
+
+    @can('admin')
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Administrator
+    </div>
+
+    <li class="nav-item {{ request()->is('employee') || request()->is('employee/*') ? 'active' : '' }}">
+        <a class="nav-link" href="/employee">
+            <i class="fas fa-fw fa-cogs"></i>
+            <span>{{ __('Akun Karyawan') }}</span></a>
+    </li>
+    
+    <li class="nav-item {{ request()->is('salary/create') ? 'active' : '' }}">
+        <a class="nav-link" href="/salary/create">
+            <i class="fas fa-fw fa-cogs"></i>
+            <span>{{ __('Gaji Karyawan') }}</span></a>
+    </li>
+    @endcan
+
+    
 
 
 </ul>

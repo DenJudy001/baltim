@@ -132,7 +132,7 @@ class EmployeeController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'old_password' => 'required',
-            'password' => 'required|confirmed|min:6',
+            'password' => 'required|confirmed|min:5',
         ],[
             'old_password.required' => 'Silakan masukkan kata sandi saat ini.',
             'password.required' => 'Silakan masukkan kata sandi baru.',

@@ -10,7 +10,7 @@
     <div class="card-header bg-white">
         <div class="row">
             <div class="col"><h4 class="font-weight-bold">Rincian Akun</h4></div>
-        </div>                 
+        </div>
     </div>
     <div class="card-body">
         <form action="/employee/{{ $employee->id }}" method="post">
