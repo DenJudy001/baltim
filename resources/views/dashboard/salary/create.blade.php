@@ -12,8 +12,8 @@
                 @csrf
                 <div class="row">
                     <div class="mb-3">
-                        <label for="emp_name" class="form-label @error('emp_name') is-invalid @enderror">Nama</label>
-                        <select class="form-select single-select-employee" name="user_id" id="emp_name" data-placeholder="Pilih Karyawan" required>
+                        <label for="emp_name" class="form-label @error('emp_name') is-invalid @enderror">Nama<span class="text-danger">*</span></label>
+                        <select class="form-select single-select-employee" name="user_id" id="emp_name" data-placeholder="Pilih Karyawan" required oninvalid="this.setCustomValidity('Nama tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                             <option></option>
                             @foreach ($employee as $emp)
                                 @if(old('emp_name') == $emp->id)
@@ -30,12 +30,12 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="salary" class="form-label @error('salary') is-invalid @enderror">Jumlah</label>
+                        <label for="salary" class="form-label @error('salary') is-invalid @enderror">Jumlah<span class="text-danger">*</span></label>
                         <input type="hidden" class="form-control" id="name" name="name" value="{{ $emp->name }}">
                         <input type="hidden" class="form-control" id="email" name="email" value="{{ $emp->email }}">
                         <input type="hidden" class="form-control" id="telp" name="telp" value="{{ $emp->telp }}">
                         <input type="number" class="form-control" id="salary" name="salary"
-                            value="{{ old('salary') }}" required>
+                            value="{{ old('salary') }}" required min="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninvalid="this.setCustomValidity('Jumlah tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                         @error('salary')
                             <div class="invalid-feedback">
                                 {{ $message }}

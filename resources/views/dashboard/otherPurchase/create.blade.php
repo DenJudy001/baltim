@@ -12,9 +12,9 @@
                 @csrf
                 <div class="row">
                     <div class="mb-3">
-                        <label for="purchase_name" class="form-label @error('purchase_name') is-invalid @enderror">Nama Pembayaran</label>
+                        <label for="purchase_name" class="form-label @error('purchase_name') is-invalid @enderror">Nama Pembayaran<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="purchase_name" name="purchase_name"
-                            value="{{ old('purchase_name') }}" required autofocus>
+                            value="{{ old('purchase_name') }}" required autofocus oninvalid="this.setCustomValidity('Nama Pembayaran tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                         @error('purchase_name')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -32,9 +32,9 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="total" class="form-label @error('total') is-invalid @enderror">Total Harga</label>
+                        <label for="total" class="form-label @error('total') is-invalid @enderror">Total Harga<span class="text-danger">*</span></label>
                         <input type="number" class="form-control" id="total" name="total"
-                            value="{{ old('total') }}" required>
+                            value="{{ old('total') }}" required min='1' onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninvalid="this.setCustomValidity('Harga tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                         @error('total')
                             <div class="invalid-feedback">
                                 {{ $message }}

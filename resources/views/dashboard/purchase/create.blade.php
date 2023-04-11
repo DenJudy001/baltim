@@ -12,8 +12,8 @@
                 @csrf
                 <div class="row">
                     <div class="mb-3">
-                        <label for="supplier_id" class="form-label @error('supplier_id') is-invalid @enderror">Pemasok</label>
-                        <select class="form-select single-select-supplier" name="supplier_id" id="sel_supplier_id" data-placeholder="Pilih Pemasok" required>
+                        <label for="supplier_id" class="form-label @error('supplier_id') is-invalid @enderror">Pemasok<span class="text-danger">*</span></label>
+                        <select class="form-select single-select-supplier" name="supplier_id" id="sel_supplier_id" data-placeholder="Pilih Pemasok" required oninvalid="this.setCustomValidity('Pemasok tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                             <option></option>
                             @foreach ($suppliers as $supp)
                                 <option value="{{ $supp->id }}">{{ $supp->supplier_name }}</option>
@@ -43,11 +43,11 @@
                         <table class="table table-light" id="PurchaseTable">
                             <thead>
                                 <tr>
-                                    <th scope="col" nowrap>Nama Bahan</th>
+                                    <th scope="col" nowrap>Nama Bahan<span class="text-danger">*</span></th>
                                     <th scope="col">Deskripsi</th>
-                                    <th scope="col">Jumlah</th>
-                                    <th scope="col">Satuan</th>
-                                    <th scope="col">Harga</th>
+                                    <th scope="col">Jumlah<span class="text-danger">*</span></th>
+                                    <th scope="col">Satuan<span class="text-danger">*</span></th>
+                                    <th scope="col">Harga<span class="text-danger">*</span></th>
                                     <th scope="col" nowrap>Sub Total</th>
                                     <th scope="col"><a href="javascript:void(0)" class="btn btn-success addRowPurchase">+</a></th>
                                 </tr>
@@ -55,14 +55,14 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <select class="form-select single-select-stuff" data-placeholder="Pilih Barang" name="stuff_name[]" required>
+                                        <select class="form-select single-select-stuff" data-placeholder="Pilih Barang" name="stuff_name[]" required oninvalid="this.setCustomValidity('Nama tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                                             <option></option>
                                         </select>
                                     </td>
                                     <td><textarea  class="form-control descID" name="description[]"></textarea></td>
-                                    <td><input type="number" class="form-control qtyID" name="qty[]" value=1 required></td>
+                                    <td><input type="number" class="form-control qtyID" name="qty[]" value=1 required min='1' onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninvalid="this.setCustomValidity('Kuantitas tidak boleh kosong !')" oninput="this.setCustomValidity('')"></td>
                                     <td>
-                                        <select class="form-select single-select-unit" data-placeholder="Pilih Satuan" name="unit[]" required>
+                                        <select class="form-select single-select-unit" data-placeholder="Pilih Satuan" name="unit[]" required oninvalid="this.setCustomValidity('Satuan tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                                             <option></option>
                                             <option>kg (kilogram)</option>
                                             <option>gr (gram)</option>
@@ -71,7 +71,7 @@
                                             <option>lembar</option>
                                         </select>
                                     </td>
-                                    <td><input type="number" class="form-control priceID" name="price[]" value=0 required></td>
+                                    <td><input type="number" class="form-control priceID" name="price[]" value=0 required min='1' onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninvalid="this.setCustomValidity('Harga tidak boleh kosong !')" oninput="this.setCustomValidity('')"></td>
                                     <td><input type="number" class="form-control subtotalID" value=0 disabled></td>
                                     <td>
                                         {{-- <a href="javascript:void(0)" class="btn btn-danger deleteRowPurchase"><span data-feather='trash'></span></a> --}}
@@ -147,14 +147,14 @@
             $('thead').on('click', '.addRowPurchase', function(){
                 var tr = "<tr>"+
                             "<td>"+
-                            "<select class='form-select single-select-stuff' data-placeholder='Pilih Barang' name='stuff_name[]' required>"+
+                            "<select class='form-select single-select-stuff' data-placeholder='Pilih Barang' name='stuff_name[]' required oninvalid=\"this.setCustomValidity('Nama tidak boleh kosong !')\" oninput=\"this.setCustomValidity('')\">"+
                                 "<option></option>"+
                             "</select>"+
                             "</td>"+
                             "<td><textarea class='form-control descID' name='description[]' ></textarea></td>"+
-                            "<td><input type='number' class='form-control qtyID' name='qty[]' value=1 required></td>"+
+                            "<td><input type='number' class='form-control qtyID' name='qty[]' value=1 required min='1' onkeypress=\"return event.charCode >= 48 && event.charCode <= 57\" oninvalid=\"this.setCustomValidity('Kuantitas tidak boleh kosong !')\" oninput=\"this.setCustomValidity('')\"></td>"+
                             "<td>"+
-                                "<select class='form-select single-select-unit' data-placeholder='Pilih Satuan' name='unit[]' required>"+
+                                "<select class='form-select single-select-unit' data-placeholder='Pilih Satuan' name='unit[]' required oninvalid=\"this.setCustomValidity('Satuan tidak boleh kosong !')\" oninput=\"this.setCustomValidity('')\">"+
                                     "<option></option>"+
                                     "<option>kg (kilogram)</option>"+
                                     "<option>gr (gram)</option>"+
@@ -163,7 +163,7 @@
                                     "<option>lembar</option>"+
                                 "</select>"+
                             "</td>"+
-                            "<td><input type='number' class='form-control priceID' name='price[]' value=0 required></td>"+
+                            "<td><input type='number' class='form-control priceID' name='price[]' value=0 required min='1' onkeypress=\"return event.charCode >= 48 && event.charCode <= 57\" oninvalid=\"this.setCustomValidity('Harga tidak boleh kosong !')\" oninput=\"this.setCustomValidity('')\"></td>"+
                             "<td><input type='number' class='form-control subtotalID' value=0 disabled></td>"+
                             "<td>"+
                                 "<a href='javascript:void(0)' class='btn btn-danger deleteRowPurchase'><i class='fas fa-trash-alt'></i></a>"+

@@ -24,7 +24,7 @@
                             <label for="supplier_name" class="form-label @error('supplier_name') is-invalid @enderror">Nama
                                 Tempat Pemasok<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="supplier_name" name="supplier_name"
-                                value="{{ old('supplier_name') }}" required autofocus>
+                                value="{{ old('supplier_name') }}" required autofocus oninvalid="this.setCustomValidity('Nama Tempat Pemasok tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                             @error('supplier_name')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -44,7 +44,7 @@
                         <div class="mb-3">
                             <label for="address" class="form-label @error('address') is-invalid @enderror">Alamat<span class="text-danger">*</span></label>
                             <textarea type="text" class="form-control" id="address" name="address"
-                                required>{{ old('address') }}</textarea>
+                                required oninvalid="this.setCustomValidity('Alamat tidak boleh kosong !')" oninput="this.setCustomValidity('')">{{ old('address') }}</textarea>
                             @error('address')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -57,7 +57,7 @@
                             <label for="responsible"
                                 class="form-label @error('responsible') is-invalid @enderror">Pemilik<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="responsible" name="responsible"
-                                value="{{ old('responsible') }}" required>
+                                value="{{ old('responsible') }}" required oninvalid="this.setCustomValidity('Nama Pemilik tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                             @error('responsible')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -67,7 +67,7 @@
                         <div class="mb-3">
                             <label for="telp" class="form-label @error('telp') is-invalid @enderror">No. HP<span class="text-danger">*</span> Cth: 62878***</label>
                             <input type="text" class="form-control" id="telp" name="telp"
-                                value="{{ old('telp') }}" required>
+                                value="{{ old('telp') }}" required oninvalid="this.setCustomValidity('Nomor Telepon tidak boleh kosong !')" onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninput="this.setCustomValidity('')">
                             @error('telp')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -133,9 +133,9 @@
         $(document).ready(function(){
             $('thead').on('click', '.addRow', function(){
                 var tr = "<tr>"+
-                            "<td><input type='text' class='form-control' name='stuff_name[]' required></td>"+
+                            "<td><input type='text' class='form-control' name='stuff_name[]' required oninvalid=\"this.setCustomValidity('Nama tidak boleh kosong !')\" oninput=\"this.setCustomValidity('')\"></td>"+
                             "<td><textarea class='form-control' name='description[]' ></textarea></td>"+
-                            "<td><input type='number' class='form-control' name='price[]' value=0 required></td>"+
+                            "<td><input type='number' class='form-control' name='price[]' value='1' required min='1' onkeypress=\"return event.charCode >= 48 && event.charCode <= 57\" oninvalid=\"this.setCustomValidity('Harga tidak boleh kosong !')\" oninput=\"this.setCustomValidity('')\"></td>"+
                             "<td>"+
                                 "<a href='javascript:void(0)' class='btn btn-danger deleteRow'><i class='fas fa-trash-alt'></i></a>"+
                             "</td>"+

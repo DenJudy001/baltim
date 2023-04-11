@@ -42,8 +42,7 @@
                         <div class="mb-3">
                             <label for="name" class="form-label @error('name') is-invalid @enderror">Nama
                                 Menu<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                value="{{ old('name', $fnb->name) }}" required autofocus>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $fnb->name) }}" required autofocus oninvalid="this.setCustomValidity('Nama tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                             @error('name')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -63,7 +62,7 @@
                         <div class="mb-3">
                             <label for="type" class="form-label @error('type') is-invalid @enderror">Jenis Menu<span class="text-danger">*</span></label>
                             <select class="form-select single-select-menu-type" data-placeholder="Pilih Jenis Menu"
-                                name="type" id="type" required>
+                                name="type" id="type" required oninvalid="this.setCustomValidity('Kategori tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                                 <option></option>
                                 @foreach ($categs as $categ)
                                     <option value="{{ $fnb->type }}" @if(old('type', $fnb->type) == $categ->type) selected @endif>{{ $categ->type }}</option>
@@ -78,7 +77,7 @@
                         <div class="mb-3">
                             <label for="price" class="form-label @error('price') is-invalid @enderror">Harga<span class="text-danger">*</span></label>
                             <input type="number" class="form-control" id="price" name="price"
-                                value="{{ old('price', $fnb->price) }}" required>
+                                value="{{ old('price', $fnb->price) }}" required min="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required oninvalid="this.setCustomValidity('Harga tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                             @error('price')
                                 <div class="invalid-feedback">
                                     {{ $message }}

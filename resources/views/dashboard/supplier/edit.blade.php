@@ -25,7 +25,7 @@
                             <label for="supplier_name" class="form-label @error('supplier_name') is-invalid @enderror">Nama
                                 Tempat Pemasok<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="supplier_name" name="supplier_name"
-                                value="{{ old('supplier_name',$supplier->supplier_name) }}" required autofocus>
+                                value="{{ old('supplier_name',$supplier->supplier_name) }}" required autofocus oninvalid="this.setCustomValidity('Nama Tempat Pemasok tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                             @error('supplier_name')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -44,7 +44,7 @@
                         <div class="mb-3">
                             <label for="address" class="form-label @error('address') is-invalid @enderror">Alamat
                                 <span class="text-danger">*</span></label>
-                            <textarea type="text" class="form-control" id="address" name="address" required>{{ old('address',$supplier->address) }}</textarea>
+                            <textarea type="text" class="form-control" id="address" name="address" required oninvalid="this.setCustomValidity('Alamat tidak boleh kosong !')" oninput="this.setCustomValidity('')">{{ old('address',$supplier->address) }}</textarea>
                             @error('address')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -57,7 +57,7 @@
                             <label for="responsible"
                                 class="form-label @error('responsible') is-invalid @enderror">Pemilik<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="responsible" name="responsible"
-                                value="{{ old('responsible',$supplier->responsible) }}" required>
+                                value="{{ old('responsible',$supplier->responsible) }}" required oninvalid="this.setCustomValidity('Nama Pemilik tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                             @error('responsible')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -67,7 +67,7 @@
                         <div class="mb-3">
                             <label for="telp" class="form-label @error('telp') is-invalid @enderror">No. HP<span class="text-danger">*</span> Cth: 62878***</label>
                             <input type="text" class="form-control" id="telp" name="telp"
-                                value="{{ old('telp',$supplier->telp) }}" required>
+                                value="{{ old('telp',$supplier->telp) }}" required oninvalid="this.setCustomValidity('Nomor Telepon tidak boleh kosong !')" onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninput="this.setCustomValidity('')">
                             @error('telp')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -154,13 +154,13 @@
                 } 
                 else{
                     var tr = "<tr data-supplier-id='{{ $supplier->id }}'>"+
-                            "<td><input type='text' class='form-control stuff-name' name='stuff_name' id='validationServerStuff' aria-describedby='inputGroupPrepend3 validationServerStuffFeedback' required>"+
+                            "<td><input type='text' class='form-control stuff-name' name='stuff_name' id='validationServerStuff' aria-describedby='inputGroupPrepend3 validationServerStuffFeedback' required >"+
                                 "<div id='validationServerStuffFeedback' class='invalid-feedback d-none'>"+
                                     "Silahkan simpan data terlebih dahulu"+
                                 "</div>"+
                             "</td>"+
                             "<td><textarea class='form-control stuff-desc' name='description' ></textarea></td>"+
-                            "<td><input type='number' class='form-control stuff-price' name='price' required></td>"+
+                            "<td><input type='number' class='form-control stuff-price' name='price' required min='1'></td>"+
                             "<td>"+
                                 "<a class='btn btn-success button-save'><i class='fas fa-check'></i></a>"+
                                 "<a class='btn btn-warning button-edit d-none'><i class='fas fa-edit'></i></a>"+
@@ -169,7 +169,7 @@
                             "</td>"+
                         "</tr>"
                     $('tbody').append(tr);
-                    feather.replace();
+                    // feather.replace();
                 }
                 
             });
