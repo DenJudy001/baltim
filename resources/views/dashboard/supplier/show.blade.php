@@ -62,14 +62,14 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-sm-12">
-                <table class="table table-sm" width="100%">
+            <div class="table-responsive">
+                <table class="table" width="100%">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Menu</th>
-                            <th>Keterangan</th>
-                            <th>Harga</th>
+                            <th width="5%">No</th>
+                            <th width="20%">Menu</th>
+                            <th width="60%">Keterangan</th>
+                            <th width="15%">Harga</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -16,13 +16,13 @@
         <div class="card-body">
             <div class="table-responsive">
                 <a href="/employee/create" class="btn btn-primary mb-3">Tambah Karyawan</a>
-                <table class="table table-striped table-sm" id="DataTables">
+                <table class="table table-striped" id="DataTables">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Nama</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Aksi</th>
+                            <th scope="col" width="5%">No.</th>
+                            <th scope="col" width="40%">Nama</th>
+                            <th scope="col" width="40%">Email</th>
+                            <th scope="col" width="15%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,13 +31,14 @@
                                 <td>{{ $loop->iteration }} </td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>
-                                    <a href="/employee/{{ $user->username }}" class="badge bg-info"><i class="fas fa-eye"></i></a>
+                                <td><div class="d-flex justify-content-evenly">
+                                    <a href="/employee/{{ $user->username }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
                                     <form action="/employee/{{ $user->username }}" method="POST" class="d-inline">
                                         @method('delete')
                                         @csrf
-                                        <button class="badge bg-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><i class="fas fa-trash-alt"></i></button>
+                                        <button class="btn btn-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><i class="fas fa-trash-alt"></i></button>
                                     </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

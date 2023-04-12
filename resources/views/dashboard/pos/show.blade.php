@@ -58,15 +58,16 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-sm-12">
-                <table class="table table-sm" width="100%">
+            <div class="table-responsive">
+                <table class="table" width="100%">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Menu</th>
-                            <th>Kategori</th>
-                            <th>Jumlah</th>
-                            <th>Harga</th>
+                            <th width="5%">No</th>
+                            <th width="15%">Menu</th>
+                            <th width="35%">Keterangan</th>
+                            <th width="15%">Kategori</th>
+                            <th width="10%">Jumlah</th>
+                            <th width="20%">Harga</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,6 +75,7 @@
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$details->name}}</td>
+                                <td>{{$details->description}}</td>
                                 <td>{{$details->type}}</td>
                                 <td>{{ $details->qty }}</td>
                                 <td>Rp. {{number_format($details->price, 0, ',', '.')}}</td>

@@ -14,9 +14,11 @@
         <div class="row">
             <div class="col"><h4 class="font-weight-bold">{{ $purchase->purchase_number }}</h4></div>
             @if ($purchase->state == 'Proses')
-                <div class="col text-right" id="changeStatus" data-purchase-id="{{ $purchase->id }}">
-                    <a class="btn btn-success shadow-sm button-finished">{{ __('Selesaikan') }}</a>
-                    <a class="btn btn-danger shadow-sm button-cancelled">{{ __('Batalkan') }}</a>
+                <div class="col text-right">
+                    <div class="d-flex justify-content-end" id="changeStatus" data-purchase-id="{{ $purchase->id }}">
+                        <a class="btn btn-success shadow-sm button-finished mr-1">{{ __('Selesaikan') }}</a>
+                        <a class="btn btn-danger shadow-sm button-cancelled">{{ __('Batalkan') }}</a>
+                    </div>
                 </div>
             @endif
         </div>                 
@@ -95,17 +97,17 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-sm-12">
-                <table class="table table-sm" width="100%" id="PurchaseTable">
+            <div class="table-responsive">
+                <table class="table" width="100%" id="PurchaseTable">
                     <thead>
                         <tr data-supp-id="{{ $purchase->supplier_id }}">
-                            <th>Produk</th>
-                            <th>Keterangan</th>
-                            <th>Jumlah</th>
-                            <th>Unit</th>
-                            <th>Harga</th>
-                            <th scope="col">
-                                <div  class="d-flex justify-content-center">
+                            <th scope="col" width="20%">Produk</th>
+                            <th scope="col" width="35%">Keterangan</th>
+                            <th scope="col" width="10%">Jumlah</th>
+                            <th scope="col" width="10%">Unit</th>
+                            <th scope="col" width="15%">Harga</th>
+                            <th scope="col" width="10%">
+                                <div  class="d-flex justify-content-end">
                                     <a href="javascript:void(0)" class="btn btn-success addRowPurchase">+</a>
                                 </div>
                             </th>
@@ -134,10 +136,12 @@
                                 </select></td>
                                 <td><input type="number" class="form-control-plaintext stuff-price" name="price" value="{{ old('price',$details->price) }}" required readonly></td>
                                 <td>
-                                    <a class="btn btn-success button-save d-none" ><i class="fas fa-check"></i></a>
-                                    <a class="btn btn-warning button-edit"><i class="fas fa-edit"></i></a>
-                                    <a class="btn btn-danger button-cancel d-none"><i class="fas fa-times"></i></a>
-                                    <a class="btn btn-danger single-stuff"><i class="fas fa-trash-alt"></i></a>
+                                    <div class="d-flex justify-content-between">
+                                        <a class="btn btn-success button-save d-none col-sm-6 mr-1" ><i class="fas fa-check"></i></a>
+                                        <a class="btn btn-warning button-edit col-sm-6 mr-1"><i class="fas fa-edit"></i></a>
+                                        <a class="btn btn-danger button-cancel d-none col-sm-6"><i class="fas fa-times"></i></a>
+                                        <a class="btn btn-danger single-stuff col-sm-6"><i class="fas fa-trash-alt"></i></a>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -237,10 +241,12 @@
                                 "</td>"+
                                 "<td><input type='number' class='form-control stuff-price' name='price' value=0 required></td>"+
                                 "<td>"+
-                                    "<a class='btn btn-success button-save'><i class='fas fa-check'></i></a>"+
-                                    "<a class='btn btn-warning button-edit d-none'><i class='fas fa-edit'></i></a>"+
-                                    "<a class='btn btn-danger button-cancel d-none'><i class='fas fa-times'></i></a>"+
-                                    "<a href='javascript:void(0)' class='btn btn-danger deleteRowPurchase'><i class='fas fa-trash-alt'></i></a>"+
+                                    "<div class='d-flex justify-content-between'>"+
+                                    "<a class='btn btn-success button-save col-sm-6 mr-1'><i class='fas fa-check'></i></a>"+
+                                    "<a class='btn btn-warning button-edit d-none col-sm-6'><i class='fas fa-edit'></i></a>"+
+                                    "<a class='btn btn-danger button-cancel d-none col-sm-6'><i class='fas fa-times'></i></a>"+
+                                    "<a href='javascript:void(0)' class='btn btn-danger col-sm-6 deleteRowPurchase'><i class='fas fa-trash-alt'></i></a>"+
+                                    "</div>"+
                                 "</td>"+
                             "</tr>"
                     $('tbody.detail-trx').append(tr);
@@ -260,7 +266,7 @@
             });
 
             $('tbody').on('click', '.deleteRowPurchase', function(){
-                $(this).parent().parent().remove();
+                $(this).parent().parent().parent().remove();
             });
 
             $( '.single-select-stuff' ).select2( {

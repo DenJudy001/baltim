@@ -114,14 +114,14 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped table-sm" id="DataTables">
+                <table class="table table-striped" id="DataTables">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Kode Transaksi</th>
-                            <th scope="col">Total</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Aksi</th>
+                            <th scope="col" width="5%">Np.</th>
+                            <th scope="col" width="35%">Kode Transaksi</th>
+                            <th scope="col" width="30%">Total</th>
+                            <th scope="col" width="15%">Status</th>
+                            <th scope="col" width="15%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -129,39 +129,45 @@
                             <tr>
                                 <td>{{ $loop->iteration }} </td>
                                 <td>{{ $transaction->purchase_number }}</td>
-                                <td>{{ $transaction->total }}</td>
+                                <td>Rp. {{ number_format($transaction->total, 0, ',', '.')}}</td>
                                 <td ><span class="badge {{ $transaction->state == 'Proses' ? 'text-bg-warning' : ($transaction->state == 'Selesai' ? 'text-bg-success' : 'text-bg-danger') }}">{{ $transaction->state }}</span></td>
                                 <td>
                                     @if (str_contains($transaction->purchase_number, 'PUR'))
-                                    <a href="/purchase/{{ $transaction->purchase_number }}" class="badge bg-info"><i class="fas fa-eye"></i></a>
-                                    <a href="/purchase/{{ $transaction->purchase_number }}/edit" class="badge bg-warning"><i class="fas fa-edit"></i></a>
+                                    <div class="d-flex justify-content-evenly">
+                                    <a href="/purchase/{{ $transaction->purchase_number }}" class="btn btn-info "><i class="fas fa-eye"></i></a>
+                                    <a href="/purchase/{{ $transaction->purchase_number }}/edit" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                                     @can('admin') 
                                     <form action="/purchase/{{ $transaction->purchase_number }}" method="POST" class="d-inline">
                                         @method('delete')
                                         @csrf
-                                        <button class="badge bg-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><i class="fas fa-trash-alt"></i></button>
+                                        <button class="btn btn-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><i class="fas fa-trash-alt"></i></button>
                                     </form>
                                     @endcan
+                                    </div>
                                     @elseif (str_contains($transaction->purchase_number, 'SAL'))
-                                    <a href="/salary/{{ $transaction->purchase_number }}" class="badge bg-info"><i class="fas fa-eye"></i></a>
-                                    <a href="/salary/{{ $transaction->purchase_number }}/edit" class="badge bg-warning"><i class="fas fa-edit"></i></a>
+                                    <div class="d-flex justify-content-evenly">
+                                    <a href="/salary/{{ $transaction->purchase_number }}" class="btn btn-info "><i class="fas fa-eye"></i></a>
+                                    <a href="/salary/{{ $transaction->purchase_number }}/edit" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                                     @can('admin') 
                                     <form action="/salary/{{ $transaction->purchase_number }}" method="POST" class="d-inline">
                                         @method('delete')
                                         @csrf
-                                        <button class="badge bg-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><i class="fas fa-trash-alt"></i></button>
+                                        <button class="btn btn-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><i class="fas fa-trash-alt"></i></button>
                                     </form>
                                     @endcan
+                                    </div>
                                     @elseif (str_contains($transaction->purchase_number, 'TRX'))
-                                    <a href="/pos/{{ $transaction->purchase_number }}" class="badge bg-info"><i class="fas fa-eye"></i></a>
-                                    <a href="/pos/{{ $transaction->purchase_number }}/edit" class="badge bg-warning"><i class="fas fa-edit"></i></a>
+                                    <div class="d-flex justify-content-evenly">
+                                    <a href="/pos/{{ $transaction->purchase_number }}" class="btn btn-info "><i class="fas fa-eye"></i></a>
+                                    <a href="/pos/{{ $transaction->purchase_number }}/edit" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                                     @can('admin') 
                                     <form action="/pos/{{ $transaction->purchase_number }}" method="POST" class="d-inline">
                                         @method('delete')
                                         @csrf
-                                        <button class="badge bg-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><i class="fas fa-trash-alt"></i></button>
+                                        <button class="btn btn-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><i class="fas fa-trash-alt"></i></button>
                                     </form>
                                     @endcan
+                                    </div>
                                     @endif
                                 </td>
                             </tr>

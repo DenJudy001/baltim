@@ -26,30 +26,31 @@
                         @enderror
                     </div>
                 </div>
-                <div class="row">
-                    <div class="table-responsive">
-                        @if($errors->any())
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <ul>
-                                    @foreach ($errors->all() as $error_validate ) 
-                                        <li>
-                                            {{ $error_validate }}
-                                        </li>
-                                    @endforeach
-                                </ul>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        @endif
-                        <table class="table table-light" id="PurchaseTable">
+                <div class="row mt-2">
+                    <h4 class="fw-bold">Rincian Pemesanan</h4>
+                    @if($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <ul>
+                                @foreach ($errors->all() as $error_validate ) 
+                                    <li>
+                                        {{ $error_validate }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    <div class="table-responsive mt-2">
+                        <table class="table" id="PurchaseTable">
                             <thead>
                                 <tr>
-                                    <th scope="col" nowrap>Nama Bahan<span class="text-danger">*</span></th>
-                                    <th scope="col">Deskripsi</th>
-                                    <th scope="col">Jumlah<span class="text-danger">*</span></th>
-                                    <th scope="col">Satuan<span class="text-danger">*</span></th>
-                                    <th scope="col">Harga<span class="text-danger">*</span></th>
-                                    <th scope="col" nowrap>Sub Total</th>
-                                    <th scope="col"><a href="javascript:void(0)" class="btn btn-success addRowPurchase">+</a></th>
+                                    <th scope="col" width="20%" nowrap>Nama Bahan<span class="text-danger">*</span></th>
+                                    <th scope="col" width="25%">Deskripsi</th>
+                                    <th scope="col" width="10%">Jumlah<span class="text-danger">*</span></th>
+                                    <th scope="col" width="10%">Satuan<span class="text-danger">*</span></th>
+                                    <th scope="col" width="15%">Harga<span class="text-danger">*</span></th>
+                                    <th scope="col" width="15%" nowrap>Sub Total</th>
+                                    <th scope="col" width="5%"><a href="javascript:void(0)" class="btn btn-success addRowPurchase">+</a></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -84,8 +85,8 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td ><div class="d-flex justify-content-end">Total Harga :</div></td>
-                                    <td colspan="2"><input type="number" class="form-control-plaintext text-left" name="total" id="totalPurchase" value="0" readonly></td>
+                                    <td class="align-middle"><div class="d-flex justify-content-end"><span nowrap>Total Harga :</span></div></td>
+                                    <td colspan="2" nowrap><div class="d-flex align-items-top"><input type="number" class="form-control-plaintext text-left" name="total" id="totalPurchase" value="0" readonly></div></td>
                                 </tr>
                             </tfoot>
                         </table>

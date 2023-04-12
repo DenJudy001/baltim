@@ -80,7 +80,8 @@
                     </div>
                 </form>
                 </div>
-                <div class="row">
+                <div class="row mt-2">
+                    <h4 class="fw-bold">Rincian Bahan/Barang</h4>
                     @if(session()->has('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{ session('success') }}
@@ -91,15 +92,15 @@
                     <div class="alert alert-success alert-dismissible fade d-none" role="alert" id="success_hapus">
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-light" id="editTable">
+                    <div class="table-responsive mt-2">
+                        <table class="table" id="editTable">
                             <thead>
                                 <tr>
-                                    <th scope="col">Nama Bahan<span class="text-danger">*</span></th>
-                                    <th scope="col">Keterangan</th>
-                                    <th scope="col">Harga<span class="text-danger">*</span></th>
-                                    <th scope="col">
-                                        <div  class="d-flex justify-content-center">
+                                    <th scope="col" width="30%">Nama<span class="text-danger">*</span></th>
+                                    <th scope="col" width="40%">Keterangan</th>
+                                    <th scope="col" width="20%">Harga<span class="text-danger">*</span></th>
+                                    <th scope="col" width="10%">
+                                        <div  class="d-flex justify-content-end">
                                             <a href="javascript:void(0)" class="btn btn-success addRow">+</a>
                                         </div>
                                     </th>
@@ -121,10 +122,13 @@
                                             
                                         </td>
                                         <td>
-                                            <a class="btn btn-success button-save d-none" ><i class="fas fa-check"></i></a>
-                                            <a class="btn btn-warning button-edit"><i class="fas fa-edit"></i></a>
-                                            <a class="btn btn-danger button-cancel d-none"><i class="fas fa-times"></i></a>
-                                            <a class="btn btn-danger single-stuff"><i class="fas fa-trash-alt"></i></a>
+                                            <div class="d-flex justify-content-between">
+
+                                                <a class="btn btn-success button-save d-none col-sm-6 mr-1" ><i class="fas fa-check"></i></a>
+                                                <a class="btn btn-warning button-edit col-sm-6 mr-1"><i class="fas fa-edit"></i></a>
+                                                <a class="btn btn-danger button-cancel d-none col-sm-6"><i class="fas fa-times"></i></a>
+                                                <a class="btn btn-danger single-stuff col-sm-6"><i class="fas fa-trash-alt"></i></a>
+                                            </div>
                                         </td>
                                     </tr>
 
@@ -162,10 +166,12 @@
                             "<td><textarea class='form-control stuff-desc' name='description' ></textarea></td>"+
                             "<td><input type='number' class='form-control stuff-price' name='price' required min='1'></td>"+
                             "<td>"+
-                                "<a class='btn btn-success button-save'><i class='fas fa-check'></i></a>"+
-                                "<a class='btn btn-warning button-edit d-none'><i class='fas fa-edit'></i></a>"+
-                                "<a class='btn btn-danger button-cancel d-none'><i class='fas fa-times'></i></a>"+
-                                "<a href='javascript:void(0)' class='btn btn-danger deleteRow'><i class='fas fa-trash-alt'></i></a>"+
+                                "<div class='d-flex justify-content-between'>"+
+                                    "<a class='btn btn-success button-save col-sm-6 mr-1'><i class='fas fa-check'></i></a>"+
+                                    "<a class='btn btn-warning button-edit d-none col-sm-6'><i class='fas fa-edit'></i></a>"+
+                                    "<a class='btn btn-danger button-cancel d-none col-sm-6'><i class='fas fa-times'></i></a>"+
+                                    "<a href='javascript:void(0)' class='btn btn-danger col-sm-6 deleteRow'><i class='fas fa-trash-alt'></i></a>"+
+                                "</div>"+
                             "</td>"+
                         "</tr>"
                     $('tbody').append(tr);
@@ -175,7 +181,7 @@
             });
 
             $('tbody').on('click', '.deleteRow', function(){
-                $(this).parent().parent().remove();
+                $(this).parent().parent().parent().remove();
             });
 
             $('#editTable').on('click', '.button-edit', function(){

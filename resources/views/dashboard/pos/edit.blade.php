@@ -70,16 +70,16 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-sm-12">
-                <table class="table table-sm" width="100%" id="PosTable">
+            <div class="table-responsive">
+                <table class="table" width="100%" id="PosTable">
                     <thead>
                         <tr>
-                            <th>Menu</th>
-                            <th>Keterangan</th>
-                            <th>Jumlah</th>
-                            <th>Harga</th>
-                            <th scope="col">
-                                <div  class="d-flex justify-content-center">
+                            <th width="25%">Menu</th>
+                            <th width="40%">Keterangan</th>
+                            <th width="10%">Jumlah</th>
+                            <th width="15%">Harga</th>
+                            <th scope="col" width="10%">
+                                <div  class="d-flex justify-content-end">
                                     <a href="javascript:void(0)" class="btn btn-success addRowPos">+</a>
                                 </div>
                             </th>
@@ -100,10 +100,12 @@
                                 <td><input type="number" class="form-control-plaintext menu-qty" name="qty" value="{{ old('qty',$details->qty) }}" required readonly></td>
                                 <td><input type="number" class="form-control-plaintext menu-price" name="price" value="{{ old('price',$details->price) }}" required readonly></td>
                                 <td>
-                                    <a class="btn btn-success button-save d-none" ><i class="fas fa-check"></i></a>
-                                    <a class="btn btn-warning button-edit"><i class="fas fa-edit"></i></a>
-                                    <a class="btn btn-danger button-cancel d-none"><i class="fas fa-times"></i></a>
-                                    <a class="btn btn-danger single-stuff"><i class="fas fa-trash-alt"></i></a>
+                                    <div class="d-flex justify-content-between">
+                                        <a class="btn btn-success button-save d-none col-sm-6 mr-1" ><i class="fas fa-check"></i></a>
+                                        <a class="btn btn-warning button-edit col-sm-6 mr-1"><i class="fas fa-edit"></i></a>
+                                        <a class="btn btn-danger button-cancel d-none col-sm-6"><i class="fas fa-times"></i></a>
+                                        <a class="btn btn-danger single-stuff col-sm-6"><i class="fas fa-trash-alt"></i></a>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -183,10 +185,12 @@
                                 "<td><input type='number' class='form-control menu-qty' name='qty' value=1 required></td>"+
                                 "<td><input type='number' class='form-control menu-price' name='price' value=0 required></td>"+
                                 "<td>"+
-                                    "<a class='btn btn-success button-save'><i class='fas fa-check'></i></a>"+
-                                    "<a class='btn btn-warning button-edit d-none'><i class='fas fa-edit'></i></a>"+
-                                    "<a class='btn btn-danger button-cancel d-none'><i class='fas fa-times'></i></a>"+
-                                    "<a href='javascript:void(0)' class='btn btn-danger deleteRowPos'><i class='fas fa-trash-alt'></i></a>"+
+                                    "<div class='d-flex justify-content-between'>"+
+                                    "<a class='btn btn-success button-save col-sm-6 mr-1'><i class='fas fa-check'></i></a>"+
+                                    "<a class='btn btn-warning button-edit d-none col-sm-6'><i class='fas fa-edit'></i></a>"+
+                                    "<a class='btn btn-danger button-cancel d-none col-sm-6'><i class='fas fa-times'></i></a>"+
+                                    "<a href='javascript:void(0)' class='btn btn-danger col-sm-6 deleteRowPos'><i class='fas fa-trash-alt'></i></a>"+
+                                    "</div>"+
                                 "</td>"+
                             "</tr>"
                     $('tbody.detail-pos').append(tr);
@@ -205,7 +209,7 @@
             });
 
             $('tbody').on('click', '.deleteRowPos', function(){
-                $(this).parent().parent().remove();
+                $(this).parent().parent().parent().remove();
             });
 
 

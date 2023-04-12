@@ -76,44 +76,45 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="table-responsive">
-                        @if($errors->any())
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <ul>
-                                    @foreach ($errors->all() as $error_validate ) 
-                                        <li>
-                                            {{ $error_validate }}
-                                        </li>
-                                    @endforeach
-                                    @if(session()->has('error_validate'))
-                                        <li>
-                                            {{ session('error_validate') }}
-                                        </li>
-                                    @endif
-                                </ul>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        @endif
-                        @if(session()->has('error_unique'))
+                <div class="row mt-2">
+                    <h4 class="fw-bold">Rincian Bahan/Barang</h4>
+                    @if($errors->any())
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <ul>
-                                @if(session()->has('error_unique'))
+                                @foreach ($errors->all() as $error_validate ) 
                                     <li>
-                                        {{ session('error_unique') }}
+                                        {{ $error_validate }}
+                                    </li>
+                                @endforeach
+                                @if(session()->has('error_validate'))
+                                    <li>
+                                        {{ session('error_validate') }}
                                     </li>
                                 @endif
                             </ul>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                        @endif
-                        <table class="table table-light">
+                    @endif
+                    @if(session()->has('error_unique'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <ul>
+                            @if(session()->has('error_unique'))
+                                <li>
+                                    {{ session('error_unique') }}
+                                </li>
+                            @endif
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    @endif
+                    <div class="table-responsive mt-2">
+                        <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Nama Bahan<span class="text-danger">*</span></th>
-                                    <th scope="col">Keterangan</th>
-                                    <th scope="col">Harga<span class="text-danger">*</span></th>
-                                    <th scope="col"><a href="javascript:void(0)" class="btn btn-success addRow">+</a></th>
+                                    <th scope="col" width="30%">Nama<span class="text-danger">*</span></th>
+                                    <th scope="col" width="40%">Keterangan</th>
+                                    <th scope="col" width="20%">Harga<span class="text-danger">*</span></th>
+                                    <th scope="col" width="10%"><a href="javascript:void(0)" class="btn btn-success addRow">+</a></th>
                                 </tr>
                             </thead>
                             <tbody>
