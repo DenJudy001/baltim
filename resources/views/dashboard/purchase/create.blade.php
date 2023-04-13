@@ -20,7 +20,7 @@
                             @endforeach
                         </select>
                         @error('supplier_id')
-                            <div class="text-danger">
+                            <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                         @enderror

@@ -12,19 +12,19 @@
                 @csrf
                 <div class="row">
                     <div class="mb-3">
-                        <label for="emp_name" class="form-label @error('emp_name') is-invalid @enderror">Nama<span class="text-danger">*</span></label>
-                        <select class="form-select single-select-employee" name="user_id" id="emp_name" data-placeholder="Pilih Karyawan" required oninvalid="this.setCustomValidity('Nama tidak boleh kosong !')" oninput="this.setCustomValidity('')">
+                        <label for="user_id" class="form-label @error('user_id') is-invalid @enderror">Nama<span class="text-danger">*</span></label>
+                        <select class="form-select single-select-employee" name="user_id" id="user_id" data-placeholder="Pilih Karyawan" required oninvalid="this.setCustomValidity('Nama tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                             <option></option>
                             @foreach ($employee as $emp)
-                                @if(old('emp_name') == $emp->id)
+                                @if(old('user_id') == $emp->id)
                                     <option value="{{ $emp->id }}" selected>{{ $emp->name }}</option>
                                 @else
                                     <option value="{{ $emp->id }}">{{ $emp->name }}</option>
                                 @endif
                             @endforeach
                         </select>
-                        @error('emp_name')
-                            <div class="text-danger">
+                        @error('user_id')
+                            <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                         @enderror
