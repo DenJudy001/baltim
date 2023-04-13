@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('pos_id')->constrained('pos')->onDelete('cascade');
             $table->foreignId('fnb_id')->nullable();
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('type');
             $table->string('image')->nullable();
             $table->integer('qty');
