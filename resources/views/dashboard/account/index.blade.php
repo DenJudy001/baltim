@@ -113,6 +113,25 @@
             </div>
         </div>
         <div class="card-body">
+            <form action="{{ url('/account') }}" method="get" class="d-inline">
+            <div class="row align-items-center">
+                <div class="col-sm-12 col-md-3 col-lg-2">
+                        <div class="form-floating mb-3">
+                            <input type="date" class="form-control" id="start_date" name="start_date" value="{{ request('start_date') }}" placeholder="Dari">
+                            <label for="start_date">Dari</label>
+                        </div>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-2">
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="end_date" name="end_date" value="{{ request('end_date') }}" placeholder="Dari">
+                        <label for="end_date">Sampai</label>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-2">
+                    <button type="submit" class="btn btn-primary mb-3">Filter</button>
+                </div>
+            </div>
+            </form>
             <div class="table-responsive">
                 <table class="table table-striped" id="DataTables">
                     <thead>
