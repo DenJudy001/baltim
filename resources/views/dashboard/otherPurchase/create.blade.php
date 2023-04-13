@@ -12,7 +12,7 @@
                 @csrf
                 <div class="row">
                     <div class="mb-3">
-                        <label for="purchase_name" class="form-label @error('purchase_name') is-invalid @enderror">Nama Pembayaran<span class="text-danger">*</span></label>
+                        <label for="purchase_name" class="form-label @error('purchase_name') is-invalid @enderror">Nama Pembayaran<span class="text-danger">*</span><span> Cth: Listrik,Peralatan,Transportasi,dsb..</span></label>
                         <input type="text" class="form-control" id="purchase_name" name="purchase_name"
                             value="{{ old('purchase_name') }}" required autofocus oninvalid="this.setCustomValidity('Nama Pembayaran tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                         @error('purchase_name')

@@ -41,9 +41,21 @@ class AccountController extends Controller
         $transactions = $purchase->union($salary)->union($pos)->orderBy('updated_at', 'desc')->get();
         $title = "Catatan Keuangan";
 
-        $posData = $pos->get();
-        $salaryData = $salary->get();
-        $purchaseData = $purchase->get();
+        $posToday = DB::table('pos')
+            ->select('pos_number', 'total', 'state', 'updated_at')
+            ->whereDate('updated_at', '=', date('Y-m-d'));
+
+        $salaryToday = DB::table('employee_salaries')
+            ->select('salary_number', 'salary', 'state', 'updated_at')
+            ->whereDate('updated_at', '=', date('Y-m-d'));
+
+        $purchaseToday = DB::table('purchases')
+            ->select('purchase_number', 'total', 'state', 'updated_at')
+            ->whereDate('updated_at', '=', date('Y-m-d'));
+
+        $posData = $posToday->get();
+        $salaryData = $salaryToday->get();
+        $purchaseData = $purchaseToday->get();
         $totalIncome = 0;
         $pendingIncome = 0;
         $confirmedIncome = 0;
