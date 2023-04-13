@@ -86,7 +86,7 @@
                                     <td></td>
                                     <td></td>
                                     <td class="align-middle"><div class="d-flex justify-content-end"><span nowrap>Total Harga :</span></div></td>
-                                    <td colspan="2" nowrap><div class="d-flex align-items-top"><input type="number" class="form-control-plaintext text-left" name="total" id="totalPurchase" value="0" readonly></div></td>
+                                    <td colspan="2" nowrap><div class="d-flex align-items-top"><input type="hidden" class="form-control-plaintext text-left" name="total" id="totalPurchase" value="0" readonly><input type="text" class="form-control-plaintext text-left totalPuchaseStr" value="Rp. 0" readonly></div></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -188,12 +188,16 @@
 
             function countTotalHarga(){
                 var totalHarga = $('#totalPurchase');
+                var totalHargaStr = totalHarga.closest('td').find('input.totalPuchaseStr');
                 var subtotal = $('.subtotalID');
                 var result = 0;
                 subtotal.each(function(){
                     result = result + parseInt($(this).val());
                 });
                 totalHarga.val(result);
+                let format = result.toLocaleString('id-ID');
+                console.log(format);
+                totalHargaStr.val('Rp. '+format);
             }
 
             $('tbody').on('click', '.deleteRowPurchase', function(){
