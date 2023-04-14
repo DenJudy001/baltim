@@ -44,6 +44,8 @@ class FoodNBeveragesController extends Controller
         ]);
 
         $validatedData['description'] = $request->description;
+        $validatedData['name'] = ucwords($request->name);
+        $validatedData['type'] = ucwords($request->type);
 
         if($request->hasFile('image')) {
             $image = $request->file('image');
@@ -117,6 +119,8 @@ class FoodNBeveragesController extends Controller
             $validatedData['image'] = 'food_3.jpg';
         }
         $validatedData['description'] = $request->description;
+        $validatedData['name'] = ucwords($request->name);
+        $validatedData['type'] = ucwords($request->type);
         FoodNBeverages::where('id', $foodNBeverages->id)
             ->update($validatedData);
 
