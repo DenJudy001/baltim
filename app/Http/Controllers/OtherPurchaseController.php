@@ -24,7 +24,8 @@ class OtherPurchaseController extends Controller
     public function create()
     {
         return view('dashboard.otherPurchase.create', [
-            'title'=>"Pembayaran"
+            'title'=>"Pembayaran",
+            'purchaseName'=>Purchase::select('purchase_name')->distinct()->get()
         ]);
     }
 
@@ -38,6 +39,7 @@ class OtherPurchaseController extends Controller
             'total' => 'required',
         ]);
 
+        $validatedData['purchase_name'] = ucwords($request->purchase_name);
         $validatedData['description'] = $request->supplier_description;
         $validatedData['responsible'] = auth()->user()->username;
         $validatedData['state'] = 'Selesai';

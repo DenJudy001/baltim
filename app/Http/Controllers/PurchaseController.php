@@ -42,7 +42,7 @@ class PurchaseController extends Controller
             'supplier_id' => 'required',
             'total' => 'required',
         ]);
-        $validatedDataPurch['purchase_name'] = 'Pemesanan';
+        $validatedDataPurch['purchase_name'] = 'Persediaan Bahan';
         $validatedDataPurch['responsible'] = auth()->user()->username;
         $validatedDataPurch['state'] = 'Proses';
         $validatedDataPurch['purchase_number'] = IdGenerator::generate(['table' => 'purchases', 'length' => 10, 'prefix' =>'PUR-','reset_on_prefix_change' => true ,'field' => 'purchase_number']);
