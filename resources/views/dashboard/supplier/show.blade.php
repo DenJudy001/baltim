@@ -12,7 +12,7 @@
 <div class="card mb-3">
     <div class="card-header bg-white">
         <div class="row">
-            <div class="col"><h4 class="font-weight-bold">Data Pemasok Bahan/Barang</h4></div>
+            <div class="col"><h4 class="font-weight-bold">Data Pemasok</h4></div>
         </div>                 
     </div>
     <div class="card-body">
@@ -57,7 +57,7 @@
 <div class="card">
     <div class="card-header bg-white">
         <div class="row">
-            <div class="col"><h4 class="font-weight-bold">Rincian Bahan/Barang</h4></div>
+            <div class="col"><h4 class="font-weight-bold">Rincian Produk</h4></div>
         </div>                 
     </div>
     <div class="card-body">

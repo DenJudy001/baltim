@@ -77,7 +77,7 @@
                     </div>
                 </div>
                 <div class="row mt-2">
-                    <h4 class="fw-bold">Rincian Bahan/Barang</h4>
+                    <h4 class="fw-bold">Rincian Produk</h4>
                     @if($errors->any())
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <ul>

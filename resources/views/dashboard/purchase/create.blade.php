@@ -44,7 +44,7 @@
                         <table class="table" id="PurchaseTable">
                             <thead>
                                 <tr>
-                                    <th scope="col" width="20%" nowrap>Nama Bahan<span class="text-danger">*</span></th>
+                                    <th scope="col" width="20%" nowrap>Nama<span class="text-danger">*</span></th>
                                     <th scope="col" width="25%">Deskripsi</th>
                                     <th scope="col" width="10%">Jumlah<span class="text-danger">*</span></th>
                                     <th scope="col" width="10%">Satuan<span class="text-danger">*</span></th>
@@ -56,7 +56,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <select class="form-select single-select-stuff" data-placeholder="Pilih Barang" name="stuff_name[]" required oninvalid="this.setCustomValidity('Nama tidak boleh kosong !')" oninput="this.setCustomValidity('')">
+                                        <select class="form-select single-select-stuff" data-placeholder="Pilih Produk" name="stuff_name[]" required oninvalid="this.setCustomValidity('Nama tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                                             <option></option>
                                         </select>
                                     </td>

@@ -116,7 +116,7 @@
                     <tbody class="detail-trx">
                         @foreach ($purchase->dtl_purchase as $details)
                             <tr data-id="{{ $details->id }}" data-purchase-id="{{ $purchase->id }}">
-                                <td><select class="form-select single-select-stuff stuff-name" data-placeholder="Pilih Bahan/Barang"
+                                <td><select class="form-select single-select-stuff stuff-name" data-placeholder="Pilih Produk"
                                     name="name" aria-describedby="inputGroupPrepend3 validationServerStuffNameFeedback" required disabled>
                                     <option></option>
                                         @foreach ($stuffs as $stuff)
@@ -222,7 +222,7 @@
 
                     var tr = "<tr data-purchase-id='{{ $purchase->id }}''>"+
                                 "<td>"+
-                                "<select class='form-select single-select-stuff stuff-name' data-placeholder='Pilih Barang' name='name' aria-describedby='inputGroupPrepend3 validationServerStuffNameFeedback' required>"+
+                                "<select class='form-select single-select-stuff stuff-name' data-placeholder='Pilih Produk' name='name' aria-describedby='inputGroupPrepend3 validationServerStuffNameFeedback' required>"+
                                     "<option></option>"+
                                 "</select>"+
                                 "<div id='validationServerStuffNameFeedback' class='invalid-feedback d-none'>Silahkan simpan data terlebih dahulu</div>"+
