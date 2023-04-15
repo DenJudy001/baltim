@@ -9,7 +9,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item {{ request()->is('account') || request()->is('purchase/*') && !request()->is('purchase/create') || request()->is('salary/*') && !request()->is('salary/create') || request()->is('pos/*')  && !request()->is('pos/create')  ? 'active' : '' }}">
+    <li class="nav-item {{ request()->is('account') || request()->is('account/*') || request()->is('purchase/*') && !request()->is('purchase/create') || request()->is('salary/*') && !request()->is('salary/create') || request()->is('pos/*')  && !request()->is('pos/create')  ? 'active' : '' }}">
         <a class="nav-link" href="/account">
             <i class="fas fa-receipt"></i>
             <span>{{ __('Catatan Keuangan') }}</span></a>
@@ -51,7 +51,7 @@
     <li class="nav-item {{ request()->is('purchase/create') ? 'active' : '' }}">
         <a class="nav-link" href="/purchase/create">
             <i class="fas fa-luggage-cart"></i>
-            <span>{{ __('Pemesanan Bahan/Barang') }}</span></a>
+            <span>{{ __('Pemesanan Bahan') }}</span></a>
     </li>
 
     <li class="nav-item {{ request()->is('otherpurchase') || request()->is('otherpurchase/*') ? 'active' : '' }}">
@@ -89,7 +89,7 @@
         Administrator
     </div>
 
-    <li class="nav-item {{ request()->is('employee') || request()->is('employee/*') ? 'active' : '' }}">
+    <li class="nav-item {{ request()->is('employee') || request()->is('employee/*') && !request()->is('employee/'. auth()->user()->username .'/edit') ? 'active' : '' }}">
         <a class="nav-link" href="/employee">
             <i class="fas fa-users"></i>
             <span>{{ __('Akun Karyawan') }}</span></a>
@@ -99,6 +99,21 @@
         <a class="nav-link" href="/salary/create">
             <i class="fas fa-hand-holding-usd"></i>
             <span>{{ __('Gaji Karyawan') }}</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+            aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-scroll"></i>
+            <span>Laporan</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="/">Posisi Keuangan</a>
+                <a class="collapse-item" href="/report/laba-rugi">Laba Rugi</a>
+                <a class="collapse-item" href="/">CALK</a>
+            </div>
+        </div>
     </li>
     @endcan
 
