@@ -62,8 +62,10 @@ class AccountController extends Controller
         $totalExpense = 0;
         $pendingExpense = 0;
         $confirmedExpense = 0;
+        $pendingNoticeIncome = 0;
+        $pendingNoticeExpense = 0;
 
-
+        //untuk hari ini
         foreach ($posData as $data){
             if($data->state == "Proses"){
                 $pendingIncome += $data->total;
@@ -93,7 +95,24 @@ class AccountController extends Controller
                 $totalExpense += $data->total;
             }
         }
+        //untuk seluruh data
+        foreach($pos->get() as $data){
+            if($data->state == "Proses"){
+                $pendingNoticeIncome += $data->total;
+            }
+        }
+        foreach($purchase->get() as $data){
+            if($data->state == "Proses"){
+                $pendingNoticeExpense += $data->total;
+            }
+        }
 
+        if($pendingNoticeIncome > 1){
+            session()->flash('trx-notice', 'terdapat transaksi (TRX-XXX) yang belum diselesaikan');
+        }
+        if($pendingNoticeExpense > 1){
+            session()->flash('pur-notice', 'terdapat pengeluaran (PUR-XXX) yang belum diselesaikan');
+        }
 
         return view('dashboard.account.index', compact('transactions','title','totalIncome','pendingIncome','confirmedIncome','totalExpense','pendingExpense','confirmedExpense'));
     }

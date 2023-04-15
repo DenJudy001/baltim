@@ -106,6 +106,18 @@
             {{ session('success') }}
         </div>
     @endif
+    @if (session()->has('trx-notice'))
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <b>Perhatian! </b>{{ session('trx-notice') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session()->has('pur-notice'))
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <b>Perhatian! </b>{{ session('pur-notice') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <div class="card">
         <div class="card-header bg-white">
             <div class="row">
