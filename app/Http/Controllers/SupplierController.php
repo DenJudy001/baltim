@@ -86,9 +86,11 @@ class SupplierController extends Controller
                 }
                 return redirect()->back()->withErrors($validator->errors())->withInput();
             } else{
+                
                 $stuffNames = array_column($arr_input, 'stuff_name');
     
                 if (count($stuffNames) !== count(array_unique($stuffNames))){
+                    Supplier::destroy($supp->id);
                     return redirect()->back()->with('error_unique','Gagal! nama barang tidak boleh sama ')->withInput();
                 }
             }
