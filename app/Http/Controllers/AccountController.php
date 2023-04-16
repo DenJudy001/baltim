@@ -96,13 +96,13 @@ class AccountController extends Controller
             }
         }
         //untuk seluruh data
-        foreach($pos->get() as $data){
-            if($data->state == "Proses"){
+        foreach($transactions as $data){
+            if($data->state == "Proses" && str_contains($data->purchase_number, 'TRX')){
                 $pendingNoticeIncome += $data->total;
             }
         }
-        foreach($purchase->get() as $data){
-            if($data->state == "Proses"){
+        foreach($transactions as $data){
+            if($data->state == "Proses" && str_contains($data->purchase_number, 'PUR')){
                 $pendingNoticeExpense += $data->total;
             }
         }
