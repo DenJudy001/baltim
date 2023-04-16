@@ -8,6 +8,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\DetailPosController;
 use App\Http\Controllers\DetailPurchaseController;
+use App\Http\Controllers\DetailReportController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\PosMenuDdController;
 use App\Http\Controllers\PosMenuDetailsDdController;
 use App\Http\Controllers\ReportController;
 use App\Models\DetailPurchase;
+use App\Models\DetailReport;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,8 +84,14 @@ Route::post('/employee-change-password', [EmployeeController::class, 'changePass
 Route::get('/employee-change-password/{user}', [EmployeeController::class, 'indexChangePassword'])->middleware('auth');
 Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
 
-Route::get('/report/laba-rugi', [ReportController::class, 'labaRugiIndex'])->middleware('auth');
+Route::get('/report/laba-rugi', [ReportController::class, 'labaRugiIndex'])->middleware('admin');
+Route::get('/report/posisi-keuangan', [ReportController::class, 'posisiKeuanganIndex'])->middleware('admin');
+Route::get('/report/posisi-keuangan/{id}/edit', [ReportController::class, 'posisiKeuanganEdit'])->middleware('admin');
 Route::post('/report/laba-rugi-download', [ReportController::class, 'labaRugiDownload'])->middleware('auth');
+Route::post('/report/posisi-keuangan-create', [ReportController::class, 'createKeuangan'])->middleware('auth');
+Route::post('/report/posisi-keuangan-update/{report}', [ReportController::class, 'updateKeuangan'])->middleware('auth');
+Route::resource('/detail-report', DetailReportController::class)->middleware('admin');
+Route::post('/detail-report/update-details', [DetailReportController::class, 'updateDetailReport'])->name('update.details-report')->middleware('auth');
 
 Route::get('/lang/id/datatables', function () {
     return response()->json(trans('datatables'));
