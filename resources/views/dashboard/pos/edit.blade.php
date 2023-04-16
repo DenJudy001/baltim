@@ -98,7 +98,7 @@
                                 <div id="validationServerMenuNameFeedback" class="invalid-feedback d-none">Silahkan simpan data terlebih dahulu</div></td>
                                 <td><textarea class="form-control-plaintext menu-desc" name="description" readonly>{{ old('description',$details->description) }}</textarea></td>
                                 <td><input type="number" class="form-control-plaintext menu-qty" name="qty" value="{{ old('qty',$details->qty) }}" required readonly></td>
-                                <td><input type="number" class="form-control-plaintext menu-price" name="price" value="{{ old('price',$details->price) }}" required readonly></td>
+                                <td><input type="text" class="form-control-plaintext priceFormat" value="Rp. {{ number_format($details->price, 0, ',', '.') }}" readonly><input type="hidden" class="form-control-plaintext menu-price" name="price" value="{{ old('price',$details->price) }}" required readonly></td>
                                 <td>
                                     <div class="d-flex justify-content-between">
                                         <a class="btn btn-success button-save d-none col-sm-6 mr-1" ><i class="fas fa-check"></i></a>
@@ -267,6 +267,7 @@
                     var inpDesc = editButton.closest('tr').find('textarea.menu-desc');
                     var inpqty = editButton.closest('tr').find('input.menu-qty');
                     var inpPrice = editButton.closest('tr').find('input.menu-price');
+                    var inpPriceFormat = editButton.closest('tr').find('input.priceFormat');
 
                     inpName.removeAttr("disabled");
 
@@ -281,6 +282,8 @@
                     inpPrice.removeClass('form-control-plaintext');
                     inpPrice.removeAttr("readonly");
                     inpPrice.addClass('form-control');
+                    inpPrice.attr('type','number');
+                    inpPriceFormat.attr('type','hidden');
 
                     saveButton.removeClass('d-none');
                     cancelButton.removeClass('d-none');

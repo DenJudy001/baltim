@@ -118,7 +118,7 @@
                                               </div>
                                         </td>
                                         <td><textarea class="form-control-plaintext stuff-desc" name="description" readonly>{{ $stuff->description }}</textarea></td>
-                                        <td><input type="number" class="form-control-plaintext stuff-price" name="price" value="{{ $stuff->price }}" required readonly>
+                                        <td><input type="text" class="form-control-plaintext priceFormat" value="Rp. {{ number_format($stuff->price, 0, ',', '.') }}" readonly><input type="hidden" class="form-control-plaintext stuff-price" name="price" value="{{ $stuff->price }}" required readonly>
                                             
                                         </td>
                                         <td>
@@ -203,6 +203,7 @@
                     var inpName = editButton.closest('tr').find('input.stuff-name');
                     var inpDesc = editButton.closest('tr').find('textarea.stuff-desc');
                     var inpPrice = editButton.closest('tr').find('input.stuff-price');
+                    var inpPriceFormat = editButton.closest('tr').find('input.priceFormat');
 
                     inpName.removeClass('form-control-plaintext');
                     inpName.removeAttr("readonly");
@@ -215,6 +216,8 @@
                     inpPrice.removeClass('form-control-plaintext');
                     inpPrice.removeAttr("readonly");
                     inpPrice.addClass('form-control');
+                    inpPrice.attr('type','number');
+                    inpPriceFormat.attr('type','hidden');
 
                     saveButton.removeClass('d-none');
                     cancelButton.removeClass('d-none');

@@ -134,7 +134,7 @@
                                     <option @if(old('unit', $details->unit) == 'ekor') selected @endif>ekor</option>
                                     <option @if(old('unit', $details->unit) == 'lembar') selected @endif>lembar</option>
                                 </select></td>
-                                <td><input type="number" class="form-control-plaintext stuff-price" name="price" value="{{ old('price',$details->price) }}" required readonly></td>
+                                <td><input type="text" class="form-control-plaintext priceFormat" value="Rp. {{ number_format($details->price, 0, ',', '.') }}" readonly><input type="hidden" class="form-control-plaintext stuff-price" name="price" value="{{ old('price',$details->price) }}" required readonly></td>
                                 <td>
                                     <div class="d-flex justify-content-between">
                                         <a class="btn btn-success button-save d-none col-sm-6 mr-1" ><i class="fas fa-check"></i></a>
@@ -330,6 +330,7 @@
                     var inpqty = editButton.closest('tr').find('input.stuff-qty');
                     var inpunit = editButton.closest('tr').find('select.stuff-unit');
                     var inpPrice = editButton.closest('tr').find('input.stuff-price');
+                    var inpPriceFormat = editButton.closest('tr').find('input.priceFormat');
 
                     inpName.removeAttr("disabled");
                     inpunit.removeAttr("disabled");
@@ -346,6 +347,8 @@
                     inpPrice.removeClass('form-control-plaintext');
                     inpPrice.removeAttr("readonly");
                     inpPrice.addClass('form-control');
+                    inpPrice.attr('type','number');
+                    inpPriceFormat.attr('type','hidden');
 
                     saveButton.removeClass('d-none');
                     cancelButton.removeClass('d-none');
