@@ -263,4 +263,85 @@ class ReportController extends Controller
 
         return redirect('/report/posisi-keuangan')->with('success','Berhasil menyimpan data laporan posisi keuangan! ');
     }
+
+    public function keuanganDownload(Report $report)
+    {
+        $year = $report->report_year;
+        $month = $report->report_periode;
+        $endDays = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        $monthName = date('F', mktime(0, 0, 0, $month, 1));
+        $asetBangunan = $report->dtl_reports->where('type','Asset Bangunan')->first()->price;
+
+        $totalSupply = 0;
+        $totalAsset = 0;
+        $groupedAsset = [];
+        
+        foreach($report->dtl_reports->where('type','Persediaan') as $data){
+            $totalSupply += $data->price;
+        }
+
+        foreach($report->dtl_reports->where('type','Asset') as $data){
+            //standar penyusutan = 4 tahun (25%)
+            $bebanTahun = $data->price * 0.25;
+            $bebanBulan = $bebanTahun/12;
+            $diffYear = $year-$data->year_asset;
+            $diffMonth = $month-$data->month_asset;
+            $bebanTotal = 0;
+
+            if($diffYear > 0) {
+                $bebanTotal += $diffYear*$bebanTahun;
+            }else {
+                if ($diffMonth > 0) {
+                    $bebanTotal = $diffMonth*$bebanBulan;
+                } else{
+                    $bebanTotal = 0;
+                }
+            }
+
+            if($bebanTotal > $data->price){
+                $bebanTotal = $data->price;
+            }
+
+            $groupedAsset[] = [
+                'name'=> $data->name,
+                'year'=> $diffYear,
+                'month'=> $diffMonth,
+                'price'=> $data->price,
+                'beban'=> $bebanTotal
+            ];
+
+            if($diffYear > 0){
+                $totalAsset = $totalAsset + ($data->price-$bebanTotal);
+            } else if($diffYear == 0){
+                if($diffMonth >= 0){
+                    $totalAsset = $totalAsset + ($data->price-$bebanTotal);
+                }
+            }
+        }
+        
+        $totalAsetLancar = $report->kas+$report->piutang+$totalSupply;
+        $totalAsetLnT = $totalAsetLancar+$totalAsset+$asetBangunan;
+        $totalutang = $report->utang_usaha+$report->utang_bank;
+        $totalModal = $totalAsetLnT-$totalutang;
+        $totalLnE = $totalModal+$totalutang;
+
+        // dd($groupedAsset);
+        $pdf = Pdf::loadView('dashboard.report.posisi_keuangan_pdf', [
+            'report' => $report,
+            'asset'=> $groupedAsset,
+            'supply' => $totalSupply,
+            'totalAsetLancar' => $totalAsetLancar,
+            'totalAsetTetap' => $totalAsset+$asetBangunan,
+            'totalAset' => $totalAsetLnT,
+            'totalLiabilitas' => $totalutang,
+            'modal' => $totalModal,
+            'totalLnE' => $totalLnE,
+            'asetBangunan' => $asetBangunan,
+            'date' => $endDays,
+            'month' => $monthName,
+            'year'=> $year
+        ]);
+        return $pdf->stream('laporan-posisi-keuangan.pdf');
+
+    }
 }

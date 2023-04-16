@@ -92,6 +92,7 @@ Route::post('/report/posisi-keuangan-create', [ReportController::class, 'createK
 Route::post('/report/posisi-keuangan-update/{report}', [ReportController::class, 'updateKeuangan'])->middleware('auth');
 Route::resource('/detail-report', DetailReportController::class)->middleware('admin');
 Route::post('/detail-report/update-details', [DetailReportController::class, 'updateDetailReport'])->name('update.details-report')->middleware('auth');
+Route::post('/report/posisi-keuangan-download/{report}', [ReportController::class, 'keuanganDownload'])->middleware('auth');
 
 Route::get('/lang/id/datatables', function () {
     return response()->json(trans('datatables'));

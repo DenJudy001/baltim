@@ -132,7 +132,10 @@
                 </div>
             </div>
             <a href="/report/posisi-keuangan/{{ $report->id }}/edit" class="btn btn-primary mb-3 mt-2">Ubah Laporan</a>
-            <button type="button" class="btn btn-primary mb-3 mt-2">Download Laporan</button>
+            <form action="/report/posisi-keuangan-download/{{ $report->id }}" method="post" target="_blank" class="d-inline">
+                @csrf
+                <button type="submit" class="btn btn-primary mb-3 mt-2">Download Laporan</button>
+            </form>
         </div>
     </div>
 @endsection

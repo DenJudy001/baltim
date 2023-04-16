@@ -8,7 +8,7 @@
     </div>
 @endif
 <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <b>Tips!</b> Pastikan klik Simpan Laporan sebelum mengubah <b>Aset Non-Bangunan/Persediaan</b>, agar tidak terjadi data yang tidak konsisten.
+    <b>Tips!</b> Pastikan klik Simpan Laporan sebelum mengubah <b>Aset Non-Bangunan/Persediaan</b>.
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
     <div class="card">
@@ -25,8 +25,11 @@
                         <h5 class="fw-bold">Periode Laporan</h5>
                         <div class="mb-3">
                             <label for="report_year" class="form-label @error('report_year') is-invalid @enderror">Tahun<span class="text-danger">*</span></label>
+                            @php
+                                $minYearAsset = $report->dtl_reports->where('type', 'Asset')->max('year_asset');
+                            @endphp
                             <input type="number" class="form-control" id="report_year" name="report_year"
-                                value="{{ old('report_year',$report->report_year) }}" required min="1900" max="2099" onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninvalid="this.setCustomValidity('Tahun tidak valid !')" oninput="this.setCustomValidity('')">
+                                value="{{ old('report_year',$report->report_year) }}" required min={{ $minYearAsset ?? 1900 }} max="2099" onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninvalid="this.setCustomValidity('Tahun tidak valid atau cek tahun peroleh aset non-bangunan !')" oninput="this.setCustomValidity('')">
                             @error('report_year')
                                 <div class="invalid-feedback">
                                     {{ $message }}
