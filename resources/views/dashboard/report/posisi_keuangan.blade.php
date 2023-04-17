@@ -204,6 +204,7 @@
         });
         }
         $(document).ready(function(){
+            $('[data-bs-toggle="tooltip"]').tooltip();
             const now = new Date();
             const year = now.getFullYear();
             var yearInput = $('input#report_year');
