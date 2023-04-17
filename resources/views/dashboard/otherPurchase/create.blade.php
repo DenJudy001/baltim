@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="mb-3">
                         <label for="purchase_name" class="form-label @error('purchase_name') is-invalid @enderror">Jenis Pembayaran<span class="text-danger">*</span><span> Cth: Listrik,Peralatan,Transportasi,dsb..</span></label>
-                        <select class="form-select single-select-purchase-name" data-placeholder="Pilih Jenis Pembayaran"
+                        <select class="form-select single-select-purchase-name" data-placeholder="Pilih/Tuliskan Jenis Pembayaran"
                             name="purchase_name" id="purchase_name" required>
                             <option></option>
                             @foreach ( $purchaseName as $name )
