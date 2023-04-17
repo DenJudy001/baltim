@@ -86,6 +86,7 @@ Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
 
 Route::get('/report/laba-rugi', [ReportController::class, 'labaRugiIndex'])->middleware('admin');
 Route::get('/report/posisi-keuangan', [ReportController::class, 'posisiKeuanganIndex'])->middleware('admin');
+Route::get('/report/calk', [ReportController::class, 'calkIndex'])->middleware('admin');
 Route::get('/report/posisi-keuangan/{id}/edit', [ReportController::class, 'posisiKeuanganEdit'])->middleware('admin');
 Route::post('/report/laba-rugi-download', [ReportController::class, 'labaRugiDownload'])->middleware('auth');
 Route::post('/report/posisi-keuangan-create', [ReportController::class, 'createKeuangan'])->middleware('auth');
@@ -93,6 +94,7 @@ Route::post('/report/posisi-keuangan-update/{report}', [ReportController::class,
 Route::resource('/detail-report', DetailReportController::class)->middleware('admin');
 Route::post('/detail-report/update-details', [DetailReportController::class, 'updateDetailReport'])->name('update.details-report')->middleware('auth');
 Route::post('/report/posisi-keuangan-download/{report}', [ReportController::class, 'keuanganDownload'])->middleware('auth');
+Route::post('/report/calk-download/{report}', [ReportController::class, 'calkDownload'])->middleware('auth');
 
 Route::get('/lang/id/datatables', function () {
     return response()->json(trans('datatables'));

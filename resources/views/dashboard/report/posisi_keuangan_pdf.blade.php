@@ -47,7 +47,7 @@
             <td></td>
         </tr>
         <tr>
-            <td>Pendapatan Usaha</td>
+            <td>Kas</td>
             <td>Rp. {{ number_format($report->kas, 0, ',', '.') }}</td>
             <td></td>
         </tr>

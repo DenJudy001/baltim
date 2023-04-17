@@ -20,6 +20,14 @@ class ReportController extends Controller
             'title'=>"Buat Laporan Laba Rugi"
         ]);
     }
+
+    public function calkIndex() {
+        $periode = Report::first();
+        return view('dashboard.report.calk',[
+            'title'=>"Buat Catatan Atas Laporan Keuangan",
+            'periode'=> $periode
+        ]);
+    }
     public function posisiKeuanganIndex() {
         $reportData = Report::first();
 
@@ -343,5 +351,108 @@ class ReportController extends Controller
         ]);
         return $pdf->stream('laporan-posisi-keuangan.pdf');
 
+    }
+
+    public function calkDownload(Report $report)
+    {
+        $year = $report->report_year;
+        $month = $report->report_periode;
+        $endDays = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        $monthName = date('F', mktime(0, 0, 0, $month, 1));
+        $startDate = $year.'-'.$month.'-01 00:00:00';
+        $endDate = $year.'-'.$month.'-'.$endDays.' 23:59:59';
+        $asetBangunan = $report->dtl_reports->where('type','Asset Bangunan')->first()->price;
+        $supplyData = $report->dtl_reports->where('type','Persediaan');
+        $income = Pos::where('state', '=', 'Selesai')
+                    ->whereBetween('updated_at', [$startDate, $endDate])
+                    ->sum('total');
+        $salary = EmployeeSalary::where('state', '=', 'Selesai')
+                    ->whereBetween('updated_at', [$startDate, $endDate])
+                    ->sum('salary');
+        $purchase = Purchase::where('state', '=', 'Selesai')
+                    ->whereBetween('updated_at', [$startDate, $endDate])
+                    ->get();
+
+        $totalSupply = 0;
+        $totalAsset = 0;
+        $groupedAsset = [];
+        $groupedPurchase = [];
+
+        foreach ($purchase as $data){
+            $name = $data->purchase_name;
+            $total = $data->total;
+            if (isset($groupedPurchase[$name])) {
+                $groupedPurchase[$name]['total'] += $total;
+            } else {
+                $groupedPurchase[$name] = [
+                    'name' => $name,
+                    'total' => $total
+                ];
+            }
+        }
+        $expenseTotal = $salary;
+        foreach($groupedPurchase as $item){
+            $expenseTotal+=$item['total'];
+        }
+        
+        foreach($report->dtl_reports->where('type','Persediaan') as $data){
+            $totalSupply += $data->price;
+        }
+
+        foreach($report->dtl_reports->where('type','Asset') as $data){
+            //standar penyusutan = 4 tahun (25%)
+            $bebanTahun = $data->price * 0.25;
+            $bebanBulan = $bebanTahun/12;
+            $diffYear = $year-$data->year_asset;
+            $diffMonth = $month-$data->month_asset;
+            $bebanTotal = 0;
+
+            if($diffYear > 0) {
+                $bebanTotal += $diffYear*$bebanTahun;
+            }else {
+                if ($diffMonth > 0) {
+                    $bebanTotal = $diffMonth*$bebanBulan;
+                } else{
+                    $bebanTotal = 0;
+                }
+            }
+
+            if($bebanTotal > $data->price){
+                $bebanTotal = $data->price;
+            }
+
+            $groupedAsset[] = [
+                'name'=> $data->name,
+                'year'=> $diffYear,
+                'month'=> $diffMonth,
+                'price'=> $data->price,
+                'beban'=> $bebanTotal
+            ];
+
+            if($diffYear > 0){
+                $totalAsset = $totalAsset + ($data->price-$bebanTotal);
+            } else if($diffYear == 0){
+                if($diffMonth >= 0){
+                    $totalAsset = $totalAsset + ($data->price-$bebanTotal);
+                }
+            }
+        }
+
+        $pdf = Pdf::loadView('dashboard.report.calk_pdf', [
+            'report' => $report,
+            'supply'=> $supplyData,
+            'totalPersediaan' => $totalSupply,
+            'asetBangunan' => $asetBangunan,
+            'asset'=> $groupedAsset,
+            'totalAsetTetap' => $totalAsset+$asetBangunan,
+            'income' => $income,
+            'salary' => $salary,
+            'expense' => $groupedPurchase,
+            'expenseTotal' => $expenseTotal,
+            'date' => $endDays,
+            'month' => $monthName,
+            'year'=> $year
+        ]);
+        return $pdf->stream('catatan-atas-laporan-keuangan.pdf');
     }
 }

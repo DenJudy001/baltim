@@ -111,7 +111,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item {{ request()->is('report/posisi-keuangan') || request()->is('report/posisi-keuangan*') ? 'active' : '' }}" href="/report/posisi-keuangan">Posisi Keuangan</a>
                 <a class="collapse-item {{ request()->is('report/laba-rugi') ? 'active' : '' }}" href="/report/laba-rugi">Laba Rugi</a>
-                <a class="collapse-item" href="/">CALK</a>
+                <a class="collapse-item {{ request()->is('report/calk') ? 'active' : '' }}" href="/report/calk">CALK</a>
             </div>
         </div>
     </li>
