@@ -61,11 +61,13 @@
             <td></td>
             <td></td>
         </tr>
-        <tr>
-            <td>Beban Gaji</td>
-            <td>Rp. {{ number_format($salary, 0, ',', '.') }}</td>
-            <td></td>
-        </tr>
+        @if ($salary > 0)
+            <tr>
+                <td>Beban Gaji</td>
+                <td>Rp. {{ number_format($salary, 0, ',', '.') }}</td>
+                <td></td>
+            </tr>
+        @endif
         @foreach ($expense as $item)
             <tr>
                 <td>Beban {{ $item['name'] }}</td>

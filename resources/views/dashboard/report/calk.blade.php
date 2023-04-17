@@ -1,11 +1,11 @@
 @extends('dashboard.layouts.main')
 
 @section('container')
-<div class="alert alert-success alert-dismissible fade show" role="alert">
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
     <b>Perhatian!</b> Catatan Atas Laporan Keuangan membutuhkan Laporan Posisi Keuangan dan Laba Rugi.
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
-<div class="alert alert-success alert-dismissible fade show" role="alert">
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
     <b>Tips!</b> Pastikan sudah menyimpan data Laporan Posisi Keuangan.
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>

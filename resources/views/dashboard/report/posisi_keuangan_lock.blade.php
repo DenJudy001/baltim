@@ -26,7 +26,7 @@
                         <tr>
                             <td width="38%" >Periode</td>
                             <td width="2%" >:</td>
-                            <td width="60%" >Bulan ke-{{$report->report_periode}}</td>
+                            <td width="60%" >{{ strftime('%B', mktime(0, 0, 0, $report->report_periode, 1, 2023)) }}</td>
                         </tr>
                     </table>
                 </div>

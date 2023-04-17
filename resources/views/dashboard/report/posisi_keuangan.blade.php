@@ -79,7 +79,8 @@
                     <div class="col-md-6">
                         <h5 class="fw-bold">Aset Lancar</h5>
                         <div class="mb-3">
-                            <label for="kas" class="form-label @error('kas') is-invalid @enderror">Kas</label>
+                            <label for="kas" class="form-label @error('kas') is-invalid @enderror">Kas </label>
+                            <i class="fas fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Jumlah kas yang dipegang saat periode laporan"></i>
                             <input type="number" class="form-control" id="kas" name="kas"
                                 value="{{ old('kas',0) }}" required onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninvalid="this.setCustomValidity('Tulis 0 jika kosong !')" oninput="this.setCustomValidity('')">
                             @error('kas')
@@ -89,7 +90,8 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="piutang" class="form-label @error('piutang') is-invalid @enderror">Piutang</label>
+                            <label for="piutang" class="form-label @error('piutang') is-invalid @enderror">Piutang </label>
+                            <i class="fas fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Jumlah piutang yang dimiliki saat periode laporan"></i>
                             <input type="number" class="form-control" id="piutang" name="piutang"
                                 value="{{ old('piutang',0) }}" required onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninvalid="this.setCustomValidity('Tulis 0 jika kosong !')" oninput="this.setCustomValidity('')">
                             @error('piutang')
@@ -98,7 +100,7 @@
                                 </div>
                             @enderror
                         </div>
-                        <p>Persediaan</p>
+                        <p>Persediaan <i class="fas fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Persediaan seperti (bahan makanan, dsb) yang akan digunakan lagi untuk usaha"></i></p>
                         <div class="table-responsive mt-2">
                             <table class="table" id="supplyTable">
                                 <thead>
@@ -122,7 +124,8 @@
                 <div class="row">
                     <h5 class="fw-bold">Aset Tetap</h5>
                     <div class="mb-3 col-md-6">
-                        <label for="priceBangunan" class="form-label @error('priceBangunan') is-invalid @enderror">Bangunan</label>
+                        <label for="priceBangunan" class="form-label @error('priceBangunan') is-invalid @enderror">Bangunan </label>
+                        <i class="fas fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Total harga dari aset bangunan yang dimiliki"></i>
                         <input type="number" class="form-control" id="priceBangunan" name="priceBangunan"
                         value="{{ old('priceBangunan',0) }}" required onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninvalid="this.setCustomValidity('Tulis 0 jika kosong !')" oninput="this.setCustomValidity('')">
                         @error('priceBangunan')
@@ -131,7 +134,7 @@
                             </div>
                         @enderror
                     </div>
-                    <p>Non Bangunan</p>
+                    <p>Non Bangunan <i class="fas fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Aset yang memiliki nilai susut seiring berjalan waktu. Cth:Kendaraan(Motor,Mobil),Peralatan Elektronik, dsb."></i></p>
                     <div class="table-responsive mt-2">
                         <table class="table" id="assetTable">
                             <thead>
