@@ -43,7 +43,7 @@
                         @enderror
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary mb-3 mt-2">Tambah Upah Karyawan</button>
+                <button type="submit" class="btn btn-primary mb-3 mt-2">Tambah Gaji Karyawan</button>
             </form>
         </div>
     </div>

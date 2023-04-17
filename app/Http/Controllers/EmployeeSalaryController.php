@@ -47,7 +47,7 @@ class EmployeeSalaryController extends Controller
         $validatedData['salary_number'] = IdGenerator::generate(['table' => 'employee_salaries', 'length' => 10, 'prefix' =>'SAL-','reset_on_prefix_change' => true ,'field' => 'salary_number']);
 
         EmployeeSalary::create($validatedData);
-        return redirect('/account')->with('success','Berhasil Menambah Upah Karyawan');
+        return redirect('/account')->with('success','Berhasil Menambah Gaji Karyawan');
     }
 
     /**
