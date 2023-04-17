@@ -11,6 +11,7 @@
     {{-- My Style --}}
     <link rel="stylesheet" href="/assets/css/style.css">
     <title>RM-Baltim | {{ $title }}</title>
+    {{-- <link rel="icon" type="image/x-icon" href="/assets/img/undraw_rocket.svg"> --}}
   </head>
   <body>
 

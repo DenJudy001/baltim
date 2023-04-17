@@ -6,8 +6,7 @@
         <main class="form-signin w-100 m-auto">
             <form action="/login" method="POST">
                 @csrf
-                {{-- <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> --}}
-                <h1 class="h3 mb-3 fw-normal">Login</h1>
+                <h1 class="h3 mb-5 mt-2 fw-normal">Selamat Datang!</h1>
                 
                 @if(session()->has('error'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -27,7 +26,7 @@
                 </div>
                 <div class="form-floating">
                     <input type="password" class="form-control rounded-bottom @error('password') is-invalid @enderror" name="password" id="password" placeholder="Password">
-                    <label for="password">Password</label>
+                    <label for="password">Kata Sandi</label>
                     @error('password')
                         <div class="invalid-feedback">
                             {{ $message }}

@@ -26,7 +26,7 @@ class LoginController extends Controller
              return redirect()->intended('/');
          }
 
-         return back()->with('error', 'Login Gagal!')->withInput();
+         return back()->with('error', 'Gagal! Username atau Kata Sandi salah')->withInput();
     }
     public function logout(Request $request){
         Auth::logout();
