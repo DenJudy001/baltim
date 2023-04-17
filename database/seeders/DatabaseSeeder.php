@@ -17,14 +17,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(4)->create();
-        Supplier::factory(5)->create();
-        Stuff::factory(10)->create();
-        FoodNBeverages::factory(10)->create();
+        User::factory(19)->create();
+        Supplier::factory(20)->create();
+        Stuff::factory(40)->create();
+        FoodNBeverages::factory(40)->create();
         User::create([
            'name' => "RM Baltim",
            'username' => "baltim",
-           'telp' => "123123",
+           'telp' => "6287824009898",
            'email' => "baltim@gmail.com",
            'password' => bcrypt('12345'),
            'is_admin' => True

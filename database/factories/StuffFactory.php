@@ -21,8 +21,8 @@ class StuffFactory extends Factory
         $this->faker->addProvider(new Restaurant($this->faker));
 
         return [
-            'supplier_id' =>  mt_rand(1,5),
-            'stuff_name' => $this->faker->foodName(),
+            'supplier_id' =>  mt_rand(1,20),
+            'stuff_name' => $this->faker->randomElement([$this->faker->vegetableName(), $this->faker->meatName(), $this->faker->sauceName(), $this->faker->fruitName(), $this->faker->dairyName()]),
             'description' => $this->faker->sentence(),
             'price' => $this->faker->numberBetween(1000, 100000),
         ];
