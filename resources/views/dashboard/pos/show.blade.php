@@ -13,6 +13,11 @@
     <div class="card-header bg-white">
         <div class="row">
             <div class="col"><h4 class="font-weight-bold">{{ $pos->pos_number }}</h4></div>
+            @if ($pos->state == 'Selesai')
+                <div class="col text-right">
+                    <a href="/pos/{{ $pos->pos_number }}/print_struk" target="_blank" class="btn btn-success shadow-sm">Cetak</a>
+                </div>
+            @endif
         </div>                 
     </div>
     <div class="card-body">

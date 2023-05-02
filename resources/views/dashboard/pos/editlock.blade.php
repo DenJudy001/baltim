@@ -24,6 +24,10 @@
                     <a class="btn btn-success shadow-sm button-finished">{{ __('Selesaikan') }}</a>
                     <a class="btn btn-danger shadow-sm button-cancelled">{{ __('Batalkan') }}</a>
                 </div>
+            @else
+                <div class="col text-right">
+                    <a href="/pos/{{ $pos->pos_number }}/print_struk" target="_blank" class="btn btn-success shadow-sm">Cetak</a>
+                </div>
             @endif
         </div>                 
     </div>

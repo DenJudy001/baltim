@@ -49,7 +49,7 @@
         <tr>
             <td></td>
             <td colspan="2">Rumah Makan Ayam Baltim merupakan usaha yang bergerak di 
-                bidang jasa restoran atau rumah makan. Usaha ini berlokasi di Jalan Raya Serang No. 21, Cibadak, Cikupa, Cibadak, Kec. Cikupa, Kabupaten Tangerang, Banten 15710</td>
+                bidang jasa restoran atau rumah makan. Usaha ini berlokasi di Jalan Raya Serang No. 21, Cibadak, Kec. Cikupa, Kabupaten Tangerang, Banten 15710</td>
         </tr>
         <tr>
             <td><b>2</b></td>

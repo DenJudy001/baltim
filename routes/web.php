@@ -73,6 +73,7 @@ Route::get('/pos/{po}', [PosController::class, 'show'])->middleware('auth');
 Route::delete('/pos/{po}', [PosController::class, 'destroy'])->middleware('auth');
 Route::resource('/detail-pos', DetailPosController::class)->middleware('auth');
 Route::post('/detail-pos/update-details', [DetailPosController::class, 'updateDetailPos'])->name('update.details-pos')->middleware('auth');
+Route::get('/pos/{pos}/print_struk', [PosController::class, 'printStruk'])->middleware('auth');
 Route::post('/pos/update-status', [PosController::class, 'updateStatus'])->name('update.status-pos')->middleware('auth');
 Route::get('pos/add-to-cart/{menu}', [PosController::class, 'addToCart'])->middleware('auth');
 Route::post('pos/update-qty', [PosController::class, 'updateQty'])->middleware('auth');

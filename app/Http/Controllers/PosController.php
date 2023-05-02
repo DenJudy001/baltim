@@ -74,7 +74,7 @@ class PosController extends Controller
         }
         session()->forget('cart');
         
-        return redirect('/pos/create')->with('success','Data transaksi penjualan berhasil disimpan! ');
+        return redirect('/pos/create')->with(['success_create'=>'Data transaksi penjualan berhasil disimpan.','pos_id' => $posTransaction->pos_number]);
     }
 
     /**
@@ -229,5 +229,10 @@ class PosController extends Controller
             ->update(['state'=>$newStatus, 'end_date'=>$endDate,'end_by'=>$endBy]);  
         
         session()->flash('success', 'Berhasil Merubah Status Penjualan');   
+    }
+
+    public function printStruk(Pos $pos)
+    {
+        return view('dashboard.pos.struk', compact('pos'));
     }
 }

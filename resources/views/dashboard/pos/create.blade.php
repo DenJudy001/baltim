@@ -1,18 +1,3 @@
-@push('style')
-
-  <style>
-   /* Buat jarak antara card-body dan pagination */
-   .card-body {
-    margin-bottom: 20px;
-  }
-  
-  /* Atur lebar agar pagination tidak keluar dari div */
-  .pagination {
-    width: 100%;
-    justify-content: center;
-  }
-  </style>
-@endpush
 @extends('dashboard.layouts.main')
 
 @section('container')
@@ -21,6 +6,12 @@
             @if (session()->has('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+            @if (session()->has('success_create'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success_create') }} Silahkan <a href="/pos/{{ session('pos_id') }}/edit">klik disini!</a>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
@@ -78,7 +69,7 @@
                             </div>
                             @endforeach
                         </div>
-                        <div class="justify-content-center mt-4">{{ $fnbs->links() }}</div>
+                        <div class="justify-content-center mt-2">{{ $fnbs->links() }}</div>
                     </div>
                 </div>
             </div>
