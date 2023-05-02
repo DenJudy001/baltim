@@ -1,3 +1,18 @@
+@push('style')
+
+  <style>
+   /* Buat jarak antara card-body dan pagination */
+   .card-body {
+    margin-bottom: 20px;
+  }
+  
+  /* Atur lebar agar pagination tidak keluar dari div */
+  .pagination {
+    width: 100%;
+    justify-content: center;
+  }
+  </style>
+@endpush
 @extends('dashboard.layouts.main')
 
 @section('container')
@@ -16,13 +31,13 @@
             <div class="col-md-6 mb-4 col-lg-8">
                 <div class="card">
                     <div class="card-header bg-white">
-                        <form action="{{ url('/pos/create') }}" method="get">
+                        {{-- <form action="{{ url('/pos/create') }}" method="get"> --}}
                             <div class="row">
                                 <div class="col">
                                     <h4 class="font-weight-bold">Menu</h4>
                                 </div>
                             </div>
-                            <div class="row mb-2">
+                            <div class="row mb-2" id="search-control">
                                 <div class="col-sm-6 col-md-6 col-lg-4">
                                     <select name="category_type" id="sel_category_id" class="form-select form-select-sm single-select-category" data-placeholder="Pilih Kategori"
                                         style="font-size: 12px">
@@ -33,26 +48,24 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-sm-6 col-md-6 col-lg-4 mb-2"><input type="text" name="search"
-                                        class="form-control form-control-sm col-sm-12 float-right"
-                                        placeholder="Cari Menu..." onblur="this.form.submit()" value="{{ request('search') }}"></div>
-                                <div class="col-lg-4"><button type="submit"
-                                        class="btn btn-primary btn-sm float-right btn-block">Cari Menu</button></div>
+                                <div class="col-sm-6 col-md-6 col-lg-8 mb-2"><input type="text" name="search"
+                                        class="form-control form-control-sm col-sm-12 float-right search"
+                                        placeholder="Cari Menu..." value="{{ request('search') }}"></div>
+                                {{-- <div class="col-lg-4"><button type="submit"
+                                        class="btn btn-primary btn-sm float-right btn-block">Cari Menu</button></div> --}}
                             </div>
                             {{-- <div class="row">
                                 <div class="d-lg-none"><button type="submit"
                                     class="btn btn-primary btn-sm float-right btn-block">Cari Menu</button></div>
                             </div> --}}
-                        </form>
+                        {{-- </form> --}}
                     </div>
-                    <div class="card-body d-flex flex-wrap justify-content-between">
+                    <div class="card-body d-flex flex-wrap justify-content-center menu-items">
                         <div class="row">
                             @foreach ($fnbs as $fnb)
                             <div class="card mb-4 col-sm-6 col-md-6 col-lg-4">
-                                {{-- <div class=" col-sm-6 col-md-6 col-lg-4"> --}}
                                 <div class="productCard" data-cart-id={{ $fnb->id }}>
                                     <div class="view overlay">
-                                    {{-- <a href="/pos/add-to-cart/{{ $fnb->id }}"></a> --}}
                                         <img class="card-img-top gambar" src="{{ asset('images/' . $fnb->image) }}" alt="Card image cap" style="cursor: pointer">
                                     </div>
                                     <div class="card-body">
@@ -62,12 +75,11 @@
                                     </p>
                                     </div>
                                 </div>
-                                {{-- </div> --}}
                             </div>
                             @endforeach
                         </div>
+                        <div class="justify-content-center mt-4">{{ $fnbs->links() }}</div>
                     </div>
-                    <div class="d-flex justify-content-center">{{ $fnbs->appends(['category_type' => request()->category_type, 'search' => request()->search])->links() }}</div>
                 </div>
             </div>
             <div class="col-md-6 col-lg-4 mb-4">
@@ -241,7 +253,77 @@
                 }
             } );
 
-            $(".productCard").click(function(e) {
+            function find_menu(url){
+                $.ajax({
+                    url: url,
+                    method: "GET",
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        // window.location.reload();
+                        $('.menu-items').html(response);
+                    }
+                });
+            }
+
+            $("#search-control").on('keyup', '.search', function(e) {
+                e.preventDefault();
+
+                let search = $(this).val();
+                let categ = $(".single-select-category").val();
+                let url = "/pos/create";
+                console.log(categ);
+
+                if(categ != null){
+                    url = "/pos/create?category_type="+categ+"&search="+search;
+                } else {
+                    url = "/pos/create?category_type=&search="+search;
+                }
+
+                find_menu(url);
+                
+            });
+            
+            $("#search-control").on('change', '.single-select-category', function(e) {
+                e.preventDefault();
+
+                let categ = $(this).val();
+                let search = $("#search-control").find('.search').val();
+                let url = "/pos/create";
+                console.log(categ);
+
+                if(search != null){
+                    url = "/pos/create?category_type="+categ+"&search="+search;
+                } else {
+                    url = "/pos/create?category_type="+categ+"&search=";
+                }
+
+                find_menu(url);
+            });
+
+            $(document).on('click','.pagination a', function(e){
+                e.preventDefault();
+                let page = $(this).attr('href').split('page=')[1];
+                let categ = $("#search-control").find('.single-select-category').val();
+                let search = $("#search-control").find('.search').val();
+                if(search != null && categ != null){
+                    url = "/pos/create?category_type="+categ+"&search="+search+"&page="+page;
+                } else {
+                    if(categ != null){
+                        url = "/pos/create?category_type="+categ+"&search=";
+                    }
+                    else if(search != null){
+                        url = "/pos/create?category_type=&search="+search+"&page="+page;
+                    }
+                    else {
+                        url = "/pos/create?category_type=&search=&page="+page;
+                    }
+                }
+                find_menu(url);
+            });
+
+            $(document).on('click','.productCard',function(e) {
                 e.preventDefault();
 
                 var position = $(this);

@@ -17,22 +17,26 @@ class PosController extends Controller
      */
     public function index()
     {
-        
+       return redirect("/pos/create");
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         $fnbs = FoodNBeverages::when(request('search'), function($query){
             return $query->where('name','like','%'.request('search').'%');
         })->when(request('category_type'), function($query) {
             return $query->where('type', request('category_type'));
-        })->orderBy('created_at','desc')->paginate(6);
+        })->orderBy('created_at','desc')->simplePaginate(6);
 
         $fnbCat = FoodNBeverages::select('type')->distinct()->get();
         $title = "Penjualan";
+
+        if($request->ajax()){
+            return view('dashboard.pos.menu', compact('fnbs','fnbCat','title'))->render();
+        }
 
         return view('dashboard.pos.create', compact('fnbs','fnbCat','title'));
     }
