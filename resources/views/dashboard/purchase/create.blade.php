@@ -45,9 +45,9 @@
                             <thead>
                                 <tr>
                                     <th scope="col" width="20%" nowrap>Nama<span class="text-danger">*</span></th>
-                                    <th scope="col" width="25%">Deskripsi</th>
+                                    <th scope="col" width="30%">Deskripsi</th>
                                     <th scope="col" width="10%">Jumlah<span class="text-danger">*</span></th>
-                                    <th scope="col" width="10%">Satuan<span class="text-danger">*</span></th>
+                                    <th scope="col" width="5%">Satuan<span class="text-danger">*</span></th>
                                     <th scope="col" width="15%">Harga<span class="text-danger">*</span></th>
                                     <th scope="col" width="15%" nowrap>Sub Total</th>
                                     <th scope="col" width="5%"><a href="javascript:void(0)" class="btn btn-success addRowPurchase">+</a></th>
