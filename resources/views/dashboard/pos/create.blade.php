@@ -226,6 +226,8 @@
 @push('script')
     <script>
         $(document).ready(function() {
+            var debounceTimer;
+
             if($(".table-cart tbody tr").length > 0) {
                 $('div.save-reset-control').removeClass('d-none');
                 
@@ -264,7 +266,7 @@
                 let search = $(this).val();
                 let categ = $(".single-select-category").val();
                 let url = "/pos/create";
-                console.log(categ);
+                // console.log(categ);
 
                 if(categ != null){
                     url = "/pos/create?category_type="+categ+"&search="+search;
@@ -272,7 +274,14 @@
                     url = "/pos/create?category_type=&search="+search;
                 }
 
-                find_menu(url);
+                if (debounceTimer) {
+                    clearTimeout(debounceTimer);
+                }
+
+                // Set timer baru untuk menjalankan fungsi find_menu setelah 0,5 detik
+                debounceTimer = setTimeout(function() {
+                    find_menu(url);
+                }, 750);
                 
             });
             
@@ -282,7 +291,7 @@
                 let categ = $(this).val();
                 let search = $("#search-control").find('.search').val();
                 let url = "/pos/create";
-                console.log(categ);
+                // console.log(categ);
 
                 if(search != null){
                     url = "/pos/create?category_type="+categ+"&search="+search;
