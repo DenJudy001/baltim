@@ -28,11 +28,14 @@
             <i class="fas fa-utensils"></i>
             <span>{{ __('Menu') }}</span></a>
     </li>
+    @can('employee')
     <li class="nav-item {{ request()->is('pos/create') ? 'active' : '' }}">
         <a class="nav-link" href="/pos/create">
             <i class="fas fa-cash-register"></i>
             <span>{{ __('Kasir') }}</span></a>
     </li>
+        
+    @endcan
 
     <!-- Divider -->
     <hr class="sidebar-divider">

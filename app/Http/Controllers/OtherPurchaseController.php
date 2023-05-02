@@ -15,7 +15,7 @@ class OtherPurchaseController extends Controller
      */
     public function index()
     {
-        //
+        return redirect("/otherpurchase/create");
     }
 
     /**

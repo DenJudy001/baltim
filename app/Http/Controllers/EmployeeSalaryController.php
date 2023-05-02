@@ -15,7 +15,7 @@ class EmployeeSalaryController extends Controller
      */
     public function index()
     {
-        //
+        return redirect("/salary/create");
     }
 
     /**

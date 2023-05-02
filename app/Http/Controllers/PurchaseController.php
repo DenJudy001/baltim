@@ -19,7 +19,7 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        //
+        return redirect("/purchase/create");
     }
 
     /**

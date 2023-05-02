@@ -67,7 +67,10 @@ Route::post('/purchase/update-status', [PurchaseController::class, 'updateStatus
 Route::resource('/detail-purchase', DetailPurchaseController::class)->middleware('auth');
 Route::post('/detail-purchase/update-details', [DetailPurchaseController::class, 'updateDetailPurchase'])->name('update.details-purchase')->middleware('auth');
 Route::resource('/otherpurchase', OtherPurchaseController::class)->middleware('auth');
-Route::resource('/pos', PosController::class)->middleware('auth');
+Route::resource('/pos', PosController::class)->middleware('employee')->except('edit','show','destroy');
+Route::get('/pos/{po}/edit', [PosController::class, 'edit'])->middleware('auth');
+Route::get('/pos/{po}', [PosController::class, 'show'])->middleware('auth');
+Route::delete('/pos/{po}', [PosController::class, 'destroy'])->middleware('auth');
 Route::resource('/detail-pos', DetailPosController::class)->middleware('auth');
 Route::post('/detail-pos/update-details', [DetailPosController::class, 'updateDetailPos'])->name('update.details-pos')->middleware('auth');
 Route::post('/pos/update-status', [PosController::class, 'updateStatus'])->name('update.status-pos')->middleware('auth');
