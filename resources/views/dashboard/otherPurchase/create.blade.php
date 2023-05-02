@@ -17,12 +17,17 @@
                 <div class="row">
                     <div class="mb-3">
                         <label for="purchase_name" class="form-label @error('purchase_name') is-invalid @enderror">Jenis Pembayaran<span class="text-danger">*</span><span> Cth: Listrik,Peralatan,Transportasi,dsb..</span></label>
-                        <select class="form-select single-select-purchase-name" data-placeholder="Pilih/Tuliskan Jenis Pembayaran"
+                        <select class="form-select single-select-purchase-name" data-placeholder="Pilih Jenis Pembayaran"
                             name="purchase_name" id="purchase_name" required>
                             <option></option>
-                            @foreach ( $purchaseName as $name )
-                                <option value="{{ $name->purchase_name }}" {{ old('purchase_name') == $name->purchase_name ? 'selected' : '' }}>{{ $name->purchase_name }}</option>
-                            @endforeach
+                            <option value="Listrik">Listrik</option>
+                            <option value="Air">Air</option>
+                            <option value="Internet">Internet</option>
+                            <option value="Transportasi">Transportasi</option>
+                            <option value="Asuransi">Asuransi</option>
+                            <option value="Perawatan/Perbaikan">Perawatan/Perbaikan</option>
+                            <option value="Pemasaran/Promosi">Pemasaran/Promosi</option>
+                            <option value="Sewa Tempat">Sewa</option>
                         </select>
                         @error('purchase_name')
                             <div class="invalid-feedback">
@@ -64,7 +69,12 @@
                 theme: "bootstrap-5",
                 width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
                 placeholder: $( this ).data( 'placeholder' ),
-                tags : true
+                sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+                language: {
+                    "noResults": function(){
+                        return "Data Tidak ditemukan";
+                    }
+                }
             } );
 
             $(".single-select-purchase-name").change(function(){

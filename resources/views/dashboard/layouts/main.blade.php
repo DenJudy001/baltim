@@ -119,11 +119,11 @@
         @stack('script')
 
         <script>
-            if ($(window).width() < 992) {
-                $("body").addClass("sidebar-toggled");
-                $(".sidebar").addClass("toggled");
-                $('.sidebar .collapse').collapse('hide');
-            };
+            // if (!$("body").hasClass('sidebar-toggled') && $(window).width() < 992) {
+            //     $("body").addClass("sidebar-toggled");
+            //     $(".sidebar").addClass("toggled");
+            //     $('.sidebar .collapse').collapse('hide');
+            // };
 
             $(document).ready(function () {
                 $('#DataTables').DataTable({
