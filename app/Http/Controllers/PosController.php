@@ -168,7 +168,12 @@ class PosController extends Controller
         }
           
         session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Berhasil menambahkan menu ke keranjang');
+        return response()->json([
+            'cart_view' => view('dashboard.pos.cart')->render(),
+            'modal_view' => view('dashboard.pos.modal')->render(),
+        ]);
+        // return view('dashboard.pos.cart')->render();
+        // return redirect()->back()->with('success', 'Berhasil menambahkan menu ke keranjang');
     }
 
     public function updateQty(Request $request)
@@ -178,7 +183,11 @@ class PosController extends Controller
             $cart = session()->get('cart');
             $cart[$request->id]["quantity"] = $request->quantity;
             session()->put('cart', $cart);
-            session()->flash('success', 'Berhasil merubah jumlah');
+            // session()->flash('success', 'Berhasil merubah jumlah');
+            return response()->json([
+                'cart_view' => view('dashboard.pos.cart')->render(),
+                'modal_view' => view('dashboard.pos.modal')->render(),
+            ]);
         }
     }
 
@@ -190,13 +199,21 @@ class PosController extends Controller
                 unset($cart[$request->id]);
                 session()->put('cart', $cart);
             }
-            session()->flash('success', 'Berhasil menghapus keranjang menu');
+            // session()->flash('success', 'Berhasil menghapus keranjang menu');
+            return response()->json([
+                'cart_view' => view('dashboard.pos.cart')->render(),
+                'modal_view' => view('dashboard.pos.modal')->render(),
+            ]);
         }
     }
 
     public function clearCart()
     {
         session()->forget('cart');
+        return response()->json([
+            'cart_view' => view('dashboard.pos.cart')->render(),
+            'modal_view' => view('dashboard.pos.modal')->render(),
+        ]);
     }
 
     public function updateStatus(Request $request)

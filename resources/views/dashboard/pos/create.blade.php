@@ -9,6 +9,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
+            <div class="alert alert-danger alert-dismissible fade d-none" role="alert" id="alert-save-trx">
+                Anda belum tambahkan menu pada keranjang
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
             <div class="col-md-6 mb-4 col-lg-8">
                 <div class="card">
                     <div class="card-header bg-white">
@@ -46,10 +50,10 @@
                             @foreach ($fnbs as $fnb)
                             <div class="card mb-4 col-sm-6 col-md-6 col-lg-4">
                                 {{-- <div class=" col-sm-6 col-md-6 col-lg-4"> --}}
-                                <div class="productCard">
+                                <div class="productCard" data-cart-id={{ $fnb->id }}>
                                     <div class="view overlay">
-                                    <a href="/pos/add-to-cart/{{ $fnb->id }}"><img class="card-img-top gambar"
-                                        src="{{ asset('images/' . $fnb->image) }}" alt="Card image cap" style="cursor: pointer"></a>
+                                    {{-- <a href="/pos/add-to-cart/{{ $fnb->id }}"></a> --}}
+                                        <img class="card-img-top gambar" src="{{ asset('images/' . $fnb->image) }}" alt="Card image cap" style="cursor: pointer">
                                     </div>
                                     <div class="card-body">
                                     <label class="card-text font-weight-bold" style="text-transform: capitalize;">
@@ -68,8 +72,8 @@
             </div>
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="user-cart">
-                    <div class="card mb-3">
-                        <table class="table table-striped mb-0">
+                    <div class="card mb-3 table-cart">
+                        <table class="table mb-0 cart-table">
                             <thead>
                                 <tr>
                                     <th width="30%">Menu</th>
@@ -84,7 +88,7 @@
                                         <tr data-id="{{ $menu }}">
                                             <td>{{ Str::words($details['name'], 2) }}</td>
                                             <td class="font-weight-bold">
-                                                <input type="number" class="form-control qty update-qty"
+                                                <input type="number" min="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control qty update-qty"
                                                     value={{ $details['quantity'] }} required>
                                             </td>
                                             <td class="text-right">Rp. {{ number_format($details['price'], 0, ',', '.') }}</td>
@@ -113,24 +117,18 @@
                     </div>
                 </div>
                 {{-- <div class="row mt-2">
-                    
-                    
-                   
                 </div> --}}
-                <div class="row">
-                    @if (session('cart'))
+                <div class="row save-reset-control d-none">
                     <div class="col">
                         <button type="button" class="btn btn-danger btn-block clear-cart">
                             Reset
                         </button>
                     </div>
                     <div class="col">
-                        <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal"
-                            data-bs-target="#openTransaction">
+                        <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#openTransaction">
                             Simpan Transaksi
                         </button>
                     </div>
-                    @endif
                 </div>
             </div>
             <!-- Modal -->
@@ -167,44 +165,46 @@
                                     </div>
                                 </div>
                                 <div class="card">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" class="text-center" width="20%">Gambar</th>
-                                                <th scope="col" width="20%">Menu</th>
-                                                <th scope="col" width="30%">Keterangan</th>
-                                                <th scope="col" width="10%">Jumlah</th>
-                                                <th scope="col" class="text-right" width="20%">Harga</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if (session('cart'))
-                                                @foreach (session('cart') as $menu => $details)
-                                                    <tr>
-                                                        <td scope="row"><img class="card-img-top"
-                                                            src="{{ asset('images/' . $details['image']) }}" alt="Card image cap"></td>
-                                                        <td>{{ $details['name'] }}</td>
-                                                        <td>{{ $details['description'] }}</td>
-                                                        <td class="font-weight-bold">
-                                                            <p>{{ $details['quantity'] }}</p>
-                                                        </td>
-                                                        <td class="text-right">Rp. {{ number_format($details['price'], 0, ',', '.') }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-                                        </tbody>                                        
-                                        <tfoot>
-                                            <tr>
-                                                <td colspan="4">
-                                                    <div class="d-flex justify-content-end">Total Harga :</div> 
-                                                </td>
-                                                <td>
-                                                    <input type="hidden" value="{{ $total }}" name="totalHarga">
-                                                    <div><span class="fw-bold">Rp. {{ number_format($total, 0, ',', '.') }}</span></div>
-                                                </td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
+                                    <div class="table-responsive">
+                                        <table class="table table-modal">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" class="text-center" width="20%">Gambar</th>
+                                                    <th scope="col" width="20%">Menu</th>
+                                                    <th scope="col" width="30%">Keterangan</th>
+                                                    <th scope="col" width="10%">Jumlah</th>
+                                                    <th scope="col" class="text-right" width="20%">Harga</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (session('cart'))
+                                                    @foreach (session('cart') as $menu => $details)
+                                                        <tr>
+                                                            <td scope="row"><img class="card-img-top"
+                                                                src="{{ asset('images/' . $details['image']) }}" alt="Card image cap"></td>
+                                                            <td>{{ $details['name'] }}</td>
+                                                            <td>{{ $details['description'] }}</td>
+                                                            <td class="font-weight-bold">
+                                                                <p>{{ $details['quantity'] }}</p>
+                                                            </td>
+                                                            <td class="text-right">Rp. {{ number_format($details['price'], 0, ',', '.') }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+                                            </tbody>                                        
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="4">
+                                                        <div class="d-flex justify-content-end">Total Harga :</div> 
+                                                    </td>
+                                                    <td>
+                                                        <input type="hidden" value="{{ $total }}" name="totalHarga">
+                                                        <div><span class="fw-bold">Rp. {{ number_format($total, 0, ',', '.') }}</span></div>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -223,6 +223,12 @@
 @push('script')
     <script>
         $(document).ready(function() {
+            if($(".table-cart tbody tr").length > 0) {
+                $('div.save-reset-control').removeClass('d-none');
+                
+            } else {
+                $('div.save-reset-control').addClass('d-none');
+            }
             $( '.single-select-category' ).select2( {
                 theme: "bootstrap-5",
                 width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
@@ -235,34 +241,68 @@
                 }
             } );
 
+            $(".productCard").click(function(e) {
+                e.preventDefault();
 
-            $(".update-qty").change(function(e) {
+                var position = $(this);
+                let id = position.attr("data-cart-id")
+
+                $.ajax({
+                    url: "/pos/add-to-cart/"+id,
+                    method: "GET",
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        // window.location.reload();
+                        $('.table-cart').html(response.cart_view);
+                        $('.table-modal').html(response.modal_view);
+                        if($(".table-cart tbody tr").length > 0) {
+                            $('div.save-reset-control').removeClass('d-none');
+                            
+                        } else {
+                            $('div.save-reset-control').addClass('d-none');
+                        }
+                    }
+                });
+            });
+
+            $(document).on('input', '.update-qty', function(e){
                 e.preventDefault();
 
                 var position = $(this);
                 var id = position.parents("tr").attr("data-id");
-                var quantity = position.parents("tr").find(".qty").val();
+                var quantity = parseInt(position.val());
                 var url = "{{ URL::to('pos/update-qty/') }}";
+                // console.log(position.val());
+                if(quantity == 0){
+                    quantity = 1;
+                }
+                if (quantity){
+                    $.ajax({
+                        url: url,
+                        type: 'post',
+                        data: {
+                            "_token": $('meta[name="csrf-token"]').attr('content'),
+                            "id": id,
+                            "quantity": quantity
+                        },
+                        success: function(response) {
+                            // console.log(url,id,quantity);
+                            // window.location.reload();
+                            // $('.table-cart').html("");
+                            $('.table-cart').html(response.cart_view);
+                            $('.table-modal').html(response.modal_view);
+                        },
+                        error: function(error){
+                            console.log(error);
+                        }
+                    });
 
-                $.ajax({
-                    url: url,
-                    type: 'post',
-                    data: {
-                        "_token": $('meta[name="csrf-token"]').attr('content'),
-                        "id": id,
-                        "quantity": quantity
-                    },
-                    success: function(response) {
-                        // console.log(url,id,quantity);
-                        window.location.reload();
-                    },
-                    // error: function(error){
-                    //     console.log(error);
-                    // }
-                });
+                }
             });
 
-            $(".remove-from-cart").click(function(e) {
+            $(document).on('click', '.remove-from-cart', function(e){
                 e.preventDefault();
 
                 var position = $(this);
@@ -276,7 +316,16 @@
                             id: position.parents("tr").attr("data-id")
                         },
                         success: function(response) {
-                            window.location.reload();
+                            // window.location.reload();
+                            $('.table-cart').html(response.cart_view);
+                            $('.table-modal').html(response.modal_view);
+
+                            if($(".table-cart tbody tr").length > 0) {
+                                $('div.save-reset-control').removeClass('d-none');
+                                
+                            } else {
+                                $('div.save-reset-control').addClass('d-none');
+                            }
                         }
                     });
                 }
@@ -292,7 +341,16 @@
                             _token: '{{ csrf_token() }}',
                         },
                         success: function(response) {
-                            window.location.reload();
+                            // window.location.reload();
+                            $('.table-cart').html(response.cart_view);
+                            $('.table-modal').html(response.modal_view);
+
+                            if($(".table-cart tbody tr").length > 0) {
+                                $('div.save-reset-control').removeClass('d-none');
+                                
+                            } else {
+                                $('div.save-reset-control').addClass('d-none');
+                            }
                         }
                     });
                 }
