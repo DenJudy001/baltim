@@ -10,6 +10,7 @@ class FoodNBeverages extends Model
     use HasFactory;
 
     protected $fillable = [
+        'code',
         'name',
         'description',
         'type',

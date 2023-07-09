@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         User::factory(19)->create();
         Supplier::factory(20)->create();
         Stuff::factory(40)->create();
-        FoodNBeverages::factory(40)->create();
+        FoodNBeverages::factory(20)->create();
         User::create([
            'name' => "RM Baltim",
            'username' => "baltim",

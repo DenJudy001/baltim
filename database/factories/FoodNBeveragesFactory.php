@@ -18,16 +18,18 @@ class FoodNBeveragesFactory extends Factory
     public function definition(): array
     {
         $this->faker->addProvider(new Restaurant($this->faker));
-        $name = $this->faker->randomElement(['foodName', 'beverageName']);
+        $foodName = $this->faker->unique()->foodName();
+        $beverageName = $this->faker->unique()->beverageName();
 
         $data = [
-            'name' => $this->faker->$name(),
+            'code' => $this->faker->regexify('[A-Z]{3,5}'),
+            'name' => $this->faker->randomElement([$foodName, $beverageName]),
             'description' => $this->faker->sentence(),
             'image' => 'food_3.jpg',
             'price' => $this->faker->numberBetween(1000, 100000),
         ];
 
-        if ($name == 'foodName') {
+        if ($data['name'] === $foodName) {
             $data['type'] = 'Makanan';
         } else {
             $data['type'] = 'Minuman';

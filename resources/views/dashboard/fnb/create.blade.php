@@ -34,6 +34,16 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
+                            <label for="code" class="form-label @error('code') is-invalid @enderror">Kode Menu<span class="text-danger">*</span></label><i class="fas fa-question-circle ml-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Untuk mempermudah pencarian menu (3-5 karakter)"></i>
+                            <input type="text" class="form-control" id="code" name="code" value="{{ old('code') }}"
+                                required autofocus oninvalid="this.setCustomValidity('Kode menu tidak boleh kosong !')" oninput="this.setCustomValidity('')">
+                            @error('code')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
                             <label for="name" class="form-label @error('name') is-invalid @enderror">Nama
                                 Menu<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}"
@@ -83,7 +93,7 @@
                     </div>
                     
                 </div>
-                <button type="submit" class="btn btn-primary mb-3">Buat Menu</button>
+                <button type="submit" class="btn btn-primary mb-3"><i class="fas fa-utensils mr-2"></i>Buat Menu</button>
             </form>
         </div>
     </div>
@@ -92,6 +102,7 @@
 @push('script')
     <script>
         $(document).ready(function(){
+            $('[data-bs-toggle="tooltip"]').tooltip();
             $( '.single-select-menu-type' ).select2( {
                 theme: "bootstrap-5",
                 width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',

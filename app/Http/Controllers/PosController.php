@@ -26,10 +26,16 @@ class PosController extends Controller
     public function create(Request $request)
     {
         $fnbs = FoodNBeverages::when(request('search'), function($query){
-            return $query->where('name','like','%'.request('search').'%');
-        })->when(request('category_type'), function($query) {
+            $query->where(function($query){
+                $query->where('name', 'like', '%' . request('search') . '%')
+                      ->orWhere('code', 'like', '%' . request('search') . '%');
+            });
+        })
+        ->when(request('category_type'), function($query) {
             return $query->where('type', request('category_type'));
-        })->orderBy('created_at','desc')->simplePaginate(6);
+        })
+        ->orderBy('created_at','desc')
+        ->simplePaginate(6);
 
         $fnbCat = FoodNBeverages::select('type')->distinct()->get();
         $title = "Penjualan";

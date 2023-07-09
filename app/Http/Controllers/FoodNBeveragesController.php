@@ -37,6 +37,7 @@ class FoodNBeveragesController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'code' => 'required|min:3|max:5|unique:food_n_beverages',
             'name' => 'required|max:255|unique:food_n_beverages',
             'type' => 'required',
             'price' => 'required|integer|min:1',
@@ -46,6 +47,7 @@ class FoodNBeveragesController extends Controller
         $validatedData['description'] = $request->description;
         $validatedData['name'] = ucwords($request->name);
         $validatedData['type'] = ucwords($request->type);
+        $validatedData['code'] = strtoupper($request->code);
 
         if($request->hasFile('image')) {
             $image = $request->file('image');
@@ -98,6 +100,9 @@ class FoodNBeveragesController extends Controller
         if($request->name != $foodNBeverages->name) {
             $rules['name'] = 'required|max:255|unique:food_n_beverages';
         }
+        if($request->code != $foodNBeverages->code) {
+            $rules['code'] = 'required|min:3|max:5|unique:food_n_beverages';
+        }
         
         $validatedData = $request -> validate($rules);
         
@@ -121,6 +126,7 @@ class FoodNBeveragesController extends Controller
         $validatedData['description'] = $request->description;
         $validatedData['name'] = ucwords($request->name);
         $validatedData['type'] = ucwords($request->type);
+        $validatedData['code'] = strtoupper($request->code);
         FoodNBeverages::where('id', $foodNBeverages->id)
             ->update($validatedData);
 

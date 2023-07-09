@@ -25,6 +25,11 @@
             <div class="col-md-6">
                 <table width="100%" class="table table-borderless">
                     <tr>
+                        <td width="38%">Kode Menu</td>
+                        <td width="2%">:</td>
+                        <td width="60%">{{$menu->code}}</td>
+                    </tr>   
+                    <tr>
                         <td width="38%">Nama Menu</td>
                         <td width="2%">:</td>
                         <td width="60%">{{$menu->name}}</td>
