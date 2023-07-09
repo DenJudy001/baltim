@@ -140,7 +140,7 @@
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-3 col-lg-2">
-                    <button type="submit" class="btn btn-primary mb-3">Filter</button>
+                    <button type="submit" class="btn btn-primary mb-3"><i class="fas fa-filter mr-2"></i>Filter</button>
                 </div>
             </div>
             </form>

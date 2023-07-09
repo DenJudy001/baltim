@@ -22,8 +22,8 @@
                 <div class="col"><h4 class="font-weight-bold">{{ $purchase->purchase_number }}</h4></div>
                 @if ($check_menu == True && $purchase->state == 'Proses')
                     <div class="col text-right" id="changeStatus" data-purchase-id="{{ $purchase->id }}">
-                        <a class="btn btn-success shadow-sm button-finished">{{ __('Selesaikan') }}</a>
-                        <a class="btn btn-danger shadow-sm button-cancelled">{{ __('Batalkan') }}</a>
+                        <a class="btn btn-success shadow-sm button-finished"><i class="fas fa-check mr-2"></i>{{ __('Selesaikan') }}</a>
+                        <a class="btn btn-danger shadow-sm button-cancelled"><i class="fas fa-times mr-2"></i>{{ __('Batalkan') }}</a>
                     </div>
                 @endif
             </div>                 

@@ -15,8 +15,8 @@
             <div class="col"><h4 class="font-weight-bold">{{ $pos->pos_number }}</h4></div>
             @if ($pos->state == 'Proses')
                 <div class="col text-right" id="changeStatus" data-pos-id="{{ $pos->id }}">
-                    <a class="btn btn-success shadow-sm button-finished">{{ __('Selesaikan') }}</a>
-                    <a class="btn btn-danger shadow-sm button-cancelled">{{ __('Batalkan') }}</a>
+                    <a class="btn btn-success shadow-sm button-finished"><i class="fas fa-check mr-2"></i>{{ __('Selesaikan') }}</a>
+                    <a class="btn btn-danger shadow-sm button-cancelled"><i class="fas fa-times mr-2"></i>{{ __('Batalkan') }}</a>
                 </div>
             @endif
         </div>                 
@@ -80,7 +80,7 @@
                             <th width="15%">Harga</th>
                             <th scope="col" width="10%">
                                 <div  class="d-flex justify-content-end">
-                                    <a href="javascript:void(0)" class="btn btn-success addRowPos">+</a>
+                                    <a href="javascript:void(0)" class="btn btn-success addRowPos"><i class="fas fa-plus"></i></a>
                                 </div>
                             </th>
                         </tr>

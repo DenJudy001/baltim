@@ -15,7 +15,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <a href="/employee/create" class="btn btn-primary mb-3">Tambah Karyawan</a>
+                <a href="/employee/create" class="btn btn-primary mb-3"><i class="fas fa-plus mr-2"></i>Tambah Karyawan</a>
                 <table class="table table-striped" id="DataTables">
                     <thead>
                         <tr>

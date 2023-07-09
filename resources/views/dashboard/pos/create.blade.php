@@ -212,8 +212,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fas fa-times mr-2"></i>Batal</button>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-check mr-2"></i>Simpan</button>
                         </div>
                     </form>
                     </div>
@@ -281,7 +281,7 @@
                 // Set timer baru untuk menjalankan fungsi find_menu setelah 0,5 detik
                 debounceTimer = setTimeout(function() {
                     find_menu(url);
-                }, 750);
+                }, 300);
                 
             });
             

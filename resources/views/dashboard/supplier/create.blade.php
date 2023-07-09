@@ -114,7 +114,7 @@
                                     <th scope="col" width="30%">Nama<span class="text-danger">*</span></th>
                                     <th scope="col" width="40%">Keterangan</th>
                                     <th scope="col" width="20%">Harga<span class="text-danger">*</span></th>
-                                    <th scope="col" width="10%"><a href="javascript:void(0)" class="btn btn-success addRow">+</a></th>
+                                    <th scope="col" width="10%"><a href="javascript:void(0)" class="btn btn-success addRow"><i class="fas fa-plus"></i></a></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -123,7 +123,7 @@
                         </table>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary mb-3">Simpan</button>
+                <button type="submit" class="btn btn-primary mb-3"><i class="fas fa-check mr-2"></i>Simpan</button>
             </form>
         </div>
     </div>

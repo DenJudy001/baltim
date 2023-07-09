@@ -74,7 +74,7 @@
                         </div>
                     </div>                  
                 </div>
-                <button type="submit" class="btn btn-primary mb-3 mt-2">Buat Karyawan</button>
+                <button type="submit" class="btn btn-primary mb-3 mt-2"><i class="fas fa-users mr-2"></i>Buat Karyawan</button>
             </form>
         </div>
     </div>

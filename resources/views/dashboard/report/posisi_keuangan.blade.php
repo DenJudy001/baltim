@@ -109,7 +109,7 @@
                                         <th scope="col" width="40%">Harga<span class="text-danger">*</span></th>
                                         <th scope="col" width="10%">
                                             <div  class="d-flex justify-content-end">
-                                                <a href="javascript:void(0)" class="btn btn-success addRowSupply">+</a>
+                                                <a href="javascript:void(0)" class="btn btn-success addRowSupply"><i class="fas fa-plus"></i></a>
                                             </div>
                                         </th>
                                     </tr>
@@ -145,7 +145,7 @@
                                     <th scope="col" width="20%">Harga<span class="text-danger">*</span></th>
                                     <th scope="col" width="5%">
                                         <div  class="d-flex justify-content-end">
-                                            <a href="javascript:void(0)" class="btn btn-success addRowAsset">+</a>
+                                            <a href="javascript:void(0)" class="btn btn-success addRowAsset"><i class="fas fa-plus"></i></a>
                                         </div>
                                     </th>
                                 </tr>
@@ -183,7 +183,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary mb-3 mt-2">Simpan Laporan</button>
+                <button type="submit" class="btn btn-primary mb-3 mt-2"><i class="fas fa-check mr-2"></i>Simpan Laporan</button>
             </form>
         </div>
     </div>

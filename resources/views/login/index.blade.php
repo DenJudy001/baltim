@@ -33,7 +33,7 @@
                         </div>
                     @enderror
                 </div>
-                <button class="w-100 btn btn-lg btn-primary" type="submit">Masuk</button>
+                <button class="w-100 btn btn-lg btn-primary" type="submit"><i class="bi bi-box-arrow-in-right"></i> Masuk</button>
             </form>
         </main>    
     </div>        

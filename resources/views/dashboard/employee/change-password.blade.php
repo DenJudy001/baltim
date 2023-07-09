@@ -51,7 +51,7 @@
                 </table>
             </div>
             <div class="col-sm-12">
-                <button type="submit" class="btn btn-primary">Ubah Kata Sandi</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-pen mr-2"></i>Ubah Kata Sandi</button>
             </div>
         </form>
         </div>              

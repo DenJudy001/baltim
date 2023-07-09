@@ -44,7 +44,7 @@
                         @enderror
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary mb-3 mt-2">Buat Laporan</button>
+                <button type="submit" class="btn btn-primary mb-3 mt-2"><i class="fas fa-download mr-2"></i>Unduh Laporan</button>
             </form>
         </div>
     </div>

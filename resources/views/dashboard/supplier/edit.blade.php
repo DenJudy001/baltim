@@ -76,7 +76,7 @@
                         </div>
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-primary mb-3">Ubah Data</button>
+                        <button type="submit" class="btn btn-primary mb-3"><i class="fas fa-pen mr-2"></i>Ubah Data Pemasok</button>
                     </div>
                 </form>
                 </div>
@@ -101,7 +101,7 @@
                                     <th scope="col" width="20%">Harga<span class="text-danger">*</span></th>
                                     <th scope="col" width="10%">
                                         <div  class="d-flex justify-content-end">
-                                            <a href="javascript:void(0)" class="btn btn-success addRow">+</a>
+                                            <a href="javascript:void(0)" class="btn btn-success addRow"><i class="fas fa-plus"></i></a>
                                         </div>
                                     </th>
                                 </tr>

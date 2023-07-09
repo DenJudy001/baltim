@@ -15,7 +15,7 @@
             <div class="col"><h4 class="font-weight-bold">{{ $pos->pos_number }}</h4></div>
             @if ($pos->state == 'Selesai')
                 <div class="col text-right">
-                    <a href="/pos/{{ $pos->pos_number }}/print_struk" target="_blank" class="btn btn-success shadow-sm">Cetak</a>
+                    <a href="/pos/{{ $pos->pos_number }}/print_struk" target="_blank" class="btn btn-success shadow-sm"><i class="fas fa-print mr-2"></i>Cetak</a>
                 </div>
             @endif
         </div>                 

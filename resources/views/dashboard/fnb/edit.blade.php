@@ -86,7 +86,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary mb-3">Ubah Menu</button>
+                <button type="submit" class="btn btn-primary mb-3"><i class="fas fa-pen mr-2"></i>Ubah Menu</button>
             </form>
         </div>
     </div>

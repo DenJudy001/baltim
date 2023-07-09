@@ -69,7 +69,7 @@
                 </table>
             </div>
             <div class="col-sm-12">
-                <button type="submit" class="btn btn-primary">Ubah Profil</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-pen mr-2"></i>Ubah Profil</button>
             </div>
         </form>
         </div>              

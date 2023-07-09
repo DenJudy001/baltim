@@ -56,7 +56,7 @@
                         @enderror
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary mb-3">Buat Catatan Pembayaran</button>
+                <button type="submit" class="btn btn-primary mb-3"><i class="fas fa-receipt mr-2"></i>Buat Catatan Pembayaran</button>
             </form>
         </div>
     </div>

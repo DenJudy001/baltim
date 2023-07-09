@@ -16,8 +16,8 @@
             @if ($purchase->state == 'Proses')
                 <div class="col text-right">
                     <div class="d-flex justify-content-end" id="changeStatus" data-purchase-id="{{ $purchase->id }}">
-                        <a class="btn btn-success shadow-sm button-finished mr-1">{{ __('Selesaikan') }}</a>
-                        <a class="btn btn-danger shadow-sm button-cancelled">{{ __('Batalkan') }}</a>
+                        <a class="btn btn-success shadow-sm button-finished mr-1"><i class="fas fa-check mr-2"></i>{{ __('Selesaikan') }}</a>
+                        <a class="btn btn-danger shadow-sm button-cancelled"><i class="fas fa-times mr-2"></i>{{ __('Batalkan') }}</a>
                     </div>
                 </div>
             @endif
@@ -108,7 +108,7 @@
                             <th scope="col" width="15%">Harga</th>
                             <th scope="col" width="10%">
                                 <div  class="d-flex justify-content-end">
-                                    <a href="javascript:void(0)" class="btn btn-success addRowPurchase">+</a>
+                                    <a href="javascript:void(0)" class="btn btn-success addRowPurchase"><i class="fas fa-plus"></i></a>
                                 </div>
                             </th>
                         </tr>

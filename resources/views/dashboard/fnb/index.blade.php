@@ -14,7 +14,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <a href="/fnb/create" class="btn btn-primary mb-3">Tambah Menu</a>
+                <a href="/fnb/create" class="btn btn-primary mb-3"><i class="fas fa-plus mr-2"></i>Tambah Menu</a>
                 <table class="table table-striped" id="DataTables">
                     <thead>
                         <tr>
