@@ -39,11 +39,11 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-sm-6 col-md-6 col-lg-8 mb-2"><input type="text" name="search"
+                                <div class="col-sm-6 col-md-6 col-lg-4 mb-2"><input type="text" name="search"
                                         class="form-control form-control-sm col-sm-12 float-right search"
                                         placeholder="Cari Menu..." value="{{ request('search') }}"></div>
-                                {{-- <div class="col-lg-4"><button type="submit"
-                                        class="btn btn-primary btn-sm float-right btn-block">Cari Menu</button></div> --}}
+                                <div class="col-lg-4"><button type="button"
+                                        class="btn btn-primary btn-sm float-right btn-block search-button">Cari Menu</button></div>
                             </div>
                             {{-- <div class="row">
                                 <div class="d-lg-none"><button type="submit"
@@ -161,8 +161,8 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label for="responsible" class="form-label">Kasir</label>
-                                            <p id="responsible" class="fw-bold">{{ auth()->user()->name }}</p>
+                                            <label class="form-label">Kasir</label>
+                                            <p class="fw-bold">{{ auth()->user()->name }}</p>
                                         </div>
                                       </div>
                                     </div>
@@ -227,6 +227,7 @@
     <script>
         $(document).ready(function() {
             var debounceTimer;
+            var loadingCount = 0;
 
             if($(".table-cart tbody tr").length > 0) {
                 $('div.save-reset-control').removeClass('d-none');
@@ -261,9 +262,19 @@
             }
 
             $("#search-control").on('keyup', '.search', function(e) {
-                e.preventDefault();
+                if (e.keyCode === 13) {
+                    e.preventDefault();
+                    performSearch();
+                }
+            });
 
-                let search = $(this).val();
+            $("#search-control").on('click', '.search-button', function(e) {
+                e.preventDefault();
+                performSearch();
+            });
+
+            function performSearch() {
+                let search = $('.search').val();
                 let categ = $(".single-select-category").val();
                 let url = "/pos/create";
                 // console.log(categ);
@@ -273,7 +284,25 @@
                 } else {
                     url = "/pos/create?category_type=&search="+search;
                 }
-
+                
+                let html = '<div class="row">';
+                if(loadingCount < 1){
+                    for (var count = 0; count < 6; count++) {
+                    html += '<div class="card mb-4 col-sm-6 col-md-6 col-lg-4" aria-hidden="true">';
+                    html += '<div class="view overlay bg-secondary mt-1" aria-hidden="true">';
+                    html += '<img class="card-img-top" src='+"{{ asset('images/') }}" + '/solid_gray.jpeg alt="Card image cap">';
+                    html += '</div>';
+                    html += '<div class="card-body">';
+                    html += '<h5 class="card-text placeholder-glow"><span class="placeholder col-6"></span></h5>';
+                    html += '<p class="card-text placeholder-wave"><span class="placeholder col-4"></span></p>';
+                    html += '</div>';
+                    html += '</div>';
+                    }
+                    html += '</div>';
+                    $('.menu-items').html(html);
+                    loadingCount += 1;
+                }
+                            
                 if (debounceTimer) {
                     clearTimeout(debounceTimer);
                 }
@@ -281,9 +310,10 @@
                 // Set timer baru untuk menjalankan fungsi find_menu setelah 0,5 detik
                 debounceTimer = setTimeout(function() {
                     find_menu(url);
+                    loadingCount = 0;
                 }, 300);
                 
-            });
+            }
             
             $("#search-control").on('change', '.single-select-category', function(e) {
                 e.preventDefault();
@@ -299,7 +329,33 @@
                     url = "/pos/create?category_type="+categ+"&search=";
                 }
 
-                find_menu(url);
+                let html = '<div class="row">';
+                if(loadingCount < 1){
+                    for (var count = 0; count < 6; count++) {
+                    html += '<div class="card mb-4 col-sm-6 col-md-6 col-lg-4" aria-hidden="true">';
+                    html += '<div class="view overlay bg-secondary mt-1" aria-hidden="true">';
+                    html += '<img class="card-img-top" src='+"{{ asset('images/') }}" + '/solid_gray.jpeg alt="Card image cap">';
+                    html += '</div>';
+                    html += '<div class="card-body">';
+                    html += '<h5 class="card-text placeholder-glow"><span class="placeholder col-6"></span></h5>';
+                    html += '<p class="card-text placeholder-wave"><span class="placeholder col-4"></span></p>';
+                    html += '</div>';
+                    html += '</div>';
+                    }
+                    html += '</div>';
+                    $('.menu-items').html(html);
+                    loadingCount += 1;
+                }
+
+                if (debounceTimer) {
+                    clearTimeout(debounceTimer);
+                }
+
+                // Set timer baru untuk menjalankan fungsi find_menu setelah 0,5 detik
+                debounceTimer = setTimeout(function() {
+                    find_menu(url);
+                    loadingCount = 0;
+                }, 300);
             });
 
             $(document).on('click','.pagination a', function(e){
