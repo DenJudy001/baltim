@@ -21,7 +21,7 @@
                         <tr>
                             <th scope="col" width="5%">No.</th>
                             <th scope="col" width="15%">No.Telp</th>
-                            <th scope="col" width="20%">Nama</th>
+                            <th scope="col" width="20%">Pemasok</th>
                             <th scope="col" width="30%">Alamat</th>
                             <th scope="col" width="10%">Aksi</th>
                         </tr>
@@ -32,7 +32,7 @@
                                 <td>{{ $loop->iteration }} </td>
                                 <td>{{ $supplier->telp }}</td>
                                 <td>{{ $supplier->supplier_name }}</td>
-                                <td>{{ $supplier->address }}</td>
+                                <td>{{ Str::words($supplier->address, 6) }}</td>
                                 <td> <div class="d-flex justify-content-between">
                                     <a href="/supplier/{{ $supplier->id }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
                                     <a href="/supplier/{{ $supplier->id }}/edit" class="btn btn-warning"><i class="fas fa-edit"></i></a>

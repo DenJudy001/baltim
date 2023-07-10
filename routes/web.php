@@ -36,9 +36,10 @@ use App\Models\DetailReport;
 */
 
 Route::get('/', function () {
-    return view('dashboard.index',[
-        'title'=> "Selamat Datang!"
-    ]);
+    // return view('dashboard.index',[
+    //     'title'=> "Selamat Datang!"
+    // ]);
+    return redirect('/account');
 })->middleware('auth');
 
 Route::post('stuff/{stuff}', function (Stuff $stuff) {

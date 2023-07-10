@@ -20,8 +20,9 @@
                     <thead>
                         <tr>
                             <th scope="col" width="5%">No.</th>
-                            <th scope="col" width="40%">Nama</th>
-                            <th scope="col" width="40%">Email</th>
+                            <th scope="col" width="30%">Nama</th>
+                            <th scope="col" width="25%">Username</th>
+                            <th scope="col" width="25%">Telp</th>
                             <th scope="col" width="15%">Aksi</th>
                         </tr>
                     </thead>
@@ -30,7 +31,8 @@
                             <tr>
                                 <td>{{ $loop->iteration }} </td>
                                 <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->username }}</td>
+                                <td>{{ $user->telp }}</td>
                                 <td><div class="d-flex justify-content-evenly">
                                     <a href="/employee/{{ $user->username }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
                                     <form action="/employee/{{ $user->username }}" method="POST" class="d-inline">

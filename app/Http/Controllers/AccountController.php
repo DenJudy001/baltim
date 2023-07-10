@@ -18,24 +18,24 @@ class AccountController extends Controller
             $start_date = request('start_date').' 00:00:00';
             $end_date = request('end_date').' 23:59:59';
             $purchase = DB::table('purchases')
-                ->select('purchase_number', 'total', 'state', 'updated_at')
+                ->select('purchase_number', 'total', 'state', 'created_at','updated_at')
                 ->whereBetween('updated_at', [$start_date, $end_date]);
 
             $salary = DB::table('employee_salaries')
-                ->select('salary_number', 'salary', 'state', 'updated_at')
+                ->select('salary_number', 'salary', 'state', 'created_at','updated_at')
                 ->whereBetween('updated_at', [$start_date, $end_date]);
 
             $pos = DB::table('pos')
-                ->select('pos_number', 'total', 'state', 'updated_at')
+                ->select('pos_number', 'total', 'state', 'created_at','updated_at')
                 ->whereBetween('updated_at', [$start_date, $end_date]);
         } else {
             $purchase = DB::table('purchases')
-            ->select('purchase_number', 'total', 'state', 'updated_at');
+            ->select('purchase_number', 'total', 'state', 'created_at','updated_at');
 
             $salary = DB::table('employee_salaries')
-            ->select('salary_number', 'salary', 'state', 'updated_at');
+            ->select('salary_number', 'salary', 'state', 'created_at','updated_at');
 
-            $pos = DB::table('pos')->select('pos_number', 'total', 'state', 'updated_at');
+            $pos = DB::table('pos')->select('pos_number', 'total', 'state', 'created_at','updated_at');
         }
 
         $transactions = $purchase->union($salary)->union($pos)->orderBy('updated_at', 'desc')->get();

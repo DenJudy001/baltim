@@ -54,19 +54,22 @@
                     <div class="card-body d-flex flex-wrap justify-content-center menu-items">
                         <div class="row">
                             @foreach ($fnbs as $fnb)
-                            <div class="card mb-4 col-sm-6 col-md-6 col-lg-4">
-                                <div class="productCard" data-cart-id={{ $fnb->id }}>
-                                    <div class="view overlay">
+                            {{-- <div class="card mb-4 col-sm-6 col-md-6 col-lg-4 p-0"> --}}
+                                <div class="card mb-4 col-sm-6 col-md-6 col-lg-4 p-0 productCard d-flex flex-column" data-cart-id={{ $fnb->id }}>
+                                    <div class="view overlay flex-grow-1">
                                         <img class="card-img-top gambar" src="{{ asset('images/' . $fnb->image) }}" alt="Card image cap" style="cursor: pointer">
                                     </div>
-                                    <div class="card-body">
-                                    <label class="card-text font-weight-bold" style="text-transform: capitalize;">
-                                        {{ Str::words($fnb->name, 4) }} </label>
-                                    <p class="card-text text-center">Rp. {{ number_format($fnb->price, 0, ',', '.') }}
-                                    </p>
+                                    <div class="d-flex align-items-end">
+                                        <div class="card-body p-3 bg-light mb-auto">
+                                        <label class="card-text" style="text-transform: capitalize;">
+                                            {{ Str::words($fnb->name, 4) }} </label>
+                                        <p class="card-text font-weight-bold">Rp. {{ number_format($fnb->price, 0, ',', '.') }}
+                                        </p>
+                                        </div>
+
                                     </div>
                                 </div>
-                            </div>
+                            {{-- </div> --}}
                             @endforeach
                         </div>
                         <div class="justify-content-center mt-2">{{ $fnbs->links() }}</div>

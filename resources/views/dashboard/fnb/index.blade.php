@@ -19,7 +19,8 @@
                     <thead>
                         <tr>
                             <th scope="col" width="5%">No.</th>
-                            <th scope="col" width="40%">Nama</th>
+                            <th scope="col" width="10%">Kode</th>
+                            <th scope="col" width="30%">Nama</th>
                             <th scope="col" width="20%">Jenis</th>
                             <th scope="col" width="20%">Harga</th>
                             <th scope="col" width="15%">Aksi</th>
@@ -29,9 +30,10 @@
                         @foreach ($fnbs as $fnb)
                             <tr>
                                 <td>{{ $loop->iteration }} </td>
+                                <td>{{ $fnb->code }}</td>
                                 <td>{{ $fnb->name }}</td>
                                 <td>{{ $fnb->type }}</td>
-                                <td>{{ $fnb->price }}</td>
+                                <td>Rp. {{ number_format($fnb->price, 0, ',', '.')}}</td>
                                 <td><div class="d-flex justify-content-between">
                                     <a href="/fnb/{{ $fnb->id }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
                                     <a href="/fnb/{{ $fnb->id }}/edit" class="btn btn-warning"><i class="fas fa-edit"></i></a>

@@ -15,7 +15,7 @@ class FoodNBeveragesController extends Controller
     public function index()
     {
         return view('dashboard.fnb.index',[
-            'fnbs'=>FoodNBeverages::all('id','name','type','price'),
+            'fnbs'=>FoodNBeverages::all('id','code','name','type','price'),
             'title'=>"Daftar Menu"
         ]);
     }

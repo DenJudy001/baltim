@@ -8,14 +8,18 @@ body {
   align-items: center;
   padding-top: 40px;
   padding-bottom: 40px;
-  background-color: #4e73df;
+  background: #4e73df;
 }
 
 .form-signin {
-  max-width: 550px;
+  /* max-width: 550px; */
   padding: 15px;
   background-color: #f5f5f5;
-    border-radius: 10px;
+  /* border-radius: 10px; */
+}
+
+.card-form{
+  background-color: #f5f5f5;
 }
 
 .form-signin .form-floating:focus-within {
@@ -23,13 +27,30 @@ body {
 }
 
 .form-signin input[type="String"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+  margin-bottom: 10px;
+  /* border-radius: 20px; */
+  /* border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0; */
 }
 
 .form-signin input[type="password"] {
   margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+  /* border-top-left-radius: 10;
+  border-top-right-radius: 10; */
+  /* border-radius: 10px; */
+}
+
+.invalid-user{
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.bg-login-image {
+  background: url("/images/form_img.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.btn-submit {
+  background-color: #4e73df;
 }

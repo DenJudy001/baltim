@@ -17,7 +17,7 @@ class EmployeeController extends Controller
     public function index()
     {
         return view('dashboard.employee.index',[
-            'users'=>User::all('id','name','email','username'),
+            'users'=>User::all('id','name','telp','username'),
             'title'=>"Daftar Karyawan"
         ]);
     }

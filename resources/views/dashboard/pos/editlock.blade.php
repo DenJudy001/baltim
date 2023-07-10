@@ -21,8 +21,8 @@
             <div class="col"><h4 class="font-weight-bold">{{ $pos->pos_number }}</h4></div>
             @if ($check_menu == True && $pos->state == 'Proses')
                 <div class="col text-right" id="changeStatus" data-pos-id="{{ $pos->id }}">
-                    <a class="btn btn-success shadow-sm button-finished"><i class="fas fa-check mr-2"></i>{{ __('Selesaikan') }}</a>
-                    <a class="btn btn-danger shadow-sm button-cancelled"><i class="fas fa-times mr-2"></i>{{ __('Batalkan') }}</a>
+                    <a class="btn btn-success shadow-sm button-finished"><i class="fas fa-check mr-2"></i>{{ __('Selesai') }}</a>
+                    <a class="btn btn-danger shadow-sm button-cancelled"><i class="fas fa-times mr-2"></i>{{ __('Batal') }}</a>
                 </div>
             @else
                 <div class="col text-right">

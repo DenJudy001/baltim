@@ -149,9 +149,10 @@
                     <thead>
                         <tr>
                             <th scope="col" width="5%">No.</th>
-                            <th scope="col" width="35%">Kode Transaksi</th>
-                            <th scope="col" width="30%">Total</th>
+                            <th scope="col" width="20%">Kode Transaksi</th>
+                            <th scope="col" width="15%">Tanggal</th>
                             <th scope="col" width="15%">Status</th>
+                            <th scope="col" width="30%">Total</th>
                             <th scope="col" width="15%">Aksi</th>
                         </tr>
                     </thead>
@@ -160,8 +161,9 @@
                             <tr>
                                 <td>{{ $loop->iteration }} </td>
                                 <td>{{ $transaction->purchase_number }}</td>
-                                <td>Rp. {{ number_format($transaction->total, 0, ',', '.')}}</td>
+                                <td>{{ substr($transaction->created_at, 0, 10) }}</td>
                                 <td ><span class="badge {{ $transaction->state == 'Proses' ? 'text-bg-warning' : ($transaction->state == 'Selesai' ? 'text-bg-success' : 'text-bg-danger') }}">{{ $transaction->state }}</span></td>
+                                <td>Rp. {{ number_format($transaction->total, 0, ',', '.')}}</td>
                                 <td>
                                     @if (str_contains($transaction->purchase_number, 'PUR'))
                                     <div class="d-flex justify-content-evenly">
