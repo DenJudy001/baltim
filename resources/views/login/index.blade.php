@@ -4,7 +4,7 @@
 <div class="row justify-content-center text-center">
     <div class="col-lg-4">
         <main class="form-signin w-100 m-auto">
-            <form action="/login" method="POST">
+            <form action="/login" method="POST" id="loginForm">
                 @csrf
                 <h1 class="h3 mb-5 mt-2 fw-normal">Selamat Datang!</h1>
                 
@@ -33,9 +33,23 @@
                         </div>
                     @enderror
                 </div>
-                <button class="w-100 btn btn-lg btn-primary" type="submit"><i class="bi bi-box-arrow-in-right"></i> Masuk</button>
+                <button class="w-100 btn btn-lg btn-primary btn-submit" type="submit"><i class="bi bi-box-arrow-in-right"></i> Masuk</button>
             </form>
         </main>    
     </div>        
 </div>    
 @endsection
+
+@push('scriptmain')
+<script>
+    $(document).ready(function() {
+        $("#loginForm").submit(function(e){
+
+            $(".btn-submit").find(".bi-box-arrow-in-right").remove();
+            $(".btn-submit").prepend('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+            $(".btn-submit").attr("disabled", 'disabled');
+        
+        });
+    });
+</script>
+@endpush
