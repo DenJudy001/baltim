@@ -56,8 +56,8 @@
                             @foreach ($fnbs as $fnb)
                             {{-- <div class="card mb-4 col-sm-6 col-md-6 col-lg-4 p-0"> --}}
                                 <div class="card mb-4 col-sm-6 col-md-6 col-lg-4 p-0 productCard d-flex flex-column" data-cart-id={{ $fnb->id }}>
-                                    <div class="view overlay flex-grow-1">
-                                        <img class="card-img-top gambar" src="{{ asset('images/' . $fnb->image) }}" alt="Card image cap" style="cursor: pointer">
+                                    <div class="view overlay flex-grow-1" style="cursor: pointer">
+                                        <img class="card-img-top gambar" src="{{ asset('images/' . $fnb->image) }}" alt="Card image cap" >
                                     </div>
                                     <div class="d-flex align-items-end">
                                         <div class="card-body p-3 bg-light mb-auto">
