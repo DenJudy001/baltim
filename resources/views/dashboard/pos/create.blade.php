@@ -29,7 +29,7 @@
                                 </div>
                             </div>
                             <div class="row mb-2" id="search-control">
-                                <div class="col-sm-6 col-md-6 col-lg-4">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
                                     <select name="category_type" id="sel_category_id" class="form-select form-select-sm single-select-category" data-placeholder="Pilih Kategori"
                                         style="font-size: 12px">
                                         <option></option>
@@ -39,11 +39,11 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-sm-6 col-md-6 col-lg-4 mb-2"><input type="text" name="search"
+                                <div class="col-sm-6 col-md-6 col-lg-6 mb-2"><input type="text" name="search"
                                         class="form-control form-control-sm col-sm-12 float-right search"
                                         placeholder="Cari Menu..." value="{{ request('search') }}"></div>
-                                <div class="col-lg-4"><button type="button"
-                                        class="btn btn-primary btn-sm float-right btn-block search-button">Cari Menu</button></div>
+                                {{-- <div class="col-lg-4"><button type="button"
+                                        class="btn btn-primary btn-sm float-right btn-block search-button">Cari Menu</button></div> --}}
                             </div>
                             {{-- <div class="row">
                                 <div class="d-lg-none"><button type="submit"
@@ -265,16 +265,17 @@
             }
 
             $("#search-control").on('keyup', '.search', function(e) {
-                if (e.keyCode === 13) {
-                    e.preventDefault();
-                    performSearch();
-                }
-            });
-
-            $("#search-control").on('click', '.search-button', function(e) {
-                e.preventDefault();
+                // if (e.keyCode === 13) {
+                //     e.preventDefault();
+                //     performSearch();
+                // }
                 performSearch();
             });
+
+            // $("#search-control").on('click', '.search-button', function(e) {
+            //     e.preventDefault();
+            //     performSearch();
+            // });
 
             function performSearch() {
                 let search = $('.search').val();
@@ -314,7 +315,7 @@
                 debounceTimer = setTimeout(function() {
                     find_menu(url);
                     loadingCount = 0;
-                }, 300);
+                }, 500);
                 
             }
             
