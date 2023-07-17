@@ -295,7 +295,9 @@
             //     performSearch();
             // });
 
-            function performSearch() {
+            $("#search-control").on('keyup', '.search', function(e) {
+                e.preventDefault();
+
                 let search = $('.search').val();
                 let categ = $(".single-select-category").text().trim();
                 let url = "/pos/create";
@@ -333,17 +335,16 @@
                 debounceTimer = setTimeout(function() {
                     find_menu(url);
                     loadingCount = 0;
-                }, 500);
+                }, 800);
                 
-            }
-
-            $("#search-control").on('keyup', '.search', function(e) {
-                // if (e.keyCode === 13) {
-                //     e.preventDefault();
-                //     performSearch();
-                // }
-                performSearch();
             });
+
+            // $("#search-control").on('keyup', '.search', function(e) {
+            //     if (e.keyCode === 13) {
+            //         e.preventDefault();
+            //         performSearch();
+            //     }
+            // });
 
             //Filter kategori
             $("#search-control").on('click', '.category-select', function(e) {
