@@ -29,19 +29,45 @@
                                 </div>
                             </div>
                             <div class="row mb-2" id="search-control">
-                                <div class="col-sm-6 col-md-6 col-lg-6">
-                                    <select name="category_type" id="sel_category_id" class="form-select form-select-sm single-select-category" data-placeholder="Pilih Kategori"
-                                        style="font-size: 12px">
-                                        <option></option>
-                                        <option value="">-- Pilih Kategori --</option>
-                                        @foreach ($fnbCat as $fnbcat)
-                                        <option {{ request('category_type') == $fnbcat->type ? 'selected' : '' }}>{{ $fnbcat->type }}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="row mb-2">
+                                    <div class="col">
+                                        <input type="text" name="search" class="form-control form-control-sm col-sm-12 float-right search" placeholder="Cari Menu..." value="{{ request('search') }}">
+                                    </div>
                                 </div>
-                                <div class="col-sm-6 col-md-6 col-lg-6 mb-2"><input type="text" name="search"
-                                        class="form-control form-control-sm col-sm-12 float-right search"
-                                        placeholder="Cari Menu..." value="{{ request('search') }}"></div>
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-8 col-lg-2">
+                                        {{-- <select name="category_type" id="sel_category_id" class="form-select form-select-sm single-select-category" data-placeholder="Pilih Kategori"
+                                            style="font-size: 12px">
+                                            <option></option>
+                                            <option value="">-- Pilih Kategori --</option>
+                                            @foreach ($fnbCat as $fnbcat)
+                                            <option {{ request('category_type') == $fnbcat->type ? 'selected' : '' }}>{{ $fnbcat->type }}</option>
+                                            @endforeach
+                                        </select> --}}
+                                        <table class="table table-borderless table-sm">
+                                            <tr>
+                                                <td width="20%" class="pl-1">Kategori</td>
+                                                <td width="5%">:</td>
+                                                <td class="d-none">
+                                                    <button type="button" class="btn btn-primary btn-sm float-left single-select-category"></button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4 col-lg-10">
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless table-sm w-auto">
+                                                <tr class="category-list">
+                                                    @foreach ($fnbCat as $fnbcat)
+                                                    <td>
+                                                        <button type="button" class="btn btn-outline-primary btn-sm float-left category-select">{{ $fnbcat->type }}</button>
+                                                    </td>
+                                                    @endforeach
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                                 {{-- <div class="col-lg-4"><button type="button"
                                         class="btn btn-primary btn-sm float-right btn-block search-button">Cari Menu</button></div> --}}
                             </div>
@@ -61,10 +87,10 @@
                                     </div>
                                     <div class="d-flex align-items-end">
                                         <div class="card-body p-3 bg-light mb-auto">
-                                        <label class="card-text" style="text-transform: capitalize;">
-                                            {{ Str::words($fnb->name, 4) }} </label>
-                                        <p class="card-text font-weight-bold">Rp. {{ number_format($fnb->price, 0, ',', '.') }}
-                                        </p>
+                                            <label class="card-text" style="text-transform: capitalize;">
+                                                {{ Str::words($fnb->name, 4) }} </label>
+                                            <p class="card-text font-weight-bold">Rp. {{ number_format($fnb->price, 0, ',', '.') }}
+                                            </p>
                                         </div>
 
                                     </div>
@@ -238,17 +264,17 @@
             } else {
                 $('div.save-reset-control').addClass('d-none');
             }
-            $( '.single-select-category' ).select2( {
-                theme: "bootstrap-5",
-                width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
-                placeholder: $( this ).data( 'placeholder' ),
-                allowClear: true,
-                language: {
-                    "noResults": function(){
-                        return "Data Tidak ditemukan";
-                    }
-                }
-            } );
+            // $( '.single-select-category' ).select2( {
+            //     theme: "bootstrap-5",
+            //     width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+            //     placeholder: $( this ).data( 'placeholder' ),
+            //     allowClear: true,
+            //     language: {
+            //         "noResults": function(){
+            //             return "Data Tidak ditemukan";
+            //         }
+            //     }
+            // } );
 
             function find_menu(url){
                 $.ajax({
@@ -264,14 +290,6 @@
                 });
             }
 
-            $("#search-control").on('keyup', '.search', function(e) {
-                // if (e.keyCode === 13) {
-                //     e.preventDefault();
-                //     performSearch();
-                // }
-                performSearch();
-            });
-
             // $("#search-control").on('click', '.search-button', function(e) {
             //     e.preventDefault();
             //     performSearch();
@@ -279,7 +297,7 @@
 
             function performSearch() {
                 let search = $('.search').val();
-                let categ = $(".single-select-category").val();
+                let categ = $(".single-select-category").text().trim();
                 let url = "/pos/create";
                 // console.log(categ);
 
@@ -318,14 +336,32 @@
                 }, 500);
                 
             }
-            
-            $("#search-control").on('change', '.single-select-category', function(e) {
+
+            $("#search-control").on('keyup', '.search', function(e) {
+                // if (e.keyCode === 13) {
+                //     e.preventDefault();
+                //     performSearch();
+                // }
+                performSearch();
+            });
+
+            //Filter kategori
+            $("#search-control").on('click', '.category-select', function(e) {
                 e.preventDefault();
 
-                let categ = $(this).val();
+                let categ = $(this).text().trim();
                 let search = $("#search-control").find('.search').val();
                 let url = "/pos/create";
                 // console.log(categ);
+                let categSelected = $("#search-control").find('.single-select-category');
+
+                categSelected.html(categ+" <i class='fas fa-times'></i>");
+                categSelected.parent().removeClass("d-none");
+                categSelected.parent().parent().parent().parent().parent().removeClass("col-lg-2");
+                categSelected.parent().parent().parent().parent().parent().addClass("col-lg-6");
+                $(this).parent().parent().addClass('d-none');
+                $(this).parent().parent().parent().parent().parent().parent().removeClass('col-lg-10');
+                $(this).parent().parent().parent().parent().parent().parent().addClass('col-lg-6');
 
                 if(search != null){
                     url = "/pos/create?category_type="+categ+"&search="+search;
@@ -362,10 +398,63 @@
                 }, 300);
             });
 
+            //Hapus filter kategori
+            $("#search-control").on('click', '.single-select-category', function(e) {
+                e.preventDefault();
+
+                let categ = $(this).text().trim();
+                let search = $("#search-control").find('.search').val();
+                let url = "/pos/create";
+                // console.log(categ);
+                let categoryList = $("#search-control").find('.category-list');
+
+                categoryList.removeClass("d-none");
+                categoryList.parent().parent().parent().parent().removeClass('col-lg-6');
+                categoryList.parent().parent().parent().parent().addClass('col-lg-10');
+                $(this).parent().addClass('d-none');
+                $(this).html("");
+                $(this).parent().parent().parent().parent().parent().removeClass('col-lg-6');
+                $(this).parent().parent().parent().parent().parent().addClass('col-lg-2');
+
+                if(search != null){
+                    url = "/pos/create?category_type=&search="+search;
+                } else {
+                    url = "/pos/create?category_type=&search=";
+                }
+
+                let html = '<div class="row">';
+                if(loadingCount < 1){
+                    for (var count = 0; count < 6; count++) {
+                    html += '<div class="card mb-4 col-sm-6 col-md-6 col-lg-4" aria-hidden="true">';
+                    html += '<div class="view overlay bg-secondary mt-1" aria-hidden="true">';
+                    html += '<img class="card-img-top" src='+"{{ asset('images/') }}" + '/solid_gray.jpeg alt="Card image cap">';
+                    html += '</div>';
+                    html += '<div class="card-body">';
+                    html += '<h5 class="card-text placeholder-glow"><span class="placeholder col-6"></span></h5>';
+                    html += '<p class="card-text placeholder-wave"><span class="placeholder col-4"></span></p>';
+                    html += '</div>';
+                    html += '</div>';
+                    }
+                    html += '</div>';
+                    $('.menu-items').html(html);
+                    loadingCount += 1;
+                }
+
+                if (debounceTimer) {
+                    clearTimeout(debounceTimer);
+                }
+
+                // Set timer baru untuk menjalankan fungsi find_menu setelah 0,5 detik
+                debounceTimer = setTimeout(function() {
+                    find_menu(url);
+                    loadingCount = 0;
+                }, 300);
+            });
+
             $(document).on('click','.pagination a', function(e){
                 e.preventDefault();
                 let page = $(this).attr('href').split('page=')[1];
-                let categ = $("#search-control").find('.single-select-category').val();
+                let categ = $("#search-control").find('.single-select-category').text().trim();
                 let search = $("#search-control").find('.search').val();
                 if(search != null && categ != null){
                     url = "/pos/create?category_type="+categ+"&search="+search+"&page="+page;
