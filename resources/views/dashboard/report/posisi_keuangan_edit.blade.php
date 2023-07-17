@@ -517,6 +517,8 @@
                     cancelButton.removeClass('d-none');
                     editButton.addClass('d-none');
                     deleteButton.addClass('d-none');
+
+                    selectRefresh(inpunit);
                 }
             });
 
