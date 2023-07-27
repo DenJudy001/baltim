@@ -44,7 +44,7 @@
                                             <option {{ request('category_type') == $fnbcat->type ? 'selected' : '' }}>{{ $fnbcat->type }}</option>
                                             @endforeach
                                         </select> --}}
-                                        <table class="table table-borderless table-sm">
+                                        <table class="table table-borderless table-sm w-auto">
                                             <tr>
                                                 <td width="20%" class="pl-1">Kategori</td>
                                                 <td width="5%">:</td>
@@ -355,14 +355,25 @@
                 let url = "/pos/create";
                 // console.log(categ);
                 let categSelected = $("#search-control").find('.single-select-category');
+                let newCategValue = categSelected.text().trim();
+
+                if(newCategValue.length > 0){
+                    let newCateg = $("#search-control").find('.category-list');
+                    newCateg.append("<td>"+
+                                        "<button type='button' class='btn btn-outline-primary btn-sm float-left category-select'>"+newCategValue+"</button>"+
+                                    "</td>");
+                }
+                else {
+                    $(this).parent().parent().prepend("<td class='ver-line'>|</td>");
+                }
 
                 categSelected.html(categ+" <i class='fas fa-times'></i>");
                 categSelected.parent().removeClass("d-none");
                 categSelected.parent().parent().parent().parent().parent().removeClass("col-lg-2");
-                categSelected.parent().parent().parent().parent().parent().addClass("col-lg-6");
-                $(this).parent().parent().addClass('d-none');
+                categSelected.parent().parent().parent().parent().parent().addClass("col-lg-5");
+                $(this).parent().parent().parent().parent().parent().parent().addClass('col-lg-7');
                 $(this).parent().parent().parent().parent().parent().parent().removeClass('col-lg-10');
-                $(this).parent().parent().parent().parent().parent().parent().addClass('col-lg-6');
+                $(this).parent().remove();
 
                 if(search != null){
                     url = "/pos/create?category_type="+categ+"&search="+search;
@@ -408,13 +419,21 @@
                 let url = "/pos/create";
                 // console.log(categ);
                 let categoryList = $("#search-control").find('.category-list');
+                let line = $("#search-control").find('.ver-line');
 
-                categoryList.removeClass("d-none");
-                categoryList.parent().parent().parent().parent().removeClass('col-lg-6');
+                if(categ.length > 0){
+                    let newCateg = $("#search-control").find('.category-list');
+                    newCateg.append("<td>"+
+                                        "<button type='button' class='btn btn-outline-primary btn-sm float-left category-select'>"+categ+"</button>"+
+                                    "</td>");
+                    line.remove();
+                }
+
+                categoryList.parent().parent().parent().parent().removeClass('col-lg-7');
                 categoryList.parent().parent().parent().parent().addClass('col-lg-10');
                 $(this).parent().addClass('d-none');
                 $(this).html("");
-                $(this).parent().parent().parent().parent().parent().removeClass('col-lg-6');
+                $(this).parent().parent().parent().parent().parent().removeClass('col-lg-5');
                 $(this).parent().parent().parent().parent().parent().addClass('col-lg-2');
 
                 if(search != null){
