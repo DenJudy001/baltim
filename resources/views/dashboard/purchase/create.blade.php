@@ -26,7 +26,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="row mt-2">
+                <div class="row mt-2 dtl-purch d-none">
                     <h4 class="fw-bold">Rincian Pemesanan</h4>
                     @if($errors->any())
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -241,18 +241,23 @@
                 var price = "input.priceID";
                 var qty = "input.qtyID";
                 var subtotal = "input.subtotalID";
+                var dtl_purch = $('.dtl-purch');
                 if (id){
                     onChangeSelect(url, id, name);
                     $(desc).val('');
                     $(price).val(0);
                     $(qty).val(1);
                     $(subtotal).val(0);
+                    dtl_purch.removeClass('d-none');
                 }else{
                     $('.' + name).empty();
                     $(desc).val('');
                     $(price).val(0);
                     $(qty).val(1);
                     $(subtotal).val(0);
+                    if(!dtl_purch.hasClass('d-none')){
+                        dtl_purch.addClass('d-none');
+                    }
                 }
             });
 
