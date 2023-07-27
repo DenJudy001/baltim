@@ -55,10 +55,15 @@ class EmployeeSalaryController extends Controller
      */
     public function show(EmployeeSalary $employeeSalary)
     {
-        return view('dashboard.salary.show',[
-            'salary'=>$employeeSalary,
-            'title'=>"Info Gaji Karyawan"
-        ]);
+        if($employeeSalary->email == auth()->user()->email || auth()->user()->is_admin){
+            return view('dashboard.salary.show',[
+                'salary'=>$employeeSalary,
+                'title'=>"Info Gaji Karyawan"
+            ]);
+        }
+        else{
+            abort(403);
+        }
     }
 
     /**
@@ -66,11 +71,16 @@ class EmployeeSalaryController extends Controller
      */
     public function edit(EmployeeSalary $employeeSalary)
     {
-        return view('dashboard.salary.editlock',[
-            'salary'=>$employeeSalary,
-            'announce' => 'Pembayaran jenis ini tidak dapat diubah',
-            'title'=>"Ubah Gaji Karyawan"
-        ]);
+        if($employeeSalary->email == auth()->user()->email || auth()->user()->is_admin){
+            return view('dashboard.salary.editlock',[
+                'salary'=>$employeeSalary,
+                'announce' => 'Pembayaran jenis ini tidak dapat diubah',
+                'title'=>"Ubah Gaji Karyawan"
+            ]);
+        }
+        else{
+            abort(403);
+        }
     }
 
     /**

@@ -81,7 +81,9 @@ Route::post('pos/update-qty', [PosController::class, 'updateQty'])->middleware('
 Route::post('pos/remove-from-cart', [PosController::class, 'remove'])->name('remove.from.cart')->middleware('auth');
 Route::post('pos/clear-cart', [PosController::class, 'clearCart'])->name('clear.cart')->middleware('auth');
 Route::resource('/fnb', FoodNBeveragesController::class, ['parameters' => ['fnb' => 'foodNBeverages']])->middleware('auth');
-Route::resource('/salary', EmployeeSalaryController::class , ['parameters' => ['salary' => 'employeeSalary']])->middleware('admin');
+Route::resource('/salary', EmployeeSalaryController::class , ['parameters' => ['salary' => 'employeeSalary']])->middleware('admin')->except('show','edit');
+Route::get('/salary/{employeeSalary}', [EmployeeSalaryController::class, 'show'])->middleware('auth');
+Route::get('/salary/{employeeSalary}/edit', [EmployeeSalaryController::class, 'edit'])->middleware('auth');
 Route::resource('/employee', EmployeeController::class, ['parameters' => ['employee' => 'user']])->middleware('admin')->except('edit','update');
 Route::get('/employee/{user}/edit', [EmployeeController::class, 'edit'])->middleware('auth');
 Route::put('/employee/{user}', [EmployeeController::class, 'update'])->middleware('auth');
