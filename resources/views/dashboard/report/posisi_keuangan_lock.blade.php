@@ -134,7 +134,7 @@
             <a href="/report/posisi-keuangan/{{ $report->id }}/edit" class="btn btn-primary mb-3 mt-2"><i class="fas fa-pen mr-2"></i>Ubah Laporan</a>
             <form action="/report/posisi-keuangan-download/{{ $report->id }}" method="post" target="_blank" class="d-inline">
                 @csrf
-                <button type="submit" class="btn btn-primary mb-3 mt-2"><i class="fas fa-download mr-2"></i>Unduh Laporan</button>
+                <button type="submit" class="btn btn-primary mb-3 mt-2"><i class="fas fa-eye mr-2"></i>Lihat Laporan</button>
             </form>
         </div>
     </div>

@@ -2,11 +2,7 @@
 
 @section('container')
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <b>Perhatian!</b> Catatan Atas Laporan Keuangan membutuhkan Laporan Posisi Keuangan dan Laba Rugi.
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <b>Tips!</b> Pastikan sudah menyimpan data Laporan Posisi Keuangan.
+    <b>Perhatian!</b> CALK (Catatan Atas Laporan Keuangan) membutuhkan Laporan Posisi Keuangan. <b>Pastikan sudah menyimpan data Laporan Posisi Keuangan</b>.
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
     <div class="card">
@@ -44,7 +40,7 @@
                         @enderror
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary mb-3 mt-2"><i class="fas fa-download mr-2"></i>Unduh Laporan</button>
+                <button type="submit" class="btn btn-primary mb-3 mt-2"><i class="fas fa-eye mr-2"></i>Lihat Laporan</button>
             </form>
         </div>
     </div>

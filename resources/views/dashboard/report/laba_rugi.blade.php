@@ -46,7 +46,7 @@
                     </div>
                     
                 </div>
-                <button type="submit" class="btn btn-primary mb-3 mt-2"><i class="fas fa-download mr-2"></i>Unduh Laporan</button>
+                <button type="submit" class="btn btn-primary mb-3 mt-2"><i class="fas fa-eye mr-2"></i></i>Lihat Laporan</button>
             </form>
         </div>
     </div>
