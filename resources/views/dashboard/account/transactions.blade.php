@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ url('/account') }}" method="get" class="d-inline">
+            <form action="{{ url('/transactions') }}" method="get" class="d-inline">
             <div class="row align-items-center">
                 <div class="col-sm-12 col-md-3 col-lg-2">
                         <div class="form-floating mb-3">
