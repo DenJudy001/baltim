@@ -61,7 +61,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }} </td>
                                 <td>{{ $transaction->purchase_number }}</td>
-                                <td>{{ substr($transaction->created_at, 0, 10) }}</td>
+                                <td>{{ date('d-m-Y', strtotime($transaction->created_at)) }}</td>
                                 <td ><span class="badge {{ $transaction->state == 'Proses' ? 'text-bg-warning' : ($transaction->state == 'Selesai' ? 'text-bg-success' : 'text-bg-danger') }}">{{ $transaction->state }}</span></td>
                                 <td>Rp. {{ number_format($transaction->total, 0, ',', '.')}}</td>
                                 <td>
