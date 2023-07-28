@@ -46,7 +46,7 @@
                     <tr>
                         <td width="38%">Tanggal Pencatatan</td>
                         <td width="2%">:</td>
-                        <td width="60%">{{$salary->created_at}} (dibuat oleh {{ $salary->responsible }})</td>
+                        <td width="60%">{{$salary->created_at}} (dibuat oleh {{ $salary->end_by }})</td>
                     </tr>
                     <tr>
                         <td width="38%" class="font-weight-bold">Jumlah</td>
