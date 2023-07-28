@@ -24,7 +24,7 @@
                     <a class="btn btn-success shadow-sm button-finished"><i class="fas fa-check mr-2"></i>{{ __('Selesai') }}</a>
                     <a class="btn btn-danger shadow-sm button-cancelled"><i class="fas fa-times mr-2"></i>{{ __('Batal') }}</a>
                 </div>
-            @else
+            @elseif ($pos->state == 'Selesai')
                 <div class="col text-right">
                     <a href="/pos/{{ $pos->pos_number }}/print_struk" target="_blank" class="btn btn-success shadow-sm"><i class="fas fa-print mr-2"></i>Cetak</a>
                 </div>
