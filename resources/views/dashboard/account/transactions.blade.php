@@ -21,7 +21,7 @@
     <div class="card">
         <div class="card-header bg-white">
             <div class="row">
-                <div class="col"><h4 class="font-weight-bold">Catatan Transaksi</h4></div>
+                <div class="col"><h4 class="font-weight-bold">Riwayat Transaksi</h4></div>
             </div>
         </div>
         <div class="card-body">
