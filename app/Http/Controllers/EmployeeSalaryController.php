@@ -47,7 +47,7 @@ class EmployeeSalaryController extends Controller
         $validatedData['salary_number'] = IdGenerator::generate(['table' => 'employee_salaries', 'length' => 10, 'prefix' =>'SAL-','reset_on_prefix_change' => true ,'field' => 'salary_number']);
 
         EmployeeSalary::create($validatedData);
-        return redirect('/account')->with('success','Berhasil Menambah Gaji Karyawan');
+        return redirect('/transactions')->with('success','Berhasil Menambah Gaji Karyawan');
     }
 
     /**
@@ -98,6 +98,6 @@ class EmployeeSalaryController extends Controller
     {
         EmployeeSalary::destroy($employeeSalary->id);
 
-        return redirect('/account')->with('success','Catatan Transaksi Berhasil Dihapus ');
+        return redirect('/transactions')->with('success','Transaksi Berhasil Dihapus ');
     }
 }

@@ -9,10 +9,10 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item {{ request()->is('account') || request()->is('account/*') || request()->is('purchase/*') && !request()->is('purchase/create') || request()->is('salary/*') && !request()->is('salary/create') || request()->is('pos/*')  && !request()->is('pos/create')  ? 'active' : '' }}">
+    <li class="nav-item {{ request()->is('account') || request()->is('account/*') ? 'active' : '' }}">
         <a class="nav-link" href="/account">
-            <i class="fas fa-receipt"></i>
-            <span>{{ __('Catatan Keuangan') }}</span></a>
+            <i class="fas fa-dollar-sign"></i>
+            <span>{{ __('Transaksi Hari Ini') }}</span></a>
     </li>
 
      <!-- Divider -->
@@ -49,6 +49,12 @@
         <a class="nav-link" href="/supplier">
             <i class="fas fa-warehouse"></i>
             <span>{{ __('Pemasok') }}</span></a>
+    </li>
+
+    <li class="nav-item {{ request()->is('transactions') || request()->is('transactions/*') || request()->is('purchase/*') && !request()->is('purchase/create') || request()->is('salary/*') && !request()->is('salary/create') || request()->is('pos/*')  && !request()->is('pos/create')  ? 'active' : '' }}">
+        <a class="nav-link" href="/transactions">
+            <i class="fas fa-receipt"></i>
+            <span>{{ __('Riwayat Transaksi') }}</span></a>
     </li>
 
     <li class="nav-item {{ request()->is('purchase/create') ? 'active' : '' }}">

@@ -4,7 +4,7 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb no-bg">
-            <li class="breadcrumb-item"><a href="/account">Daftar Transaksi</a></li>
+            <li class="breadcrumb-item"><a href="/transactions">Daftar Transaksi</a></li>
             <li class="breadcrumb-item active" aria-current="page">Ubah Data Penjualan</li>
         </ol>
     </nav>
@@ -123,7 +123,7 @@
                             "state": newStatus
                         },
                         success: function (data) {
-                            window.location.replace('/account');
+                            window.location.replace('/transactions');
                         },
                         error: function (data) {
                             // console.log('Error:', data);
@@ -146,7 +146,7 @@
                             "state": newStatus
                         },
                         success: function (data) {
-                            window.location.replace('/account');
+                            window.location.replace('/transactions');
                         },
                         error: function (data) {
                             // console.log('Error:', data);

@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb no-bg">
-                <li class="breadcrumb-item"><a href="/account">Daftar Transaksi</a></li>
+                <li class="breadcrumb-item"><a href="/transactions">Daftar Transaksi</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Info Pemesanan</li>
             </ol>
         </nav>
@@ -115,7 +115,7 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb no-bg">
-                <li class="breadcrumb-item"><a href="/account">Daftar Transaksi</a></li>
+                <li class="breadcrumb-item"><a href="/transactions">Daftar Transaksi</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Info Pembayaran</li>
             </ol>
         </nav>

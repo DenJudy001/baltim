@@ -47,7 +47,7 @@ class OtherPurchaseController extends Controller
         $validatedData['purchase_number'] = IdGenerator::generate(['table' => 'purchases', 'length' => 10, 'prefix' =>'PUR-','reset_on_prefix_change' => true ,'field' => 'purchase_number']);
 
         Purchase::create($validatedData);
-        return redirect('/account')->with('success','Berhasil Membuat Catatan Pembayaran');
+        return redirect('/transactions')->with('success','Berhasil Membuat Catatan Pembayaran');
     }
 
     /**

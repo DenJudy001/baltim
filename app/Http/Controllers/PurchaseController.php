@@ -127,7 +127,7 @@ class PurchaseController extends Controller
         }
         
         
-        return redirect('/account')->with('success','Data pemesanan berhasil ditambahkan! ');
+        return redirect('/transactions')->with('success','Transaksi Pemesanan Berhasil Ditambahkan! ');
     }
 
     /**
@@ -204,7 +204,7 @@ class PurchaseController extends Controller
     {
         Purchase::destroy($purchase->id);
 
-        return redirect('/account')->with('success','Catatan Transaksi Berhasil Dihapus ');
+        return redirect('/transactions')->with('success','Catatan Transaksi Berhasil Dihapus ');
     }
 
     public function updateStatus(Request $request)
