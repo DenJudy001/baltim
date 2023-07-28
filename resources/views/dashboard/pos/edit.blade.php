@@ -28,13 +28,13 @@
                     <tr>
                         <td width="38%">Tanggal pemesanan</td>
                         <td width="2%">:</td>
-                        <td width="60%">{{$pos->created_at}} (oleh @can('admin') <a href="/employee/{{ $pos->responsible }}">{{ $pos->responsible }}</a>@else {{ $pos->responsible }} @endcan)</td>
+                        <td width="60%">{{date('d-m-Y H:i', strtotime($pos->created_at))}} (oleh @can('admin') <a href="/employee/{{ $pos->responsible }}">{{ $pos->responsible }}</a>@else {{ $pos->responsible }} @endcan)</td>
                     </tr>
                     @if ($pos->end_date)
                         <tr>
                             <td width="38%">Tanggal Selesai</td>
                             <td width="2%">:</td>
-                            <td width="60%">{{$pos->end_date}} (oleh @can('admin') <a href="/employee/{{ $pos->end_by }}">{{ $pos->end_by }}</a>@else {{ $pos->end_by }} @endcan)</td>
+                            <td width="60%">{{date('d-m-Y H:i', strtotime($pos->end_date))}} (oleh @can('admin') <a href="/employee/{{ $pos->end_by }}">{{ $pos->end_by }}</a>@else {{ $pos->end_by }} @endcan)</td>
                         </tr>
                     @endif
                 </table>
