@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\Validator;
 
 class ReportController extends Controller
 {
+
+    public function recapIndex(){
+        return view('dashboard.report.recap_trx',[
+            'title'=>"Rekapitulasi Transaksi"
+        ]);
+    }
+
     public function labaRugiIndex() {
         return view('dashboard.report.laba_rugi',[
             'title'=>"Buat Laporan Laba Rugi"
@@ -50,12 +57,31 @@ class ReportController extends Controller
         ]);
     }
 
+    function getIndonesianMonthName($monthNumber) {
+        $indonesianMonths = [
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember',
+        ];
+    
+        return $indonesianMonths[$monthNumber] ?? '';
+    }
+
     public function labaRugiDownload(Request $request)
     {
         $year = $request->year;
         $month = $request->periode;
         $endDays = cal_days_in_month(CAL_GREGORIAN, $month, $year);
-        $monthName = date('F', mktime(0, 0, 0, $month, 1));
+        $monthName = $this->getIndonesianMonthName(intval($month));
         $startDate = $year.'-'.$month.'-01 00:00:00';
         $endDate = $year.'-'.$month.'-'.$endDays.' 23:59:59';
 
@@ -277,7 +303,7 @@ class ReportController extends Controller
         $year = $report->report_year;
         $month = $report->report_periode;
         $endDays = cal_days_in_month(CAL_GREGORIAN, $month, $year);
-        $monthName = date('F', mktime(0, 0, 0, $month, 1));
+        $monthName = $this->getIndonesianMonthName(intval($month));
         $asetBangunan = $report->dtl_reports->where('type','Asset Bangunan')->first()->price;
 
         $totalSupply = 0;
@@ -358,7 +384,7 @@ class ReportController extends Controller
         $year = $report->report_year;
         $month = $report->report_periode;
         $endDays = cal_days_in_month(CAL_GREGORIAN, $month, $year);
-        $monthName = date('F', mktime(0, 0, 0, $month, 1));
+        $monthName = $this->getIndonesianMonthName(intval($month));
         $startDate = $year.'-'.$month.'-01 00:00:00';
         $endDate = $year.'-'.$month.'-'.$endDays.' 23:59:59';
         $asetBangunan = $report->dtl_reports->where('type','Asset Bangunan')->first()->price;
@@ -455,4 +481,92 @@ class ReportController extends Controller
         ]);
         return $pdf->stream('catatan-atas-laporan-keuangan.pdf');
     }
+
+    public function recapValidate (Request $request)
+    {
+        $rules = [
+            'start_date' => 'required|before_or_equal:end_date',
+            'end_date' => 'required|after_or_equal:start_date',
+        ];
+
+        $messages = [
+            'start_date.required' => 'Tanggal Awal Transaksi harus diisi.',
+            'start_date.before_or_equal' => 'Tanggal Awal Transaksi harus sebelum atau sama dengan Tanggal Akhir Transaksi.',
+            'end_date.required' => 'Tanggal Akhir Transaksi harus diisi.',
+            'end_date.after_or_equal' => 'Tanggal Akhir Transaksi harus setelah atau sama dengan Tanggal Awal Transaksi.',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        return response()->json(['valid' => !$validator->fails()]);
+    }
+
+    public function recapValidateFalse (Request $request)
+    {
+        $rules = [
+            'start_date' => 'required|before_or_equal:end_date',
+            'end_date' => 'required|after_or_equal:start_date',
+        ];
+
+        $messages = [
+            'start_date.required' => 'Tanggal Awal Transaksi harus diisi.',
+            'start_date.before_or_equal' => 'Tanggal Awal Transaksi harus sebelum atau sama dengan Tanggal Akhir Transaksi.',
+            'end_date.required' => 'Tanggal Akhir Transaksi harus diisi.',
+            'end_date.after_or_equal' => 'Tanggal Akhir Transaksi harus setelah atau sama dengan Tanggal Awal Transaksi.',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        return back()->withErrors($validator->errors())->withInput();
+    }
+
+    public function recapDownload (Request $request)
+    {
+        $startDateParts = explode('-', $request->start_date);
+        $yearStart = $startDateParts[0];
+        $monthStart = $startDateParts[1];
+        $dayStart = $startDateParts[2];
+        $monthNameStart = $this->getIndonesianMonthName(intval($monthStart));
+        $endDateParts = explode('-', $request->end_date);
+        $yearEnd = $endDateParts[0];
+        $monthEnd = $endDateParts[1];
+        $dayEnd = $endDateParts[2];
+        $monthNameEnd = $this->getIndonesianMonthName(intval($monthEnd));
+        $startDate = $request->start_date.' 00:00:00';
+        $endDate = $request->end_date.' 23:59:59';
+
+        $purchase = Purchase::select('purchase_number', 'purchase_name', 'total', 'state', 'end_date','updated_at')
+                    ->where('state', '=', 'Selesai')
+                    ->whereBetween('updated_at', [$startDate, $endDate]);
+
+        $salary = EmployeeSalary::select('salary_number', 'name', 'salary', 'state', 'end_by','updated_at')
+                    ->where('state', '=', 'Selesai')
+                    ->whereBetween('updated_at', [$startDate, $endDate]);
+
+        $pos = Pos::select('pos_number', 'responsible', 'total', 'state', 'end_date','updated_at')
+                    ->where('state', '=', 'Selesai')
+                    ->whereBetween('updated_at', [$startDate, $endDate]);
+
+        $transactions = $purchase->union($salary)->union($pos)->orderBy('updated_at', 'desc')->get();
+        $purchaseTotal = $purchase->sum('total');
+        $salaryTotal = $salary->sum('salary');
+        $posTotal = $pos->sum('total');
+        $expenseTotal = $purchaseTotal+$salaryTotal;
+
+        $pdf = Pdf::loadView('dashboard.report.recap_trx_pdf', [
+            'total_income' => $posTotal,
+            'total_expense' => $expenseTotal,
+            'transactions'=> $transactions,
+            'startDay' => $dayStart,
+            'startMonth' => $monthStart,
+            'startYear' => $yearStart,
+            'endDay' => $dayEnd,
+            'endMonth' => $monthEnd,
+            'endYear' => $yearEnd,
+            'monthNameStart' => $monthNameStart,
+            'monthNameEnd' => $monthNameEnd,
+        ]);
+        return $pdf->stream('rekapitulasi-transaksi.pdf');
+    }
+
 }

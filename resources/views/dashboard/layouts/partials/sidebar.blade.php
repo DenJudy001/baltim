@@ -57,6 +57,12 @@
             <span>{{ __('Riwayat Transaksi') }}</span></a>
     </li>
 
+    <li class="nav-item {{ request()->is('transactions-recap') ? 'active' : '' }}">
+        <a class="nav-link" href="/transactions-recap">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <span>{{ __('Rekap Transaksi') }}</span></a>
+    </li>
+
     <li class="nav-item {{ request()->is('purchase/create') ? 'active' : '' }}">
         <a class="nav-link" href="/purchase/create">
             <i class="fas fa-luggage-cart"></i>

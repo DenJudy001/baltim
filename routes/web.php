@@ -92,15 +92,19 @@ Route::get('/employee-change-password/{user}', [EmployeeController::class, 'inde
 Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
 Route::get('/transactions', [AccountController::class, 'transactions'])->middleware('auth');
 
+Route::get('/transactions-recap', [ReportController::class, 'recapIndex'])->middleware('auth');
+Route::get('/transactions-recap-download', [ReportController::class, 'recapDownload'])->middleware('auth');
+Route::post('/transactions-recap-validate', [ReportController::class, 'recapValidate'])->middleware('auth');
+Route::post('/transactions-recap-validate-false', [ReportController::class, 'recapValidateFalse'])->middleware('auth');
 Route::get('/report/laba-rugi', [ReportController::class, 'labaRugiIndex'])->middleware('admin');
 Route::get('/report/posisi-keuangan', [ReportController::class, 'posisiKeuanganIndex'])->middleware('admin');
 Route::get('/report/calk', [ReportController::class, 'calkIndex'])->middleware('admin');
 Route::get('/report/posisi-keuangan/{id}/edit', [ReportController::class, 'posisiKeuanganEdit'])->middleware('admin');
-Route::post('/report/laba-rugi-download', [ReportController::class, 'labaRugiDownload'])->middleware('auth');
 Route::post('/report/posisi-keuangan-create', [ReportController::class, 'createKeuangan'])->middleware('auth');
 Route::post('/report/posisi-keuangan-update/{report}', [ReportController::class, 'updateKeuangan'])->middleware('auth');
 Route::resource('/detail-report', DetailReportController::class)->middleware('admin');
 Route::post('/detail-report/update-details', [DetailReportController::class, 'updateDetailReport'])->name('update.details-report')->middleware('auth');
+Route::post('/report/laba-rugi-download', [ReportController::class, 'labaRugiDownload'])->middleware('auth');
 Route::post('/report/posisi-keuangan-download/{report}', [ReportController::class, 'keuanganDownload'])->middleware('auth');
 Route::post('/report/calk-download/{report}', [ReportController::class, 'calkDownload'])->middleware('auth');
 

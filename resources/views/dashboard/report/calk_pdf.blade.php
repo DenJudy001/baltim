@@ -36,8 +36,8 @@
 </head>
 
 <body>
-    <h4>Rumah Makan Ayam Baltim</h4>
     <h4>Catatan Atas Laporan Keuangan</h4>
+    <h4>Rumah Makan Ayam Baltim</h4>
     <h4>Untuk Periode Bulanan Yang Berakhir {{ $date.' '.$month.' '.$year }}</h4>
     <hr>
     <table class="table table-borderless">
