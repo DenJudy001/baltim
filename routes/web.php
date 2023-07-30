@@ -90,6 +90,7 @@ Route::put('/employee/{user}', [EmployeeController::class, 'update'])->middlewar
 Route::post('/employee-change-password', [EmployeeController::class, 'changePassword'])->middleware('auth');
 Route::get('/employee-change-password/{user}', [EmployeeController::class, 'indexChangePassword'])->middleware('auth');
 Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
+Route::get('/transactions-today', [AccountController::class, 'transactionsToday'])->middleware('auth');
 Route::get('/transactions', [AccountController::class, 'transactions'])->middleware('auth');
 
 Route::get('/transactions-recap', [ReportController::class, 'recapIndex'])->middleware('auth');

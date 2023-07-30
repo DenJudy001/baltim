@@ -9,7 +9,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item {{ request()->is('account') || request()->is('account/*') ? 'active' : '' }}">
+    <li class="nav-item {{ request()->is('account') || request()->is('account/*') || request()->is('transactions-today') || request()->query('today') == 1 ? 'active' : '' }}">
         <a class="nav-link" href="/account">
             <i class="fas fa-dollar-sign"></i>
             <span>{{ __('Transaksi Hari Ini') }}</span></a>
@@ -51,7 +51,7 @@
             <span>{{ __('Pemasok') }}</span></a>
     </li>
 
-    <li class="nav-item {{ request()->is('transactions') || request()->is('transactions/*') || request()->is('purchase/*') && !request()->is('purchase/create') || request()->is('salary/*') && !request()->is('salary/create') || request()->is('pos/*')  && !request()->is('pos/create')  ? 'active' : '' }}">
+    <li class="nav-item {{ request()->is('transactions') || request()->is('transactions/*') || request()->is('purchase/*') && !request()->is('purchase/create') && !request()->query('today') == 1 || request()->is('salary/*') && !request()->is('salary/create') && !request()->query('today') == 1 || request()->is('pos/*')  && !request()->is('pos/create') && !request()->query('today') == 1  ? 'active' : '' }}">
         <a class="nav-link" href="/transactions">
             <i class="fas fa-receipt"></i>
             <span>{{ __('Riwayat Transaksi') }}</span></a>

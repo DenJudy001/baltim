@@ -4,8 +4,12 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb no-bg">
-            <li class="breadcrumb-item"><a href="/transactions">Daftar Transaksi</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Info Data Penjualan</li>
+            @if(request()->query('today') == 1)
+                <li class="breadcrumb-item"><a href="javascript:history.back()">Kembali</a></li>
+            @else
+                <li class="breadcrumb-item"><a href="/transactions">Daftar Transaksi</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Info Data Penjualan</li>
+            @endif
         </ol>
     </nav>
 </div>

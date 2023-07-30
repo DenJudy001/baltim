@@ -124,5 +124,63 @@ class AccountController extends Controller
         return view('dashboard.account.transactions', compact('transactions','title'));
     }
 
+    public function transactionsToday(Request $request){
+        $type = $request->type;
+        $posToday = DB::table('pos')
+            ->select('pos_number', 'total', 'state', 'updated_at')
+            ->whereDate('updated_at', '=', date('Y-m-d'));
+        $salaryToday = DB::table('employee_salaries')
+            ->select('salary_number', 'salary', 'state', 'updated_at')
+            ->whereDate('updated_at', '=', date('Y-m-d'));
+        $purchaseToday = DB::table('purchases')
+            ->select('purchase_number', 'total', 'state', 'updated_at')
+            ->whereDate('updated_at', '=', date('Y-m-d'));
+
+        if($request->type == 'income'){
+            if($request->status == 'pending'){
+                $transactions = $posToday->where('state', '=', 'Proses')->get();
+                $posTodayTotal = $posToday->where('state', '=', 'Proses')->sum('total');
+                $total = $posTodayTotal;
+                $title = "Transaksi Pemasukan (Tertunda)";
+            }
+            elseif($request->status == 'net'){
+                $transactions = $posToday->where('state', '=', 'Selesai')->get();
+                $posTodayTotal = $posToday->where('state', '=', 'Selesai')->sum('total');
+                $total = $posTodayTotal;
+                $title = "Transaksi Pemasukan (Selesai)";
+            }
+            else{
+                $transactions = $posToday->get();
+                $posTodayTotal = $posToday->sum('total');
+                $total = $posTodayTotal;
+                $title = "Transaksi Pemasukan (Semua)";
+            }
+        }
+        elseif($request->type == 'expense'){
+            if($request->status == 'pending'){               
+                $purchaseTodayTotal = $purchaseToday->where('state', '=', 'Proses')->sum('total');
+                $transactions = $purchaseToday->where('state', '=', 'Proses')->get();
+                $total = $purchaseTodayTotal;
+                $title = "Transaksi Pengeluaran (Tertunda)";
+            }
+            elseif($request->status == 'net'){              
+                $purchaseTodayTotal = $purchaseToday->where('state', '=', 'Selesai')->sum('total');
+                $salaryTodayTotal = $salaryToday->sum('salary');
+                $transactions = $purchaseToday->where('state', '=', 'Selesai')->union($salaryToday)->get();
+                $total = $salaryTodayTotal+$purchaseTodayTotal;
+                $title = "Transaksi Pengeluaran (Selesai)";
+            }
+            else{
+                $purchaseTodayTotal = $purchaseToday->sum('total');
+                $salaryTodayTotal = $salaryToday->sum('salary');
+                $transactions = $purchaseToday->union($salaryToday)->get();
+                $total = $salaryTodayTotal+$purchaseTodayTotal;
+                $title = "Transaksi Pengeluaran (Semua)";
+            }
+        }
+
+        return view('dashboard.account.recap-today', compact('transactions','total','type','title'));
+    }
+
 
 }
