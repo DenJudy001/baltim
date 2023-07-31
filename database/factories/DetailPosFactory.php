@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Pos;
+use App\Models\DetailPos;
+use App\Models\FoodNBeverages;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +19,25 @@ class DetailPosFactory extends Factory
      */
     public function definition(): array
     {
+        static $id = 1;
+        $posNumber = $this->faker->numberBetween(1, 5);
+        $fnbNumber = $this->faker->numberBetween(1, 20);
+        $qty = $this->faker->numberBetween(1, 3);
+        $pos = Pos::select('created_at','updated_at')->where('id', '=', $posNumber)->firstOrFail();
+        $fnb = FoodNBeverages::where('id', '=', $fnbNumber)->firstOrFail();
+
         return [
-            //
+            'id' => $id++,
+            'pos_id' => $posNumber,
+            'fnb_id' => $fnbNumber,
+            'name' => $fnb->name,
+            'description' => $fnb->description,
+            'type' => $fnb->type,
+            'image' => $fnb->image,
+            'qty' => $qty,
+            'price' => $fnb->price*$qty,
+            'created_at' => $pos->created_at,
+            'updated_at' => $pos->updated_at,
         ];
     }
 }
