@@ -150,8 +150,8 @@ class AccountController extends Controller
                 $title = "Transaksi Pemasukan (Selesai)";
             }
             else{
-                $transactions = $posToday->get();
-                $posTodayTotal = $posToday->sum('total');
+                $transactions = $posToday->where('state', '!=', 'Dibatalkan')->get();
+                $posTodayTotal = $posToday->where('state', '!=', 'Dibatalkan')->sum('total');
                 $total = $posTodayTotal;
                 $title = "Transaksi Pemasukan (Semua)";
             }
@@ -171,9 +171,9 @@ class AccountController extends Controller
                 $title = "Transaksi Pengeluaran (Selesai)";
             }
             else{
-                $purchaseTodayTotal = $purchaseToday->sum('total');
+                $purchaseTodayTotal = $purchaseToday->where('state', '!=', 'Dibatalkan')->sum('total');
                 $salaryTodayTotal = $salaryToday->sum('salary');
-                $transactions = $purchaseToday->union($salaryToday)->get();
+                $transactions = $purchaseToday->where('state', '!=', 'Dibatalkan')->union($salaryToday)->get();
                 $total = $salaryTodayTotal+$purchaseTodayTotal;
                 $title = "Transaksi Pengeluaran (Semua)";
             }
