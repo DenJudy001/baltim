@@ -83,9 +83,7 @@ class DetailPosController extends Controller
         $dataMenu = FoodNBeverages::where('name',$request->name)->select('type','image')->first();
         if ($request->id){
             $rules = [
-                'name' => ['required',Rule::unique('detail_pos')->where(function ($query) use ($pos){
-                    return $query->where('pos_id', $pos);
-                })],
+                'name' => 'required',
                 'qty' => 'required|integer|min:1',
                 'price' => 'required|integer|min:1',
             ];

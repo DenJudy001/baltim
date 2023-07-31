@@ -108,7 +108,7 @@ class PurchaseController extends Controller
                     'purchase_id' => $arr_input[$i]['purchase_id'],
                     'name' => $arr_input[$i]['name'],
                     'description' => $arr_input[$i]['description'],
-                    'price' => $arr_input[$i]['price'],
+                    'price' => $arr_input[$i]['price']*$arr_input[$i]['qty'],
                     'qty' => $arr_input[$i]['qty'],
                     'unit' => $arr_input[$i]['unit'],
                 ]);
