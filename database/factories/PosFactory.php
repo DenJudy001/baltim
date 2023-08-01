@@ -22,7 +22,7 @@ class PosFactory extends Factory
         $usernames = User::where('username', '!=', 'baltim')->pluck('username')->toArray();
         $usernames2 = User::pluck('username')->toArray();
         $responsible = $this->faker->randomElement($usernames);
-        $state = $this->faker->randomElement(['Dibatalkan', 'Selesai']);
+        $state = $this->faker->randomElement(['Dibatalkan', 'Selesai', 'Selesai']);
         $total = 0;
         $createdAt = $this->faker->dateTimeBetween('-7 month', 'now');
         $endDate = $this->faker->dateTimeBetween($createdAt, 'now');
