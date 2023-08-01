@@ -547,7 +547,7 @@ class ReportController extends Controller
                     ->where('state', '=', 'Selesai')
                     ->whereBetween('updated_at', [$startDate, $endDate]);
 
-        $transactions = $purchase->union($salary)->union($pos)->orderBy('updated_at', 'desc')->get();
+        $transactions = $purchase->union($salary)->union($pos)->orderBy('updated_at', 'asc')->get();
         $purchaseTotal = $purchase->sum('total');
         $salaryTotal = $salary->sum('salary');
         $posTotal = $pos->sum('total');
