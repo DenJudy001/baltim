@@ -16,7 +16,7 @@
     </li>
 
     <!-- Divider -->
-    <hr class="sidebar-divider">
+    <hr class="sidebar-divider my-0">
 
     <li class="nav-item {{ request()->is('transactions') || request()->is('transactions/*') || request()->is('purchase/*') && !request()->is('purchase/create') && !request()->query('today') == 1 || request()->is('salary/*') && !request()->is('salary/create') && !request()->query('today') == 1 || request()->is('pos/*')  && !request()->is('pos/create') && !request()->query('today') == 1  ? 'active' : '' }}">
         <a class="nav-link" href="/transactions">
