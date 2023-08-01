@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Supplier;
 use App\Models\User;
+use App\Models\Stuff;
+use App\Models\Supplier;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +20,7 @@ class PurchaseFactory extends Factory
     public function definition(): array
     {
         static $id = 1;
-        $suppNumber = $this->faker->numberBetween(1, 30);
+        $suppNumber = $this->faker->unique()->numberBetween(1, 20);
         $posNumber = 'PUR-' . str_pad($id, 6, '0', STR_PAD_LEFT);
         $usernames = User::pluck('username')->toArray();
         $responsible = $this->faker->randomElement($usernames);
@@ -27,12 +28,12 @@ class PurchaseFactory extends Factory
         $purchName = $this->faker->randomElement(['Air', 'Listrik', 'Internet', 'Transportasi', 'Asuransi', 'Perawatan/Perbaikan', 'Pemasaran/Promosi', 'Sewa Tempat']);
         $state = $this->faker->randomElement(['Dibatalkan', 'Selesai']);
         $total = 0;
-        $createdAt = $this->faker->dateTimeBetween('-6 month', 'now');
+        $createdAt = $this->faker->dateTimeBetween('-7 month', 'now');
         $endDate = $this->faker->dateTimeBetween($createdAt, 'now');
         $updatedAt = $endDate->format('Y-m-d H:i:s');
         $endBy = $this->faker->randomElement($usernames);
         
-        if ($suppNumber > 20){
+        if ($suppNumber > 10){
             return [
                 'id' => $id++,
                 'description' => $this->faker->sentence(),
@@ -47,9 +48,11 @@ class PurchaseFactory extends Factory
             ];
         } else{
             $supplier = Supplier::where('id', '=', $suppNumber)->firstOrFail();
+            $supp_id = Stuff::pluck('supplier_id')->toArray();
+            $rand_supp = $this->faker->randomElement($supp_id);
             return [
                 'id' => $id++,
-                'supplier_id' => $suppNumber,
+                'supplier_id' => $rand_supp,
                 'supplier_name' => $supplier->supplier_name,
                 'description' => $supplier->description,
                 'address' => $supplier->address,

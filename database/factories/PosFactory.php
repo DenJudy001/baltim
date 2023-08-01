@@ -24,7 +24,7 @@ class PosFactory extends Factory
         $responsible = $this->faker->randomElement($usernames);
         $state = $this->faker->randomElement(['Dibatalkan', 'Selesai']);
         $total = 0;
-        $createdAt = $this->faker->dateTimeBetween('-6 month', 'now');
+        $createdAt = $this->faker->dateTimeBetween('-7 month', 'now');
         $endDate = $this->faker->dateTimeBetween($createdAt, 'now');
         $updatedAt = $endDate->format('Y-m-d H:i:s');
         $endBy = $this->faker->randomElement($usernames2);

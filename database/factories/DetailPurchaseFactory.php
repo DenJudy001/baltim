@@ -19,28 +19,26 @@ class DetailPurchaseFactory extends Factory
     public function definition(): array
     {
         static $id = 1;
-        $purchNumber = $this->faker->numberBetween(1, 5);
-        $supp_id = Purchase::select('supplier_id','created_at','updated_at')->where('id', '=', $purchNumber)->firstOrFail();
-        if ($supp_id->supplier_id >= 1) {
-            $stuff = Stuff::where('supplier_id', '=', $supp_id->supplier_id)->firstOrFail();
-            $qty = $this->faker->numberBetween(1, 3);
-            $unit = $this->faker->randomElement(['kg (kilogram)', 'gr (gram)', 'ltr (liter)', 'ekor', 'lembar']);
-            
-            return [
-                'id' => $id++,
-                'purchase_id' => $purchNumber,
-                'name' => $stuff->stuff_name,
-                'description' => $stuff->description,
-                'qty' => $qty,
-                'unit' => $unit,
-                'price' => $stuff->price*$qty,
-                'created_at' => $supp_id->created_at,
-                'updated_at' => $supp_id->updated_at,
-            ];
-        } else {
-            return [
-                //
-            ];
-        }
+        $supp_id = Purchase::where('supplier_id', '>=', 1)->pluck('id')->toArray();
+        $rand_supp = $this->faker->randomElement($supp_id);
+        $supplier = Purchase::select('supplier_id','created_at','updated_at')->where('id','=', $rand_supp)->firstOrFail();
+        $number_stuff = Stuff::where('supplier_id', '=', $supplier->supplier_id)->pluck('id')->toArray();
+        $rand_stuff = $this->faker->randomElement($number_stuff);
+        $stuff = Stuff::where('id', '=', $rand_stuff)->firstOrFail();
+        $qty = $this->faker->numberBetween(1, 3);
+        $unit = $this->faker->randomElement(['kg (kilogram)', 'gr (gram)', 'ltr (liter)', 'ekor', 'lembar']);
+        
+        return [
+            'id' => $id++,
+            'purchase_id' => $rand_supp,
+            'name' => $stuff->stuff_name,
+            'description' => $stuff->description,
+            'qty' => $qty,
+            'unit' => $unit,
+            'price' => $stuff->price*$qty,
+            'created_at' => $supplier->created_at,
+            'updated_at' => $supplier->updated_at,
+        ];
+        
     }
 }
