@@ -33,10 +33,18 @@ class DatabaseSeeder extends Seeder
         $posList = Pos::all();
         foreach ($posList as $pos) {
             $total = DetailPos::where('pos_id', $pos->id)->sum('price');
-            $pos->total = $total;
-            DB::table('pos')
-            ->where('id', $pos->id)
-            ->update(['total' => $total]);
+            if ($total > 0) {
+                $pos->total = $total;
+                DB::table('pos')
+                ->where('id', $pos->id)
+                ->update(['total' => $total]);
+                
+            } else {
+                $pos->total = $total;
+                DB::table('pos')
+                ->where('id', $pos->id)
+                ->update(['state' => 'Dibatalkan']);
+            }
         }
         Purchase::factory(20)->create();
         DetailPurchase::factory(45)->create();
