@@ -17,13 +17,14 @@
                 <div class="row">
                     <div class="mb-3">
                         <label for="periode" class="form-label @error('periode') is-invalid @enderror">Periode<span class="text-danger">*</span></label>
-                        <select class="form-select single-select-periode" name="periode" id="periode" data-placeholder="Pilih Bulan" required oninvalid="this.setCustomValidity('Periode tidak boleh kosong !')" oninput="this.setCustomValidity('')">
+                        <input type="text" class="form-control-plaintext" id="periode" name="periode" readonly value="{{ $periode ? strftime('%B', mktime(0, 0, 0, $periode->report_periode, 1, 2023)) : 'Laporan posisi keuangan belum dibuat' }}" required oninvalid="this.setCustomValidity('Periode tidak boleh kosong !')" oninput="this.setCustomValidity('')">
+                        {{-- <select class="form-select single-select-periode" name="periode" id="periode" data-placeholder="Pilih Bulan" required oninvalid="this.setCustomValidity('Periode tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                             <option></option>
                             @if ($periode)
                                 <option value="{{ $periode->report_periode ?? ''}}">{{ strftime('%B', mktime(0, 0, 0, $periode->report_periode, 1, 2023)) }}</option>
                             @endif
 
-                        </select>
+                        </select> --}}
                         @error('periode')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -32,7 +33,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="year" class="form-label @error('year') is-invalid @enderror">Tahun<span class="text-danger">*</span></label>
-                        <input type="number" class="form-control-plaintext" id="year" name="year" readonly value="{{ old('year',0) }}" required oninvalid="this.setCustomValidity('Tahun tidak boleh kosong !')" oninput="this.setCustomValidity('')">
+                        <input type="number" class="form-control-plaintext" id="year" name="year" readonly value="{{ old('year',0) }}"  min='1' required oninvalid="this.setCustomValidity('Tahun tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                         @error('year')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -60,11 +61,18 @@
                 }
             } );
 
-            $("#periode").change(function(){
-                var month = $(this).val();
+            var month = $('#periode').val();
+
+            if(month != 'Laporan posisi keuangan belum dibuat'){
                 var year = 'input#year';
                 $(year).val({{ $periode->report_year ?? '' }});
-            });
+            }
+
+            // $("#periode").change(function(){
+            //     var month = $(this).val();
+            //     var year = 'input#year';
+            //     $(year).val({{ $periode->report_year ?? '' }});
+            // });
             
         });
     </script>
