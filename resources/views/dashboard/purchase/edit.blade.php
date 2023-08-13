@@ -105,7 +105,7 @@
                             <th scope="col" width="35%">Keterangan</th>
                             <th scope="col" width="10%">Jumlah</th>
                             <th scope="col" width="10%">Unit</th>
-                            <th scope="col" width="15%">Harga</th>
+                            <th scope="col" width="15%">Total Harga</th>
                             <th scope="col" width="10%">
                                 <div  class="d-flex justify-content-end">
                                     <a href="javascript:void(0)" class="btn btn-success addRowPurchase"><i class="fas fa-plus"></i></a>
@@ -125,7 +125,7 @@
                                 </select>
                                 <div id="validationServerStuffNameFeedback" class="invalid-feedback d-none">Silahkan simpan data terlebih dahulu</div></td>
                                 <td><textarea class="form-control-plaintext stuff-desc" name="description" readonly>{{ old('description',$details->description) }}</textarea></td>
-                                <td><input type="number" class="form-control-plaintext stuff-qty" name="qty" value="{{ old('qty',$details->qty) }}" required readonly></td>
+                                <td><input type="number" class="form-control-plaintext stuff-qty" name="qty" value="{{ old('qty',$details->qty) }}" data-price-per-qty="{{ $details->price/$details->qty }}" required readonly></td>
                                 <td><select class="form-select single-select-unit stuff-unit" data-placeholder="Pilih Satuan" name="unit" required disabled>
                                     <option></option>
                                     <option @if(old('unit', $details->unit) == 'kg (kilogram)') selected @endif>kg (kilogram)</option>
@@ -228,7 +228,7 @@
                                 "<div id='validationServerStuffNameFeedback' class='invalid-feedback d-none'>Silahkan simpan data terlebih dahulu</div>"+
                                 "</td>"+
                                 "<td><textarea class='form-control stuff-desc' name='description[]' ></textarea></td>"+
-                                "<td><input type='number' class='form-control stuff-qty' name='qty' value=1 required></td>"+
+                                "<td><input type='number' class='form-control stuff-qty' name='qty' value=1 data-price-per-qty='0' min='1' required></td>"+
                                 "<td>"+
                                     "<select class='form-select single-select-unit stuff-unit' data-placeholder='Pilih Satuan' name='unit' required>"+
                                         "<option></option>"+
@@ -290,6 +290,7 @@
                 var name = $(this).val();
                 var url = "{{ URL::to('purchstuff-dropdown') }}";
                 var desc = $(this).closest('tr').find('textarea.stuff-desc');
+                var qty = $(this).closest('tr').find('input.stuff-qty');
                 var price = $(this).closest('tr').find('input.stuff-price');
                 
                 $.ajax({
@@ -302,6 +303,8 @@
                     success: function(data){
                         desc.val(data.description);
                         price.val(data.price);
+                        qty.val(1);
+                        qty.data('price-per-qty', data.price);
                     },
                     error: function(data){
                         // console.log('Error:', data);
@@ -503,6 +506,20 @@
                             // console.log('Error:', data);
                         }
                     });
+                }
+            });
+
+            $('#PurchaseTable').on('keyup', 'input.stuff-qty', function(e){
+                e.preventDefault();
+                let qty = $(this);
+                let value_qty = parseInt(qty.val());
+                let price = $(this).closest('tr').find('input.stuff-price');
+                let value_price = parseInt(price.val());
+                let single_price = parseFloat(qty.data('price-per-qty'));
+
+                if (!isNaN(single_price) && single_price!=0) {
+                    let new_price = single_price * value_qty;
+                    price.val(new_price);
                 }
             });
         });
