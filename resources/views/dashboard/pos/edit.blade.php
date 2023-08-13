@@ -77,7 +77,7 @@
                             <th width="25%">Menu</th>
                             <th width="40%">Keterangan</th>
                             <th width="10%">Jumlah</th>
-                            <th width="15%">Harga</th>
+                            <th width="15%">Total Harga</th>
                             <th scope="col" width="10%">
                                 <div  class="d-flex justify-content-end">
                                     <a href="javascript:void(0)" class="btn btn-success addRowPos"><i class="fas fa-plus"></i></a>
@@ -97,7 +97,7 @@
                                 </select>
                                 <div id="validationServerMenuNameFeedback" class="invalid-feedback d-none">Silahkan simpan data terlebih dahulu</div></td>
                                 <td><textarea class="form-control-plaintext menu-desc" name="description" readonly>{{ old('description',$details->description) }}</textarea></td>
-                                <td><input type="number" class="form-control-plaintext menu-qty" name="qty" value="{{ old('qty',$details->qty) }}" required readonly></td>
+                                <td><input type="number" class="form-control-plaintext menu-qty" name="qty" value="{{ old('qty',$details->qty) }}" data-price-per-qty="{{ $details->price/$details->qty }}" required readonly></td>
                                 <td><input type="text" class="form-control-plaintext priceFormat" value="Rp. {{ number_format($details->price, 0, ',', '.') }}" readonly><input type="hidden" class="form-control-plaintext menu-price" name="price" value="{{ old('price',$details->price) }}" required readonly></td>
                                 <td>
                                     <div class="d-flex justify-content-between">
@@ -182,7 +182,7 @@
                                 "<div id='validationServerMenuNameFeedback' class='invalid-feedback d-none'>Silahkan simpan data terlebih dahulu</div>"+
                                 "</td>"+
                                 "<td><textarea class='form-control menu-desc' name='description[]' ></textarea></td>"+
-                                "<td><input type='number' class='form-control menu-qty' name='qty' value=1 required></td>"+
+                                "<td><input type='number' class='form-control menu-qty' name='qty' value=1 data-price-per-qty='0' min='1' required></td>"+
                                 "<td><input type='number' class='form-control menu-price' name='price' value=0 required></td>"+
                                 "<td>"+
                                     "<div class='d-flex justify-content-between'>"+
@@ -228,6 +228,7 @@
                 var name = $(this).val();
                 var url = "{{ URL::to('posmenudetails-dropdown') }}";
                 var desc = $(this).closest('tr').find('textarea.menu-desc');
+                var qty = $(this).closest('tr').find('input.menu-qty');
                 var price = $(this).closest('tr').find('input.menu-price');
                 
                 $.ajax({
@@ -240,6 +241,8 @@
                     success: function(data){
                         desc.val(data.description);
                         price.val(data.price);
+                        qty.val(1);
+                        qty.data('price-per-qty', data.price);
                     },
                     error: function(data){
                         // console.log('Error:', data);
@@ -429,6 +432,20 @@
                             // console.log('Error:', data);
                         }
                     });
+                }
+            });
+
+            $('#PosTable').on('keyup', 'input.menu-qty', function(e){
+                e.preventDefault();
+                let qty = $(this);
+                let value_qty = parseInt(qty.val());
+                let price = $(this).closest('tr').find('input.menu-price');
+                let value_price = parseInt(price.val());
+                let single_price = parseFloat(qty.data('price-per-qty'));
+
+                if (!isNaN(single_price) && single_price!=0) {
+                    let new_price = single_price * value_qty;
+                    price.val(new_price);
                 }
             });
 
