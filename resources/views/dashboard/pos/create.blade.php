@@ -31,7 +31,12 @@
                             <div class="row mb-2" id="search-control">
                                 <div class="row mb-2">
                                     <div class="col">
-                                        <input type="text" name="search" class="form-control form-control-sm col-sm-12 float-right search" placeholder="Cari Menu..." value="{{ request('search') }}">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                            </div>
+                                            <input type="text" name="search" class="form-control form-control-sm col-sm-12 float-right search" placeholder="Cari Menu..." value="{{ request('search') }}">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
