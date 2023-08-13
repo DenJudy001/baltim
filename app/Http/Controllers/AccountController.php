@@ -72,46 +72,99 @@ class AccountController extends Controller
 
         $start_date = request('start_date');
         $end_date = request('end_date');
+        $pur_filter = request('pur');
+        $trx_filter = request('trx');
+        
+        if ($pur_filter != null){
+            if ($start_date && $end_date != null){
+                $start_date = request('start_date').' 00:00:00';
+                $end_date = request('end_date').' 23:59:59';
+                $purchase = DB::table('purchases')
+                    ->select('purchase_number', 'total', 'state', 'created_at','updated_at')
+                    ->where('state', '=', 'Proses')
+                    ->whereBetween('updated_at', [$start_date, $end_date]);
 
-        if ($start_date && $end_date != null){
-            $start_date = request('start_date').' 00:00:00';
-            $end_date = request('end_date').' 23:59:59';
-            $purchase = DB::table('purchases')
+                $pos = DB::table('pos')
+                    ->select('pos_number', 'total', 'state', 'created_at','updated_at')
+                    ->where('state', '=', 'end')
+                    ->whereBetween('updated_at', [$start_date, $end_date]);
+            } else {
+                $purchase = DB::table('purchases')
                 ->select('purchase_number', 'total', 'state', 'created_at','updated_at')
-                ->whereBetween('updated_at', [$start_date, $end_date]);
+                ->where('state', '=', 'Proses');
 
-            $salary = DB::table('employee_salaries')
-                ->select('salary_number', 'salary', 'state', 'created_at','updated_at')
-                ->whereBetween('updated_at', [$start_date, $end_date]);
-
-            $pos = DB::table('pos')
+                $pos = DB::table('pos')
                 ->select('pos_number', 'total', 'state', 'created_at','updated_at')
-                ->whereBetween('updated_at', [$start_date, $end_date]);
+                ->where('state', '=', 'end');
+            }
+            $transactions = $purchase->union($pos)->orderBy('updated_at', 'desc')->get();
+        } else if ($trx_filter != null){
+            if ($start_date && $end_date != null){
+                $start_date = request('start_date').' 00:00:00';
+                $end_date = request('end_date').' 23:59:59';
+                $purchase = DB::table('purchases')
+                    ->select('purchase_number', 'total', 'state', 'created_at','updated_at')
+                    ->where('state', '=', 'end')
+                    ->whereBetween('updated_at', [$start_date, $end_date]);
+                $pos = DB::table('pos')
+                    ->select('pos_number', 'total', 'state', 'created_at','updated_at')
+                    ->where('state', '=', 'Proses')
+                    ->whereBetween('updated_at', [$start_date, $end_date]);
+            } else {
+                $purchase = DB::table('purchases')
+                ->select('purchase_number', 'total', 'state', 'created_at','updated_at')
+                ->where('state', '=', 'end');
+
+                $pos = DB::table('pos')
+                ->select('pos_number', 'total', 'state', 'created_at','updated_at')
+                ->where('state', '=', 'Proses');
+            }
+            $transactions = $purchase->union($pos)->orderBy('updated_at', 'desc')->get();
         } else {
-            $purchase = DB::table('purchases')
-            ->select('purchase_number', 'total', 'state', 'created_at','updated_at');
-
-            $salary = DB::table('employee_salaries')
-            ->select('salary_number', 'salary', 'state', 'created_at','updated_at');
-
-            $pos = DB::table('pos')->select('pos_number', 'total', 'state', 'created_at','updated_at');
+            if ($start_date && $end_date != null){
+                $start_date = request('start_date').' 00:00:00';
+                $end_date = request('end_date').' 23:59:59';
+                $purchase = DB::table('purchases')
+                    ->select('purchase_number', 'total', 'state', 'created_at','updated_at')
+                    ->whereBetween('updated_at', [$start_date, $end_date]);
+    
+                $salary = DB::table('employee_salaries')
+                    ->select('salary_number', 'salary', 'state', 'created_at','updated_at')
+                    ->whereBetween('updated_at', [$start_date, $end_date]);
+    
+                $pos = DB::table('pos')
+                    ->select('pos_number', 'total', 'state', 'created_at','updated_at')
+                    ->whereBetween('updated_at', [$start_date, $end_date]);
+            } else {
+                $purchase = DB::table('purchases')
+                ->select('purchase_number', 'total', 'state', 'created_at','updated_at');
+    
+                $salary = DB::table('employee_salaries')
+                ->select('salary_number', 'salary', 'state', 'created_at','updated_at');
+    
+                $pos = DB::table('pos')->select('pos_number', 'total', 'state', 'created_at','updated_at');
+            }
+            $transactions = $purchase->union($salary)->union($pos)->orderBy('updated_at', 'desc')->get();
         }
+        
 
-        $transactions = $purchase->union($salary)->union($pos)->orderBy('updated_at', 'desc')->get();
         $title = "Riwayat Transaksi";
         $pendingNoticeIncome = 0;
         $pendingNoticeExpense = 0;
 
         //untuk seluruh data
         foreach($transactions as $data){
-            if($data->state == "Proses" && str_contains($data->purchase_number, 'TRX')){
-                $pendingNoticeIncome += $data->total;
+            if ($pur_filter != null || $trx_filter != null) {
+                $pendingNoticeIncome = 0;
+                $pendingNoticeExpense = 0;
+            } else {
+                if($data->state == "Proses" && str_contains($data->purchase_number, 'TRX')){
+                    $pendingNoticeIncome += $data->total;
+                } else if($data->state == "Proses" && str_contains($data->purchase_number, 'PUR')){
+                    $pendingNoticeExpense += $data->total;
+                }
             }
-        }
-        foreach($transactions as $data){
-            if($data->state == "Proses" && str_contains($data->purchase_number, 'PUR')){
-                $pendingNoticeExpense += $data->total;
-            }
+            
         }
 
         if($pendingNoticeIncome > 1){

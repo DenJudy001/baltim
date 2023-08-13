@@ -8,20 +8,27 @@
     @endif
     @if (session()->has('trx-notice'))
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <b>Perhatian! </b>{{ session('trx-notice') }}
+            <b>Perhatian! </b>{{ session('trx-notice') }} <a href="/transactions?trx=proses">Klik disini!   </a>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
     @if (session()->has('pur-notice'))
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <b>Perhatian! </b>{{ session('pur-notice') }}
+            <b>Perhatian! </b>{{ session('pur-notice') }} <a href="/transactions?pur=proses">Klik disini!   </a>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
     <div class="card">
         <div class="card-header bg-white">
             <div class="row">
-                <div class="col"><h4 class="font-weight-bold">Riwayat Transaksi</h4></div>
+                <div class="col">
+                    <h4 class="font-weight-bold">Riwayat Transaksi</h4>
+                </div>
+                @if (request()->query('pur') == 'proses' || request()->query('trx') == 'proses')
+                    <div class="col text-right">
+                        <a href="javascript:history.back()" class="btn btn-primary shadow-sm button-finished"><i class="fas fa-sync-alt mr-2"></i></i>{{ __('Reset') }}</a>
+                    </div>
+                @endif
             </div>
         </div>
         <div class="card-body">
@@ -40,6 +47,11 @@
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-3 col-lg-2">
+                    @if (request()->query('pur') == 'proses')
+                        <input type="hidden" name="pur" value="proses">
+                    @elseif (request()->query('trx') == 'proses')
+                        <input type="hidden" name="trx" value="proses">
+                    @endif
                     <button type="submit" class="btn btn-primary mb-3"><i class="fas fa-filter mr-2"></i>Filter</button>
                 </div>
             </div>
