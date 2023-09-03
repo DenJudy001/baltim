@@ -119,7 +119,8 @@ class DetailPosController extends Controller
             
         }
 
-        $newTotal = $dataPos->total + ($request->price*$request->qty);
+        $totalPrice = DetailPos::where('pos_id', $pos)->sum('price');
+        $newTotal = $totalPrice;
         Pos::where('id',$pos)->update(['total'=>$newTotal]);
     }
 }

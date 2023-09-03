@@ -126,7 +126,9 @@ class DetailPurchaseController extends Controller
             ]);
         }
 
-        $newTotal = $dataPurch->total + ($request->price*$request->qty);
+        $totalPrice = DetailPurchase::where('purchase_id', $purchase)->sum('price');
+        
+        $newTotal = $totalPrice;
         Purchase::where('id',$purchase)->update(['total'=>$newTotal]);
     }
 }
