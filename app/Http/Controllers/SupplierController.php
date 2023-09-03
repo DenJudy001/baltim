@@ -165,7 +165,7 @@ class SupplierController extends Controller
     {
         Supplier::destroy($supplier->id);
 
-        return redirect('/supplier')->with('success','Data Pemasok Berhasil Dihapus ');
+        session()->flash('success', 'Data Pemasok Berhasil Dihapus');
     }
 
     public function updateStuff(Request $request)

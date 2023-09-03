@@ -368,46 +368,92 @@
                 var url = '{{ route('update.status-pos') }}';
                 var pos_id = $(this).parents("div").attr("data-pos-id");
                 var newStatus = "Selesai";
-                if (confirm('Apakah Anda yakin ingin menyelesaikan transaksi?')) {
-                    $.ajax({
-                        url: url,
-                        type: 'post',
-                        data: {
-                            "_token": $('meta[name="csrf-token"]').attr('content'),
-                            "pos_id": pos_id,
-                            "state": newStatus
-                        },
-                        success: function (data) {
-                            window.location.replace('/transactions');
-                        },
-                        error: function (data) {
-                            // console.log('Error:', data);
-                        }
-                    });
-                }
+
+                Swal.fire({
+                    title: 'Apakah Anda yakin ingin menyelesaikan transaksi?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#1cc88a',
+                    cancelButtonColor: '#858796',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Tidak'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: url,
+                            type: 'post',
+                            data: {
+                                "_token": $('meta[name="csrf-token"]').attr('content'),
+                                "pos_id": pos_id,
+                                "state": newStatus
+                            },
+                            success: function () {
+                                Swal.fire({
+                                    title:'Berhasil!',
+                                    text:'Transaksi telah diselesaikan.',
+                                    icon:'success',
+                                    showConfirmButton: false,
+                                    timer:'1500'
+                                }).then(() => {
+                                    location.replace('/transactions');
+                                });
+                            },
+                            error: function () {
+                                Swal.fire(
+                                    'Gagal!',
+                                    'Terjadi kesalahan saat merubah status.',
+                                    'error'
+                                );
+                            }
+                        });
+                    }
+                });
             });
             $('#changeStatus').on('click', '.button-cancelled', function(e){
                 e.preventDefault();
                 var url = '{{ route('update.status-pos') }}';
                 var pos_id = $(this).parents("div").attr("data-pos-id");
                 var newStatus = "Dibatalkan";
-                if (confirm('Apakah Anda yakin ingin membatalkan transaksi?')) {
-                    $.ajax({
-                        url: url,
-                        type: 'post',
-                        data: {
-                            "_token": $('meta[name="csrf-token"]').attr('content'),
-                            "pos_id": pos_id,
-                            "state": newStatus
-                        },
-                        success: function (data) {
-                            window.location.replace('/transactions');
-                        },
-                        error: function (data) {
-                            // console.log('Error:', data);
-                        }
-                    });
-                }
+
+                Swal.fire({
+                    title: 'Apakah Anda yakin ingin membatalkan pemesanan?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#e74a3b',
+                    cancelButtonColor: '#858796',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Tidak'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: url,
+                            type: 'post',
+                            data: {
+                                "_token": $('meta[name="csrf-token"]').attr('content'),
+                                "pos_id": pos_id,
+                                "state": newStatus
+                            },
+                            success: function () {
+                                Swal.fire({
+                                    title:'Berhasil!',
+                                    text:'Transaksi telah dibatalkan.',
+                                    icon:'success',
+                                    showConfirmButton: false,
+                                    timer:'1500'
+                                }).then(() => {
+                                    location.replace('/transactions');
+                                });
+                            },
+                            error: function () {
+                                Swal.fire(
+                                    'Gagal!',
+                                    'Terjadi kesalahan saat merubah status.',
+                                    'error'
+                                );
+                            }
+                        });
+                    }
+                });
             });
 
             $('#PosTable').on('click', '.single-stuff', function(e){
@@ -416,23 +462,45 @@
                 var pos_id = $(this).parents("tr").attr("data-pos-id");
                 var url = `{{ url('/detail-pos/${id}') }}`;
 
-                if (confirm('Apakah Anda yakin ingin menghapus data yang sudah tersimpan?')) {
-                    $.ajax({
-                        url: url,
-                        type: 'DELETE',
-                        data: {
-                            "_token": $('meta[name="csrf-token"]').attr('content'),
-                            "id": id,
-                            "pos_id": pos_id,
-                        },
-                        success: function (data) {
-                             window.location.reload();
-                        },
-                        error: function (data) {
-                            // console.log('Error:', data);
-                        }
-                    });
-                }
+                Swal.fire({
+                    title: 'Apakah Anda yakin ingin menghapus data?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#e74a3b',
+                    cancelButtonColor: '#858796',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: url,
+                            type: 'DELETE',
+                            data: {
+                                "_token": $('meta[name="csrf-token"]').attr('content'),
+                                "id": id,
+                                "pos_id": pos_id,
+                            },
+                            success: function () {
+                                Swal.fire({
+                                    title:'Terhapus!',
+                                    text:'Data telah dihapus.',
+                                    icon:'success',
+                                    showConfirmButton: false,
+                                    timer:'1500'
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            },
+                            error: function () {
+                                Swal.fire(
+                                    'Gagal!',
+                                    'Terjadi kesalahan saat menghapus data.',
+                                    'error'
+                                );
+                            }
+                        });
+                    }
+                });
             });
 
             $('#PosTable').on('keyup', 'input.menu-qty', function(e){

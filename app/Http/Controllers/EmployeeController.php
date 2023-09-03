@@ -111,7 +111,7 @@ class EmployeeController extends Controller
     {
         User::destroy($user->id);
 
-        return redirect('/employee')->with('success','Berhasil Hapus Karyawan ');
+        session()->flash('success', 'Berhasil Hapus Karyawan');
     }
 
     public function indexChangePassword(User $user)

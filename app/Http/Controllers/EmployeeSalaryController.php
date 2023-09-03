@@ -98,6 +98,6 @@ class EmployeeSalaryController extends Controller
     {
         EmployeeSalary::destroy($employeeSalary->id);
 
-        return redirect('/transactions')->with('success','Transaksi Berhasil Dihapus ');
+        session()->flash('success', 'Transaksi Berhasil Dihapus');
     }
 }

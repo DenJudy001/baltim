@@ -82,11 +82,7 @@
                                     <a href="/purchase/{{ $transaction->purchase_number }}" class="btn btn-info "><i class="fas fa-eye"></i></a>
                                     <a href="/purchase/{{ $transaction->purchase_number }}/edit" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                                     @can('admin') 
-                                    <form action="/purchase/{{ $transaction->purchase_number }}" method="POST" class="d-inline">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="btn btn-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><i class="fas fa-trash-alt"></i></button>
-                                    </form>
+                                    <button class="btn btn-danger border-0" onclick="deleteConfirmationPurchase(event, '{{ $transaction->purchase_number }}')"><i class="fas fa-trash-alt"></i></button>
                                     @endcan
                                     </div>
                                     @elseif (str_contains($transaction->purchase_number, 'SAL'))
@@ -94,11 +90,7 @@
                                     <a href="/salary/{{ $transaction->purchase_number }}" class="btn btn-info "><i class="fas fa-eye"></i></a>
                                     <a href="/salary/{{ $transaction->purchase_number }}/edit" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                                     @can('admin') 
-                                    <form action="/salary/{{ $transaction->purchase_number }}" method="POST" class="d-inline">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="btn btn-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><i class="fas fa-trash-alt"></i></button>
-                                    </form>
+                                    <button class="btn btn-danger border-0" onclick="deleteConfirmationSalary(event, '{{ $transaction->purchase_number }}')"><i class="fas fa-trash-alt"></i></button>
                                     @endcan
                                     </div>
                                     @elseif (str_contains($transaction->purchase_number, 'TRX'))
@@ -106,11 +98,7 @@
                                     <a href="/pos/{{ $transaction->purchase_number }}" class="btn btn-info "><i class="fas fa-eye"></i></a>
                                     <a href="/pos/{{ $transaction->purchase_number }}/edit" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                                     @can('admin') 
-                                    <form action="/pos/{{ $transaction->purchase_number }}" method="POST" class="d-inline">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="btn btn-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><i class="fas fa-trash-alt"></i></button>
-                                    </form>
+                                    <button class="btn btn-danger border-0" onclick="deleteConfirmationPos(event, '{{ $transaction->purchase_number }}')"><i class="fas fa-trash-alt"></i></button>
                                     @endcan
                                     </div>
                                     @endif
@@ -125,3 +113,136 @@
     </div>
     
 @endsection
+@push('script')
+<script>
+    function deleteConfirmationPurchase(event, itemId) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'Apakah Anda yakin ingin menghapus data?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e74a3b',
+            cancelButtonColor: '#858796',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: '/purchase/' + itemId,
+                    data: {
+                        _method: 'DELETE',
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function () {
+                        Swal.fire({
+                            title:'Terhapus!',
+                            text:'Data telah dihapus.',
+                            icon:'success',
+                            showConfirmButton: false,
+                            timer:'1500'
+                        }).then(() => {
+                            location.reload();
+                        });
+                    },
+                    error: function () {
+                        Swal.fire(
+                            'Gagal!',
+                            'Terjadi kesalahan saat menghapus data.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    }
+
+    function deleteConfirmationSalary(event, itemId) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'Apakah Anda yakin ingin menghapus data?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e74a3b',
+            cancelButtonColor: '#858796',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: '/salary/' + itemId,
+                    data: {
+                        _method: 'DELETE',
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function () {
+                        Swal.fire({
+                            title:'Terhapus!',
+                            text:'Data telah dihapus.',
+                            icon:'success',
+                            showConfirmButton: false,
+                            timer:'1500'
+                        }).then(() => {
+                            location.reload();
+                        });
+                    },
+                    error: function () {
+                        Swal.fire(
+                            'Gagal!',
+                            'Terjadi kesalahan saat menghapus data.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    }
+
+    function deleteConfirmationPos(event, itemId) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'Apakah Anda yakin ingin menghapus data?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e74a3b',
+            cancelButtonColor: '#858796',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: '/pos/' + itemId,
+                    data: {
+                        _method: 'DELETE',
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function () {
+                        Swal.fire({
+                            title:'Terhapus!',
+                            text:'Data telah dihapus.',
+                            icon:'success',
+                            showConfirmButton: false,
+                            timer:'1500'
+                        }).then(() => {
+                            location.reload();
+                        });
+                    },
+                    error: function () {
+                        Swal.fire(
+                            'Gagal!',
+                            'Terjadi kesalahan saat menghapus data.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    }
+</script>
+    
+@endpush

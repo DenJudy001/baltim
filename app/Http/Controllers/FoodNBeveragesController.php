@@ -148,6 +148,6 @@ class FoodNBeveragesController extends Controller
 
         FoodNBeverages::destroy($foodNBeverages->id);
 
-        return redirect('/fnb')->with('success','Berhasil Hapus Menu ');
+        session()->flash('success', 'Berhasil Hapus Menu');
     }
 }

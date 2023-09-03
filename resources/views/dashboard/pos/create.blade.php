@@ -562,54 +562,67 @@
                 e.preventDefault();
 
                 var position = $(this);
+                $.ajax({
+                    url: '{{ route('remove.from.cart') }}',
+                    method: "POST",
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: position.parents("tr").attr("data-id")
+                    },
+                    success: function(response) {
+                        // window.location.reload();
+                        $('.table-cart').html(response.cart_view);
+                        $('.table-modal').html(response.modal_view);
 
-                if (confirm("Apakah Anda yakin ingin menghapus menu pada keranjang?")) {
-                    $.ajax({
-                        url: '{{ route('remove.from.cart') }}',
-                        method: "POST",
-                        data: {
-                            _token: '{{ csrf_token() }}',
-                            id: position.parents("tr").attr("data-id")
-                        },
-                        success: function(response) {
-                            // window.location.reload();
-                            $('.table-cart').html(response.cart_view);
-                            $('.table-modal').html(response.modal_view);
-
-                            if($(".table-cart tbody tr").length > 0) {
-                                $('div.save-reset-control').removeClass('d-none');
-                                
-                            } else {
-                                $('div.save-reset-control').addClass('d-none');
-                            }
+                        if($(".table-cart tbody tr").length > 0) {
+                            $('div.save-reset-control').removeClass('d-none');
+                            
+                        } else {
+                            $('div.save-reset-control').addClass('d-none');
                         }
-                    });
-                }
+                    }
+                });
             });
             $(".clear-cart").click(function(e) {
                 e.preventDefault();
 
-                if (confirm("Apakah Anda yakin ingin menghapus semua keranjang?")) {
-                    $.ajax({
-                        url: '{{ route('clear.cart') }}',
-                        method: "POST",
-                        data: {
-                            _token: '{{ csrf_token() }}',
-                        },
-                        success: function(response) {
-                            // window.location.reload();
-                            $('.table-cart').html(response.cart_view);
-                            $('.table-modal').html(response.modal_view);
+                Swal.fire({
+                    title: 'Apakah Anda yakin ingin menghapus seluruh keranjang?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#e74a3b',
+                    cancelButtonColor: '#858796',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '{{ route('clear.cart') }}',
+                            method: "POST",
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                            },
+                            success: function (response) {
+                                $('.table-cart').html(response.cart_view);
+                                $('.table-modal').html(response.modal_view);
 
-                            if($(".table-cart tbody tr").length > 0) {
-                                $('div.save-reset-control').removeClass('d-none');
-                                
-                            } else {
-                                $('div.save-reset-control').addClass('d-none');
+                                if($(".table-cart tbody tr").length > 0) {
+                                    $('div.save-reset-control').removeClass('d-none');
+                                    
+                                } else {
+                                    $('div.save-reset-control').addClass('d-none');
+                                }
+                            },
+                            error: function () {
+                                Swal.fire(
+                                    'Gagal!',
+                                    'Terjadi kesalahan saat menghapus data.',
+                                    'error'
+                                );
                             }
-                        }
-                    });
-                }
+                        });
+                    }
+                });
             });
         });
     </script>

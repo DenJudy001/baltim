@@ -204,7 +204,7 @@ class PurchaseController extends Controller
     {
         Purchase::destroy($purchase->id);
 
-        return redirect('/transactions')->with('success','Catatan Transaksi Berhasil Dihapus ');
+        session()->flash('success', 'Transaksi Berhasil Dihapus');
     }
 
     public function updateStatus(Request $request)

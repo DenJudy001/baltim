@@ -193,46 +193,92 @@
                 var url = '{{ route('update.status-purchase') }}';
                 var purchase_id = $(this).parents("div").attr("data-purchase-id");
                 var newStatus = "Selesai";
-                if (confirm('Apakah Anda yakin ingin menyelesaikan pemesanan?')) {
-                    $.ajax({
-                        url: url,
-                        type: 'post',
-                        data: {
-                            "_token": $('meta[name="csrf-token"]').attr('content'),
-                            "purchase_id": purchase_id,
-                            "state": newStatus
-                        },
-                        success: function (data) {
-                            window.location.replace('/transactions');
-                        },
-                        error: function (data) {
-                            // console.log('Error:', data);
-                        }
-                    });
-                }
+
+                Swal.fire({
+                    title: 'Apakah Anda yakin ingin menyelesaikan pemesanan?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#1cc88a',
+                    cancelButtonColor: '#858796',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Tidak'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: url,
+                            type: 'post',
+                            data: {
+                                "_token": $('meta[name="csrf-token"]').attr('content'),
+                                "purchase_id": purchase_id,
+                                "state": newStatus
+                            },
+                            success: function () {
+                                Swal.fire({
+                                    title:'Berhasil!',
+                                    text:'Transaksi telah diselesaikan.',
+                                    icon:'success',
+                                    showConfirmButton: false,
+                                    timer:'1500'
+                                }).then(() => {
+                                    location.replace('/transactions');
+                                });
+                            },
+                            error: function () {
+                                Swal.fire(
+                                    'Gagal!',
+                                    'Terjadi kesalahan saat merubah status.',
+                                    'error'
+                                );
+                            }
+                        });
+                    }
+                });
             });
             $('#changeStatus').on('click', '.button-cancelled', function(e){
                 e.preventDefault();
                 var url = '{{ route('update.status-purchase') }}';
                 var purchase_id = $(this).parents("div").attr("data-purchase-id");
                 var newStatus = "Dibatalkan";
-                if (confirm('Apakah Anda yakin ingin membatalkan pemesanan?')) {
-                    $.ajax({
-                        url: url,
-                        type: 'post',
-                        data: {
-                            "_token": $('meta[name="csrf-token"]').attr('content'),
-                            "purchase_id": purchase_id,
-                            "state": newStatus
-                        },
-                        success: function (data) {
-                            window.location.replace('/transactions');
-                        },
-                        error: function (data) {
-                            // console.log('Error:', data);
-                        }
-                    });
-                }
+
+                Swal.fire({
+                    title: 'Apakah Anda yakin ingin membatalkan pemesanan?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#e74a3b',
+                    cancelButtonColor: '#858796',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Tidak'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: url,
+                            type: 'post',
+                            data: {
+                                "_token": $('meta[name="csrf-token"]').attr('content'),
+                                "purchase_id": purchase_id,
+                                "state": newStatus
+                            },
+                            success: function () {
+                                Swal.fire({
+                                    title:'Berhasil!',
+                                    text:'Transaksi telah dibatalkan.',
+                                    icon:'success',
+                                    showConfirmButton: false,
+                                    timer:'1500'
+                                }).then(() => {
+                                    location.replace('/transactions');
+                                });
+                            },
+                            error: function () {
+                                Swal.fire(
+                                    'Gagal!',
+                                    'Terjadi kesalahan saat merubah status.',
+                                    'error'
+                                );
+                            }
+                        });
+                    }
+                });
             });
         });
     </script>

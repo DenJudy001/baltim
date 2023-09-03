@@ -36,11 +36,7 @@
                                 <td> <div class="d-flex justify-content-between">
                                     <a href="/supplier/{{ $supplier->id }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
                                     <a href="/supplier/{{ $supplier->id }}/edit" class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                                    <form action="/supplier/{{ $supplier->id }}" method="POST" class="d-inline">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="btn btn-danger border-0" onclick="return confirm('Apakah Anda yakin ingin menghapus data?')"><i class="fas fa-trash-alt"></i></button>
-                                    </form>
+                                    <button class="btn btn-danger border-0" onclick="deleteConfirmation(event, {{ $supplier->id }})"><i class="fas fa-trash-alt"></i></button>
                                 </div>
                                 </td>
                             </tr>
@@ -53,3 +49,50 @@
     </div>
     
 @endsection
+@push('script')
+<script>
+    function deleteConfirmation(event, itemId) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'Apakah Anda yakin ingin menghapus data?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e74a3b',
+            cancelButtonColor: '#858796',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: '/supplier/' + itemId,
+                    data: {
+                        _method: 'DELETE',
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function () {
+                        Swal.fire({
+                            title:'Terhapus!',
+                            text:'Data telah dihapus.',
+                            icon:'success',
+                            showConfirmButton: false,
+                            timer:'1500'
+                        }).then(() => {
+                            location.reload();
+                        });
+                    },
+                    error: function () {
+                        Swal.fire(
+                            'Gagal!',
+                            'Terjadi kesalahan saat menghapus data.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    }
+</script>
+    
+@endpush

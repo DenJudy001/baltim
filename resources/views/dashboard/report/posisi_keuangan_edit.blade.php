@@ -459,22 +459,44 @@
                 var id = $(this).parents("tr").attr("data-id");
                 var url = `{{ url('/detail-report/${id}') }}`;
 
-                if (confirm('Apakah Anda yakin ingin menghapus data yang sudah tersimpan?')) {
-                    $.ajax({
-                        url: url,
-                        type: 'DELETE',
-                        data: {
-                            "_token": $('meta[name="csrf-token"]').attr('content'),
-                            "id": id,
-                        },
-                        success: function (data) {
-                             window.location.reload();
-                        },
-                        error: function (data) {
-                            // console.log('Error:', data);
-                        }
-                    });
-                }
+                Swal.fire({
+                    title: 'Apakah Anda yakin ingin menghapus data?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#e74a3b',
+                    cancelButtonColor: '#858796',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: url,
+                            type: 'DELETE',
+                            data: {
+                                "_token": $('meta[name="csrf-token"]').attr('content'),
+                                "id": id,
+                            },
+                            success: function () {
+                                Swal.fire({
+                                    title:'Terhapus!',
+                                    text:'Data telah dihapus.',
+                                    icon:'success',
+                                    showConfirmButton: false,
+                                    timer:'1500'
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            },
+                            error: function () {
+                                Swal.fire(
+                                    'Gagal!',
+                                    'Terjadi kesalahan saat menghapus data.',
+                                    'error'
+                                );
+                            }
+                        });
+                    }
+                });
             });
 
             $('#assetTable').on('click', '.button-edit2', function(){
@@ -602,22 +624,44 @@
                 var id = $(this).parents("tr").attr("data-id");
                 var url = `{{ url('/detail-report/${id}') }}`;
 
-                if (confirm('Apakah Anda yakin ingin menghapus data yang sudah tersimpan?')) {
-                    $.ajax({
-                        url: url,
-                        type: 'DELETE',
-                        data: {
-                            "_token": $('meta[name="csrf-token"]').attr('content'),
-                            "id": id,
-                        },
-                        success: function (data) {
-                             window.location.reload();
-                        },
-                        error: function (data) {
-                            // console.log('Error:', data);
-                        }
-                    });
-                }
+                Swal.fire({
+                    title: 'Apakah Anda yakin ingin menghapus data?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#e74a3b',
+                    cancelButtonColor: '#858796',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: url,
+                            type: 'DELETE',
+                            data: {
+                                "_token": $('meta[name="csrf-token"]').attr('content'),
+                                "id": id,
+                            },
+                            success: function () {
+                                Swal.fire({
+                                    title:'Terhapus!',
+                                    text:'Data telah dihapus.',
+                                    icon:'success',
+                                    showConfirmButton: false,
+                                    timer:'1500'
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            },
+                            error: function () {
+                                Swal.fire(
+                                    'Gagal!',
+                                    'Terjadi kesalahan saat menghapus data.',
+                                    'error'
+                                );
+                            }
+                        });
+                    }
+                });
             });
         });
     </script>

@@ -156,7 +156,7 @@ class PosController extends Controller
     {
         Pos::destroy($po->id);
 
-        return redirect('/transactions')->with('success','Catatan Transaksi Berhasil Dihapus ');
+        session()->flash('success', 'Transaksi Berhasil Dihapus');
     }
     
     public function addToCart($menu)
