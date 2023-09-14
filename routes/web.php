@@ -86,7 +86,9 @@ Route::get('/salary/{employeeSalary}', [EmployeeSalaryController::class, 'show']
 Route::get('/salary/{employeeSalary}/edit', [EmployeeSalaryController::class, 'edit'])->middleware('auth');
 Route::resource('/employee', EmployeeController::class, ['parameters' => ['employee' => 'user']])->middleware('admin')->except('edit','update');
 Route::get('/employee/{user}/edit', [EmployeeController::class, 'edit'])->middleware('auth');
+Route::get('/employee/{user}/edit-salary', [EmployeeController::class, 'editSalary'])->middleware('admin');
 Route::put('/employee/{user}', [EmployeeController::class, 'update'])->middleware('auth');
+Route::put('/employee/{user}/edit-salary', [EmployeeController::class, 'changeSalary'])->middleware('admin');
 Route::post('/employee-change-password', [EmployeeController::class, 'changePassword'])->middleware('auth');
 Route::get('/employee-change-password/{user}', [EmployeeController::class, 'indexChangePassword'])->middleware('auth');
 Route::get('/account', [AccountController::class, 'index'])->middleware('auth');

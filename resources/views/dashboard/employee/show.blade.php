@@ -30,6 +30,13 @@
                         <td width="2%" >:</td>
                         <td width="60%" >{{$employee->username}}</td>
                     </tr>
+
+                    <tr>
+                        <td width="38%" >Gaji</td>
+                        <td width="2%" >:</td>
+                        <td width="60%" >Rp. {{number_format($employee->salary, 0, ',', '.')}}  
+                        </td>
+                    </tr>
                 </table>
             </div>
             <div class="col-sm-6">

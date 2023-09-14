@@ -35,6 +35,7 @@
                                 <td>{{ $user->telp }}</td>
                                 <td><div class="d-flex justify-content-evenly">
                                     <a href="/employee/{{ $user->username }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                    <a href="/employee/{{ $user->username }}/edit-salary" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                                     <button class="btn btn-danger border-0" onclick="deleteConfirmation(event, '{{ $user->username }}')"><i class="fas fa-trash-alt"></i></button>
                                     </div>
                                 </td>

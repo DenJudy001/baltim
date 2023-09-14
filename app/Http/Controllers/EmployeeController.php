@@ -41,6 +41,7 @@ class EmployeeController extends Controller
             'name' => 'required|max:255',
             'username' => 'required|min:3|max:255|unique:users',
             'telp' => 'required|min:9|max:15|unique:users',
+            'salary' => 'required|integer|min:0',
             'email' => 'required|email:dns|unique:users',
             'password' => 'required|min:5|max:255'
         ]);
@@ -80,6 +81,19 @@ class EmployeeController extends Controller
         
     }
 
+    public function editSalary(User $user)
+    {
+        if (auth()->user()->is_admin){
+            return view('dashboard.employee.edit_salary',[
+                'employee'=>$user,
+                'title'=>"Ubah Gaji Karyawan"
+            ]);
+        } else {
+            return abort(403);
+        }
+        
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -102,6 +116,19 @@ class EmployeeController extends Controller
             ->update($validatedData);
 
         return redirect()->back()->with('success','Berhasil Ubah Data Profil');
+    }
+
+    public function changeSalary(Request $request, User $user)
+    {
+        $rules =[
+            'salary' => 'required|integer|min:0'
+        ];
+        
+        $validatedData = $request->validate($rules);
+        User::where('id', $user->id)
+            ->update($validatedData);
+
+        return redirect('/employee')->with('success','Berhasil Ubah Data Gaji');
     }
 
     /**

@@ -19,23 +19,23 @@
             <form action="/employee" method="post">
                 @csrf
                 <div class="row">
-                    <div class="mb-3">
-                        <label for="name" class="form-label @error('name') is-invalid @enderror">Nama
-                            Lengkap<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="name" name="name"
-                            value="{{ old('name') }}" required autofocus oninvalid="this.setCustomValidity('Nama tidak boleh kosong !')" oninput="this.setCustomValidity('')">
-                        @error('name')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="username" class="form-label @error('username') is-invalid @enderror">Username<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="username" name="username"
-                                value="{{ old('username') }}" required oninvalid="this.setCustomValidity('Username tidak boleh kosong !')" oninput="this.setCustomValidity('')">
-                            @error('username')
+                            <label for="name" class="form-label @error('name') is-invalid @enderror">Nama
+                                Lengkap<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                value="{{ old('name') }}" required autofocus oninvalid="this.setCustomValidity('Nama tidak boleh kosong !')" oninput="this.setCustomValidity('')">
+                            @error('name')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="salary" class="form-label @error('salary') is-invalid @enderror">Gaji</label>
+                            <input type="number" class="form-control" id="salary" name="salary" value="{{ old('salary',0) }}" min="0"
+                                required onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninvalid="this.setCustomValidity('Isikan 0 jika kosong !')" oninput="this.setCustomValidity('')">
+                            @error('salary')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -53,6 +53,16 @@
                         </div>
                     </div>
                     <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="username" class="form-label @error('username') is-invalid @enderror">Username<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="username" name="username"
+                                value="{{ old('username') }}" required oninvalid="this.setCustomValidity('Username tidak boleh kosong !')" oninput="this.setCustomValidity('')">
+                            @error('username')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
                         <div class="mb-3">
                             <label for="email" class="form-label @error('email') is-invalid @enderror">Email<span class="text-danger">*</span> <span>Cth: xxx@gmail.com</span></label>
                             <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}"

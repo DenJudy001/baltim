@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="card-body">
-        <form action="/employee/{{ $employee->id }}" method="post">
+        <form action="/employee/{{ $employee->username }}" method="post">
         @csrf
         @method('put')
         <div class="row">
@@ -36,6 +36,13 @@
                         <td width="38%" >Username</td>
                         <td width="2%" >:</td>
                         <td width="60%" >{{ $employee->username }}   
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td width="38%" >Gaji</td>
+                        <td width="2%" >:</td>
+                        <td width="60%" >Rp. {{number_format($employee->salary, 0, ',', '.')}}  
                         </td>
                     </tr>
                 </table>
