@@ -34,8 +34,8 @@
                         <input type="hidden" class="form-control" id="name" name="name" value="{{ $emp->name }}">
                         <input type="hidden" class="form-control" id="email" name="email" value="{{ $emp->email }}">
                         <input type="hidden" class="form-control" id="telp" name="telp" value="{{ $emp->telp }}">
-                        <input type="number" class="form-control" id="salary" name="salary"
-                            value="{{ old('salary') }}" required min="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninvalid="this.setCustomValidity('Jumlah tidak boleh kosong !')" oninput="this.setCustomValidity('')">
+                        <input type="number" class="form-control input-total-salary" id="salary" name="salary"
+                            value="{{ old('salary',0) }}" required min="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninvalid="this.setCustomValidity('Jumlah tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                         @error('salary')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -63,6 +63,28 @@
                     }
                 }
             } );
+
+
+            $('.single-select-employee').on('change', function(){
+                var id = $(this).val();
+                var url = "{{ URL::to('saldetails-dropdown') }}";
+                var salary = $('#salary');
+                
+                $.ajax({
+                    url : url,
+                    type: 'GET',
+                    data: {
+                        "id" : id,
+                        "_token": $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data){
+                        salary.val(data.salary);
+                    },
+                    error: function(data){
+                        // console.log('Error:', data);
+                    }
+                }) 
+            });
             
         });
     </script>

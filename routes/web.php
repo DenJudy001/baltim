@@ -21,6 +21,7 @@ use App\Http\Controllers\OtherPurchaseController;
 use App\Http\Controllers\PosMenuDdController;
 use App\Http\Controllers\PosMenuDetailsDdController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SalaryDetailsController;
 use App\Models\DetailPurchase;
 use App\Models\DetailReport;
 
@@ -56,6 +57,7 @@ Route::get('purchsupp-dropdown',PurchSuppDdController::class);
 Route::get('purchstuff-dropdown',PurchStuffDdController::class);
 Route::get('posmenu-dropdown',PosMenuDdController::class);
 Route::get('posmenudetails-dropdown',PosMenuDetailsDdController::class);
+Route::get('saldetails-dropdown', SalaryDetailsController::class);
 
 Route::get('/login',[LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
