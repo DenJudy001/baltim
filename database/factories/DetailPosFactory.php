@@ -19,8 +19,12 @@ class DetailPosFactory extends Factory
      */
     public function definition(): array
     {
-        static $id = 1;
-        $posNumber = $this->faker->numberBetween(1, 100);
+        // static $id = 1;
+        // static $id = 251;
+        static $id = 256;
+        // $posNumber = $this->faker->numberBetween(1, 100);
+        // $posNumber = $this->faker->numberBetween(101, 150);
+        $posNumber = $this->faker->numberBetween(103, 152);
         $fnbNumber = $this->faker->numberBetween(1, 20);
         $qty = $this->faker->numberBetween(1, 3);
         $pos = Pos::select('created_at','updated_at')->where('id', '=', $posNumber)->firstOrFail();

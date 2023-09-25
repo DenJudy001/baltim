@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\EmployeeSalary;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,13 +18,16 @@ class EmployeeSalaryFactory extends Factory
      */
     public function definition(): array
     {
-        static $id = 1;
+        // static $id = 1;
+        // static $id = 16;
+        static $id = 17;
         $salNumber = 'SAL-' . str_pad($id, 6, '0', STR_PAD_LEFT);
         $usernames = User::where('username', '!=', 'baltim')->pluck('id')->toArray();
         $user_id = $this->faker->randomElement($usernames);
         $user = User::where('id','=',$user_id)->firstOrFail();
-        $salary = $this->faker->numberBetween(3000000, 4000000);
-        $createdAt = $this->faker->dateTimeBetween('-6 month', 'now');
+        $salary = $this->faker->numberBetween(600000, 600999);
+        // $createdAt = $this->faker->dateTimeBetween('-8 month', 'now');
+        $createdAt = $this->faker->dateTimeBetween('2023-09-01 00:00:00', '2023-09-30 23:59:59');
 
         return [
             'id' => $id++,

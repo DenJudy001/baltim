@@ -18,7 +18,9 @@ class DetailPurchaseFactory extends Factory
      */
     public function definition(): array
     {
-        static $id = 1;
+        // static $id = 1;
+        // static $id = 46;
+        static $id = 55;
         $supp_id = Purchase::where('supplier_id', '>=', 1)->pluck('id')->toArray();
         $rand_supp = $this->faker->randomElement($supp_id);
         $supplier = Purchase::select('supplier_id','created_at','updated_at')->where('id','=', $rand_supp)->firstOrFail();
