@@ -16,7 +16,7 @@
                 @csrf
                 <div class="row">
                     <div class="mb-3">
-                        <label for="purchase_name" class="form-label @error('purchase_name') is-invalid @enderror">Jenis Pembayaran<span class="text-danger">*</span><span> Cth: Listrik,Peralatan,Transportasi,dsb..</span></label>
+                        <label for="purchase_name" class="form-label @error('purchase_name') is-invalid @enderror">Jenis Pembayaran<span class="text-danger">*</span></label>
                         <select class="form-select single-select-purchase-name" data-placeholder="Pilih Jenis Pembayaran"
                             name="purchase_name" id="purchase_name" required>
                             <option></option>
@@ -37,7 +37,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label @error('description') is-invalid @enderror">Keterangan</label>
-                        <textarea type="text" class="form-control" id="description" name="supplier_description"
+                        <textarea type="text" class="form-control" id="description" name="supplier_description" placeholder="Cth: Pembayaran listrik untuk bulan januari"
                             value="{{ old('supplier_description') }}"></textarea>
                         @error('description')
                             <div class="invalid-feedback">
@@ -47,7 +47,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="total" class="form-label @error('total') is-invalid @enderror">Total Harga<span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" id="total" name="total"
+                        <input type="number" class="form-control" id="total" name="total" placeholder="Cth: 100000"
                             value="{{ old('total') }}" required min='1' onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninvalid="this.setCustomValidity('Harga tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                         @error('total')
                             <div class="invalid-feedback">
@@ -70,11 +70,7 @@
                 width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
                 placeholder: $( this ).data( 'placeholder' ),
                 sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
-                language: {
-                    "noResults": function(){
-                        return "Data Tidak ditemukan";
-                    }
-                }
+                tags : true
             } );
 
             $(".single-select-purchase-name").change(function(){

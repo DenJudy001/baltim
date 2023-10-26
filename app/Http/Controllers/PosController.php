@@ -52,7 +52,7 @@ class PosController extends Controller
      */
     public function store(Request $request)
     {
-        $dataTransaction['purchase_name'] = 'Pemesanan';
+        // $dataTransaction['purchase_name'] = 'Pemesanan';
         $dataTransaction['responsible'] = auth()->user()->username;
         $dataTransaction['pos_number'] = IdGenerator::generate(['table' => 'pos', 'length' => 10, 'prefix' =>'TRX-','reset_on_prefix_change' => true ,'field' => 'pos_number']);
         $dataTransaction['total'] = $request->totalHarga;

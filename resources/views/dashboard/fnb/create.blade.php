@@ -24,7 +24,7 @@
                             <label for="image" class="form-label">Gambar Menu</label>
                             <img class="img-preview img-fluid mb-3 col-sm-5">
                             <input class="form-control  @error('image') is-invalid @enderror" type="file" id="image"
-                                name="image">
+                                name="image" placeholder="Pilih Gambar">
                             @error('image')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -35,7 +35,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="code" class="form-label @error('code') is-invalid @enderror">Kode Menu<span class="text-danger">*</span></label><i class="fas fa-question-circle ml-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Untuk mempermudah pencarian menu (3-5 karakter)"></i>
-                            <input type="text" class="form-control" id="code" name="code" value="{{ old('code') }}"
+                            <input type="text" class="form-control" id="code" name="code" value="{{ old('code') }}" placeholder="Cth: AA001"
                                 required autofocus oninvalid="this.setCustomValidity('Kode menu tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                             @error('code')
                                 <div class="invalid-feedback">
@@ -46,7 +46,7 @@
                         <div class="mb-3">
                             <label for="name" class="form-label @error('name') is-invalid @enderror">Nama
                                 Menu<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}"
+                            <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" placeholder="Cth: Ayam Bakar"
                                 required autofocus oninvalid="this.setCustomValidity('Nama tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                             @error('name')
                                 <div class="invalid-feedback">
@@ -57,7 +57,7 @@
                         <div class="mb-3">
                             <label for="description" class="form-label @error('description') is-invalid @enderror">Keterangan
                                 </label>
-                            <textarea type="text" class="form-control" id="description" name="description">{{ old('description') }}</textarea>
+                            <textarea type="text" class="form-control" id="description" name="description" placeholder="Cth : 1 potong ayam">{{ old('description') }}</textarea>
                             @error('description')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -82,7 +82,7 @@
                         
                         <div class="mb-3">
                             <label for="price" class="form-label @error('price') is-invalid @enderror">Harga<span class="text-danger">*</span></label>
-                            <input type="number" class="form-control" id="price" name="price" value="{{ old('price') }}"
+                            <input type="number" class="form-control" id="price" name="price" value="{{ old('price') }}" placeholder="Cth: 15000"
                             min="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required oninvalid="this.setCustomValidity('Harga tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                             @error('price')
                                 <div class="invalid-feedback">

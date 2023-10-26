@@ -49,7 +49,11 @@
                     <tfoot>
                         <tr>
                             <td colspan="3" class="font-weight-bold">TOTAL</td>
-                            <td class="font-weight-bold">Rp. {{ number_format($total, 0, ',', '.')}}</td>
+                            @if (str_contains($type, 'expense'))
+                                <td class="font-weight-bold text-danger">Rp. {{ number_format($total, 0, ',', '.')}}</td>
+                            @elseif (str_contains($type, 'income'))
+                                <td class="font-weight-bold text-success">Rp. {{ number_format($total, 0, ',', '.')}}</td>
+                            @endif
                         </tr>
                     </tfoot>
                 @else

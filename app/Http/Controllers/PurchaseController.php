@@ -217,4 +217,35 @@ class PurchaseController extends Controller
         
         session()->flash('success', 'Berhasil Merubah Status Pemesanan');   
     }
+
+    public function reOrder(Request $request)
+    {
+        $validatedDataPurch['purchase_name'] = 'Persediaan Bahan';
+        $validatedDataPurch['supplier_id'] = $request->supplier_id;
+        $validatedDataPurch['total'] = $request->total;
+        $validatedDataPurch['responsible'] = auth()->user()->username;
+        $validatedDataPurch['state'] = 'Proses';
+        $validatedDataPurch['purchase_number'] = IdGenerator::generate(['table' => 'purchases', 'length' => 10, 'prefix' =>'PUR-','reset_on_prefix_change' => true ,'field' => 'purchase_number']);
+        $dataSupplier = Supplier::where('supplier_name', $request->supplier_name)->first();
+        $validatedDataPurch['supplier_name'] = $request->supplier_name;
+        $validatedDataPurch['description'] = $dataSupplier->description;
+        $validatedDataPurch['address'] = $dataSupplier->address;
+        $validatedDataPurch['supplier_responsible'] = $dataSupplier->responsible;
+        $validatedDataPurch['telp'] = $dataSupplier->telp;
+        
+        $purch = Purchase::create($validatedDataPurch);
+        $details = json_decode($request->input('details'));
+
+        foreach ($details as $index => $detail) {
+            DetailPurchase::create([
+                'purchase_id' => $purch->id,
+                'name' => $detail->name,
+                'description' => $detail->description,
+                'price' => $detail->price,
+                'qty' => $detail->qty,
+                'unit' => $detail->unit,
+            ]);
+        }
+        
+    }
 }

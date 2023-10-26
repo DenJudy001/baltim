@@ -25,6 +25,10 @@
                         <a class="btn btn-success shadow-sm button-finished"><i class="fas fa-check mr-2"></i>{{ __('Selesai') }}</a>
                         <a class="btn btn-danger shadow-sm button-cancelled"><i class="fas fa-times mr-2"></i>{{ __('Batal') }}</a>
                     </div>
+                @elseif ($purchase->state == 'Selesai')
+                    <div class="col text-right" id="reorder" data-supplier-id="{{ $purchase->supplier_id }}" data-purchase-total="{{ $purchase->total }}" data-supplier-name="{{ $purchase->supplier_name }}">
+                        <a class="btn btn-primary button-reorder shadow-sm"><i class="fas fa-clone mr-2"></i>Pesan Lagi</a>
+                    </div>
                 @endif
             </div>                 
         </div>
@@ -109,7 +113,7 @@
                         </thead>
                         <tbody>
                             @foreach ($purchase->dtl_purchase as $details)
-                                <tr>
+                                <tr class="stuffReorder" data-details-name="{{ $details->name }}" data-details-desc="{{ $details->description }}" data-details-qty="{{ $details->qty }}" data-details-unit="{{ $details->unit }}" data-details-price="{{ $details->price }}">
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$details->name}}</td>
                                     <td>{{$details->description}}</td>
@@ -273,6 +277,71 @@
                                 Swal.fire(
                                     'Gagal!',
                                     'Terjadi kesalahan saat merubah status.',
+                                    'error'
+                                );
+                            }
+                        });
+                    }
+                });
+            });
+            $('#reorder').on('click', '.button-reorder', function(e){
+                e.preventDefault();
+                let url = '{{ route('reorder.purchase') }}';
+                let supplier_id = $(this).parent("div").attr("data-supplier-id");
+                let supplier_name = $(this).parent("div").attr("data-supplier-name");
+                let total = $(this).parent("div").attr("data-purchase-total");
+                let details = {};
+                $('.stuffReorder').each(function() {
+                    let name = $(this).data('details-name');
+                    let description = $(this).data('details-desc');
+                    let qty = $(this).data('details-qty');
+                    let unit = $(this).data('details-unit');
+                    let price = $(this).data('details-price');
+                    details[$(this).index()] = {
+                        name: name,
+                        description: description,
+                        qty: qty,
+                        unit: unit,
+                        price: price
+                    };
+                });
+
+                Swal.fire({
+                    title: 'Apakah Anda yakin ingin memesan ulang?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#1cc88a',
+                    cancelButtonColor: '#858796',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Tidak'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: url,
+                            type: 'post',
+                            data: {
+                                "_token": $('meta[name="csrf-token"]').attr('content'),
+                                "supplier_id": supplier_id,
+                                "supplier_name": supplier_name,
+                                "total": total,
+                                "details": JSON.stringify(details)
+                                
+                            },
+                            success: function () {
+                                Swal.fire({
+                                    title:'Berhasil!',
+                                    text:'Pesanan berhasil dibuat.',
+                                    icon:'success',
+                                    showConfirmButton: false,
+                                    timer:'1500'
+                                }).then(() => {
+                                    location.replace('/transactions');
+                                });
+                            },
+                            error: function () {
+                                Swal.fire(
+                                    'Gagal!',
+                                    'Terjadi kesalahan saat memesan ulang.',
                                     'error'
                                 );
                             }

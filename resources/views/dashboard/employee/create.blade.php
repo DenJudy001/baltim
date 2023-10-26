@@ -23,7 +23,7 @@
                         <div class="mb-3">
                             <label for="name" class="form-label @error('name') is-invalid @enderror">Nama
                                 Lengkap<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="name" name="name"
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Cth: Sri Wijaya"
                                 value="{{ old('name') }}" required autofocus oninvalid="this.setCustomValidity('Nama tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                             @error('name')
                                 <div class="invalid-feedback">
@@ -42,8 +42,8 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="telp" class="form-label @error('telp') is-invalid @enderror">No. HP<span class="text-danger">*</span> Cth: 62878***</label>
-                            <input type="text" class="form-control" id="telp" name="telp" value="{{ old('telp') }}"
+                            <label for="telp" class="form-label @error('telp') is-invalid @enderror">No. HP<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="telp" name="telp" value="{{ old('telp') }}" placeholder="Cth: 6287812345678"
                                 required onkeypress="return event.charCode >= 48 && event.charCode <= 57" oninvalid="this.setCustomValidity('Nomor telepon tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                             @error('telp')
                                 <div class="invalid-feedback">
@@ -55,7 +55,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="username" class="form-label @error('username') is-invalid @enderror">Username<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="username" name="username"
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Cth: swijaya101"
                                 value="{{ old('username') }}" required oninvalid="this.setCustomValidity('Username tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                             @error('username')
                                 <div class="invalid-feedback">
@@ -64,8 +64,8 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="email" class="form-label @error('email') is-invalid @enderror">Email<span class="text-danger">*</span> <span>Cth: xxx@gmail.com</span></label>
-                            <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}"
+                            <label for="email" class="form-label @error('email') is-invalid @enderror">Email<span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="Cth: swijaya101@gmail.com"
                                 required oninvalid="this.setCustomValidity('Email tidak valid !')" oninput="this.setCustomValidity('')">
                             @error('email')
                                 <div class="invalid-feedback">

@@ -26,7 +26,7 @@
                 </div>
                 @if (request()->query('pur') == 'proses' || request()->query('trx') == 'proses')
                     <div class="col text-right">
-                        <a href="javascript:history.back()" class="btn btn-primary shadow-sm button-finished"><i class="fas fa-sync-alt mr-2"></i></i>{{ __('Reset') }}</a>
+                        <a href="javascript:history.back()" class="btn btn-primary shadow-sm button-finished"><i class="fas fa-arrow-left mr-2"></i></i>{{ __('Kembali') }}</a>
                     </div>
                 @endif
             </div>
@@ -36,13 +36,13 @@
             <div class="row align-items-center">
                 <div class="col-sm-12 col-md-3 col-lg-2">
                         <div class="form-floating mb-3">
-                            <input type="date" class="form-control" id="start_date" name="start_date" value="{{ request('start_date') }}" placeholder="Dari">
+                            <input type="date" class="form-control" id="start_date" name="start_date" value="{{ request('start_date') }}" placeholder="Dari" required oninvalid="this.setCustomValidity('Tanggal awal tidak boleh kosong!')" oninput="this.setCustomValidity('')">
                             <label for="start_date">Dari</label>
                         </div>
                 </div>
                 <div class="col-sm-12 col-md-3 col-lg-2">
                     <div class="form-floating mb-3">
-                        <input type="date" class="form-control" id="end_date" name="end_date" value="{{ request('end_date') }}" placeholder="Dari">
+                        <input type="date" class="form-control" id="end_date" name="end_date" value="{{ request('end_date') }}" placeholder="Dari" required oninvalid="this.setCustomValidity('Tanggal akhir tidak boleh kosong!')" oninput="this.setCustomValidity('')">
                         <label for="end_date">Sampai</label>
                     </div>
                 </div>
@@ -52,18 +52,22 @@
                     @elseif (request()->query('trx') == 'proses')
                         <input type="hidden" name="trx" value="proses">
                     @endif
-                    <button type="submit" class="btn btn-primary mb-3"><i class="fas fa-filter mr-2"></i>Filter</button>
+                    @if (request()->query('start_date'))
+                        <button type="button" class="btn btn-danger mb-3" id="resetButton"><i class="fas fa-sync-alt mr-2"></i>Reset</button> 
+                    @else
+                        <button type="submit" class="btn btn-primary mb-3" id="filterButton"><i class="fas fa-filter mr-2"></i>Filter</button>
+                    @endif
                 </div>
             </div>
             </form>
             <div class="table-responsive">
-                <table class="table table-striped" id="DataTables">
+                <table class="table" id="DataTables">
                     <thead>
                         <tr>
                             <th scope="col" width="5%">No.</th>
+                            <th scope="col" width="10%">Status</th>
                             <th scope="col" width="20%">Kode Transaksi</th>
-                            <th scope="col" width="15%">Tanggal</th>
-                            <th scope="col" width="15%">Status</th>
+                            <th scope="col" width="20%">Tanggal</th>
                             <th scope="col" width="30%">Total</th>
                             <th scope="col" width="15%">Aksi</th>
                         </tr>
@@ -72,10 +76,10 @@
                         @foreach ($transactions as $transaction)
                             <tr>
                                 <td>{{ $loop->iteration }} </td>
+                                <td ><span class="badge {{ $transaction->state == 'Proses' ? 'text-bg-warning' : ($transaction->state == 'Selesai' ? 'text-bg-success' : 'text-bg-danger') }}">{{ $transaction->state }}</span></td>
                                 <td>{{ $transaction->purchase_number }}</td>
                                 <td>{{ date('d-m-Y', strtotime($transaction->created_at)) }}</td>
-                                <td ><span class="badge {{ $transaction->state == 'Proses' ? 'text-bg-warning' : ($transaction->state == 'Selesai' ? 'text-bg-success' : 'text-bg-danger') }}">{{ $transaction->state }}</span></td>
-                                <td>Rp. {{ number_format($transaction->total, 0, ',', '.')}}</td>
+                                <td class="font-weight-bold">Rp. {{ number_format($transaction->total, 0, ',', '.')}}</td>
                                 <td>
                                     @if (str_contains($transaction->purchase_number, 'PUR'))
                                     <div class="d-flex justify-content-evenly">
@@ -243,6 +247,20 @@
             }
         });
     }
+    $(document).ready(function() {
+        $("#resetButton").click(function(e) {
+            $("#start_date").val('');
+            $("#end_date").val('');
+
+            var url = new URL(window.location);
+            var params = new URLSearchParams(url.search);
+            params.delete('start_date');
+            params.delete('end_date');
+            var newURL = url.origin + url.pathname + '?' + params.toString();
+
+            window.location.href = newURL;
+        });
+    });
 </script>
     
 @endpush

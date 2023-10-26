@@ -26,7 +26,7 @@
                 </div>
             @elseif ($pos->state == 'Selesai')
                 <div class="col text-right">
-                    <a href="/pos/{{ $pos->pos_number }}/print_struk" target="_blank" class="btn btn-success shadow-sm"><i class="fas fa-print mr-2"></i>Cetak</a>
+                    <a href="/pos/{{ $pos->pos_number }}/print_struk" target="_blank" class="btn btn-primary shadow-sm"><i class="fas fa-print mr-2"></i>Cetak</a>
                 </div>
             @endif
         </div>                 

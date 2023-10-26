@@ -16,7 +16,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <a href="/employee/create" class="btn btn-primary mb-3"><i class="fas fa-plus mr-2"></i>Tambah Karyawan</a>
-                <table class="table table-striped" id="DataTables">
+                <table class="table" id="DataTables">
                     <thead>
                         <tr>
                             <th scope="col" width="5%">No.</th>

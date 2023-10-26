@@ -229,7 +229,7 @@
             $('thead').on('click', '.addRowSupply', function(){
                 var tr = "<tr>"+
                             "<td>"+
-                                "<input type='text' class='form-control supplyID' name='supply_name[]' required  oninvalid=\"this.setCustomValidity('Nama tidak boleh kosong !')\" oninput=\"this.setCustomValidity('')\">"+
+                                "<input type='text' class='form-control supplyID' name='supply_name[]' placeholder='Cth: Ayam utuh 3 Kg' required  oninvalid=\"this.setCustomValidity('Nama tidak boleh kosong !')\" oninput=\"this.setCustomValidity('')\">"+
                             "</td>"+
                             "<td><input type='number' class='form-control priceID' name='supply_price[]' value=0 required min='1' onkeypress=\"return event.charCode >= 48 && event.charCode <= 57\" oninvalid=\"this.setCustomValidity('Harga tidak boleh kosong !')\" oninput=\"this.setCustomValidity('')\"></td>"+
                             "<td>"+
@@ -246,7 +246,7 @@
             $('thead').on('click', '.addRowAsset', function(){
                 var tr = "<tr>"+
                             "<td>"+
-                                "<input type='text' class='form-control nameAsset' name='name_asset[]' required  oninvalid=\"this.setCustomValidity('Nama tidak boleh kosong !')\" oninput=\"this.setCustomValidity('')\">"+
+                                "<input type='text' class='form-control nameAsset' name='name_asset[]' placeholder='Cth: Motor vario' required  oninvalid=\"this.setCustomValidity('Nama tidak boleh kosong !')\" oninput=\"this.setCustomValidity('')\">"+
                             "</td>"+
                             "<td><select class='form-select single-select-month-asset' data-placeholder='Pilih Bulan' name='month_asset[]' required oninvalid=\"this.setCustomValidity('Bulan tidak boleh kosong !')\" oninput=\"this.setCustomValidity('')\">"+
                                         "<option></option>"+
@@ -263,7 +263,7 @@
                                         "<option value='11'>November</option>"+
                                         "<option value='12'>Desember</option>"+
                                     "</select></td>"+
-                            "<td><input type='number' class='form-control yearAsset' name='year_asset[]' required min='1900' onkeypress=\"return event.charCode >= 48 && event.charCode <= 57\" oninvalid=\"this.setCustomValidity('Tahun tidak valid !')\" oninput=\"this.setCustomValidity('')\"></td>"+
+                            "<td><input type='number' class='form-control yearAsset' name='year_asset[]' placeholder='Cth: 2020' required min='1900' onkeypress=\"return event.charCode >= 48 && event.charCode <= 57\" oninvalid=\"this.setCustomValidity('Tahun tidak valid !')\" oninput=\"this.setCustomValidity('')\"></td>"+
                             "<td><input type='number' class='form-control priceAsset' name='price_asset[]' value=0 required min='1' onkeypress=\"return event.charCode >= 48 && event.charCode <= 57\" oninvalid=\"this.setCustomValidity('Harga tidak boleh kosong !')\" oninput=\"this.setCustomValidity('')\"></td>"+
                             "<td>"+
                                 "<a href='javascript:void(0)' class='btn btn-danger deleteRowAsset'><i class='fas fa-trash-alt'></i></a>"+

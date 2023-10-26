@@ -102,10 +102,10 @@
                     <thead>
                         <tr data-supp-id="{{ $purchase->supplier_id }}">
                             <th scope="col" width="20%">Produk</th>
-                            <th scope="col" width="35%">Keterangan</th>
-                            <th scope="col" width="10%">Jumlah</th>
-                            <th scope="col" width="10%">Unit</th>
-                            <th scope="col" width="15%">Total Harga</th>
+                            <th scope="col" width="30%">Keterangan</th>
+                            <th scope="col" width="5%">Jumlah</th>
+                            <th scope="col" width="5%">Unit</th>
+                            <th scope="col" width="30%">Total Harga</th>
                             <th scope="col" width="10%">
                                 <div  class="d-flex justify-content-end">
                                     <a href="javascript:void(0)" class="btn btn-success addRowPurchase"><i class="fas fa-plus"></i></a>
