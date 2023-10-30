@@ -52,9 +52,9 @@ class PurchaseFactory extends Factory
                 'updated_at' => $createdAt->format('Y-m-d H:i:s'),
             ];
         } else{
-            $supplier = Supplier::where('id', '=', $suppNumber)->firstOrFail();
-            $supp_id = Stuff::pluck('supplier_id')->toArray();
+            $supp_id = Supplier::pluck('id')->toArray();
             $rand_supp = $this->faker->randomElement($supp_id);
+            $supplier = Supplier::where('id', '=', $rand_supp)->firstOrFail();
             return [
                 'id' => $id++,
                 'supplier_id' => $rand_supp,

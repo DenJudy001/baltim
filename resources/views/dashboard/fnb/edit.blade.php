@@ -75,7 +75,7 @@
                                 name="type" id="type" required oninvalid="this.setCustomValidity('Kategori tidak boleh kosong !')" oninput="this.setCustomValidity('')">
                                 <option></option>
                                 @foreach ($categs as $categ)
-                                    <option value="{{ $fnb->type }}" @if(old('type', $fnb->type) == $categ->type) selected @endif>{{ $categ->type }}</option>
+                                    <option value="{{ $categ->type }}" @if(old('type', $fnb->type) == $categ->type) selected @endif>{{ $categ->type }}</option>
                                 @endforeach
                             </select>
                             @error('type')
